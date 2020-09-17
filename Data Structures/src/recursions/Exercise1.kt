@@ -18,7 +18,6 @@ fun main() {
     tnirp(5)
     println()
     upDown(5)
-    assert(false)
 }
 
 fun countDigits(num: Int): Int {
