@@ -1,0 +1,6 @@
+DEBUG:root:debug msg
+INFO:root:info msg
+WARNING:root:warning msg
+ERROR:root:error msg
+CRITICAL:root:critical msg
+INFO:root:heres a string variable and an int 10:

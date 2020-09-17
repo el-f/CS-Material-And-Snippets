@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CSS Essential Training/CSS Essential Training.iml" filepath="$PROJECT_DIR$/CSS Essential Training/CSS Essential Training.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Data Structures/Data Structures.iml" filepath="$PROJECT_DIR$/Data Structures/Data Structures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlaskIntroduction/FlaskIntroduction.iml" filepath="$PROJECT_DIR$/FlaskIntroduction/FlaskIntroduction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Learn More/Game Of Life/Game Of Life.iml" filepath="$PROJECT_DIR$/../Learn More/Game Of Life/Game Of Life.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sem2/Houses/Houses.iml" filepath="$PROJECT_DIR$/../sem2/Houses/Houses.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Learn Kotlin/Learn Kotlin.iml" filepath="$PROJECT_DIR$/Learn Kotlin/Learn Kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Learn Python/Learn Python.iml" filepath="$PROJECT_DIR$/Learn Python/Learn Python.iml" />
+    </modules>
+  </component>
+</project>

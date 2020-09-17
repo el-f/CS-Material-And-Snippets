@@ -1,0 +1,3 @@
+User: Elazar@exmaple.com 08/04/2020 05:12:28 PM: INFO: main Line:19 info msg
+User: Elazar@exmaple.com 08/04/2020 05:12:28 PM: WARNING: main Line:20 warning msg
+User: Elazar@exmaple.com 08/04/2020 05:12:28 PM: DEBUG: my_function Line:25 debug lvl msg from myfunc

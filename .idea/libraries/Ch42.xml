@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Ch4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Learn Python/Basics Course/Ch4/archive.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Learn Python/Basics Course/Ch4/testzip.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

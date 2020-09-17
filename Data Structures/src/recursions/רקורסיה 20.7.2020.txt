@@ -1,0 +1,188 @@
+
+
+int RecCountDigits(int num)
+{
+   if (num < 10 && num>=0) 
+	return 1;
+   else
+ 	return RecCountDigits(num/10) +1;
+}
+	
+int CountDigits(int num)
+{
+   if (num < 0)
+	num = 0-num;
+   return RecCountDigits(num);
+}
+
+--------
+
+int AllCountDigits(int num)
+{
+   if (num > -10 && num < 10) 
+	return 1;
+   else
+ 	return AllCountDigits(num/10) +1;
+}
+
+------------------
+
+int IsSorted (int A[], n)
+{
+
+   if (n == 1)
+	retrun 1;
+   
+    if (IsSorted(A, n-1) == 0)
+	return 0;
+   else 
+	if (A[n-1] >= A[n-2]) 
+		return 1;
+	else 
+		return 0;
+}
+
+---------------------
+
+int CountWheels(int n)
+{
+    if (n == 0) 
+	return 0;
+    else
+    {
+	if (n%2 == 0)
+		return CountWheels(n-1) + 2;
+	else
+		return CountWheels(n-1) + 4;
+    }
+}
+
+
+n      	1	2	3	4	5	6	7	8	9	10
+w	4	6	10	12	16	18	22	24	28	30
+
+
+int CountWheels(int n)
+{
+    if (n == 0) 
+	return 0;
+    if (n == 1)
+	return 4;
+
+    return CountWheels(n-2) + 6;
+}
+
+int CountWheels(int n)
+{
+    if (n == 0 || n == 1)) 
+	return 4 * n;
+    return CountWheels(n-2) + 6;
+}
+
+-----------------
+
+void Print(int n)
+// print numbers from 1 to n)
+{
+     if (n <= 0)
+	return;
+
+     Print (n-1);
+     // n נדפיס את 
+}
+
+void Print(int n)
+// print numbers from 1 to n)
+{
+     if (n > 0)
+     {
+	     Print (n-1);
+	     // n נדפיס את 
+     }
+}
+
+void Tnirp(int n)
+// print numbers from 1 to n)
+{
+     if (n > 0)
+     {
+	     // n נדפיס את 
+	     Tnirp(n-1);
+     }
+}
+
+void UpDown(int n)
+// print 1 2 3 ... n-1 n n-1 .... 3 2 1
+
+{
+     if (n > 0)
+     {
+	     UpDown(n-1);
+	     // n נדפיס את 
+	     UpDown(n-1);
+     }
+}
+	
+
+
+
+
+for (i = 1; i < n; i++)
+{
+     curr = A[i];
+     j = i-1;
+    while (j >= 0 && A[j] > curr)
+    { 
+           A[j+1] = A[j];				
+           j--;					         				
+   }
+   A[j+1] = curr;
+}
+
+
+
+                             1 2 3 4 5 6 7 8 
+
+                             4 5 6 7 8 3 2 1		4
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
