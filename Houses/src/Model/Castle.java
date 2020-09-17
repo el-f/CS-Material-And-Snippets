@@ -9,9 +9,9 @@ import java.util.Arrays;
 
 
 public class Castle extends Building {
-    private Rectangle leftTower;
-    private Rectangle rightTower;
-    private Polygon rightTowerRoof;
+    private final Rectangle leftTower;
+    private final Rectangle rightTower;
+    private final Polygon rightTowerRoof;
 
     public Castle() {
         changeMainColor(Color.DARKGRAY);

@@ -84,9 +84,9 @@ public class Building {
         return windows;
     }
 
-    public int getNumWindows() {
-        return windows.size();
-    }
+//    public int getNumWindows() {
+//        return windows.size();
+//    }
 
     protected void setDoor() {
         door.setWidth(body.getWidth() / 6);

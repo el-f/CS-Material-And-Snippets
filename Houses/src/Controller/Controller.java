@@ -2,8 +2,6 @@ package Controller;
 
 import Model.Model;
 import View.View;
-import javafx.beans.value.ChangeListener;
-import javafx.scene.control.Toggle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
@@ -17,28 +15,25 @@ public class Controller {
         view = v;
         view.update(model);
 
-        ChangeListener<Toggle> changeListener = (observable, oldValue, newValue) -> {
+        view.addChangeListenerToToggleGroup((observable, oldValue, newValue) -> {
             String kind = view.getKind();
             model.update(kind, view.getRoofSelected(), view.getWindowsSelected(), view.getDoorSelected());
             view.getWindows().clear();
             addWindowsToView();
             model.changeRoofColor(view.getRoofColor());
             view.update(model);
-        };
+        });
 
-        view.addChangeListenerToToggleGroup(changeListener);
-
-        ChangeListener<Boolean> clRoof = (observable, oldValue, newValue) -> {
+        view.addChangeListenerToRoof((observable, oldValue, newValue) -> {
             if (view.getRoofSelected())
                 view.addRoofColorsComboBox();
             else
                 view.hideRoofColorsComboBox();
             model.setProperty("roof", view.getRoofSelected());
             view.update(model);
-        };
-        view.addChangeListenerToRoof(clRoof);
+        });
 
-        ChangeListener<Boolean> clWindows = (observable, oldValue, newValue) -> {
+        view.addChangeListenerToWindows((observable, oldValue, newValue) -> {
             boolean isSelected = view.getWindowsSelected();
             model.setProperty("windows", isSelected);
             if (isSelected) {    //add windows to view
@@ -47,20 +42,17 @@ public class Controller {
                 view.removeWindows();
             }
             view.update(model);
-        };
-        view.addChangeListenerToWindows(clWindows);
+        });
 
-        ChangeListener<Boolean> clDoor = (observable, oldValue, newValue) -> {
+        view.addChangeListenerToDoor((observable, oldValue, newValue) -> {
             model.setProperty("door", view.getDoorSelected());
             view.update(model);
-        };
-        view.addChangeListenerToDoor(clDoor);
+        });
 
-        ChangeListener<String> clRoofColors = (observable, oldValue, newValue) -> {
+        view.addChangeListenerToRoofColors((observable, oldValue, newValue) -> {
             model.changeRoofColor(view.getRoofColor());
             view.update(model);
-        };
-        view.addChangeListenerToRoofColors(clRoofColors);
+        });
     }
 
     public void addWindowsToView(){
