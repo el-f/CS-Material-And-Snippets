@@ -18,27 +18,27 @@ public class MainView extends VBox {
     private final Affine affine;
     private final Canvas canvas;
     private Simulation simulation;
-    boolean run;
+//    boolean run;
 
     private int drawMode = 1;
 
     public MainView() {
         Button stepButton = new Button("step");
-        Button runBtn = new Button("Run");
-        runBtn.setOnAction(event -> {
-            run = true;
-            while (run) {
-                simulation.step();
-                draw();
+//        Button runBtn = new Button("Run");
+//        runBtn.setOnAction(event -> {
+//            run = true;
+//            while (run) {
+//                simulation.step();
+//                draw();
 //                try {
 ////                    Thread.sleep(5000);
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-            }
-        });
-        Button stopBtn = new Button("Stop");
-        stopBtn.setOnAction(event -> run = false);
+//            }
+//        });
+//        Button stopBtn = new Button("Stop");
+//        stopBtn.setOnAction(event -> run = false);
         Label label = new Label("D-Draw E-Erase T-Toggle");
         stepButton.setOnAction(actionEvent -> {
             simulation.step();
@@ -51,7 +51,13 @@ public class MainView extends VBox {
         setOnKeyPressed(this::onKeyPressed);
 
         simulation = new Simulation((int) canvas.getWidth() / 20, (int) canvas.getHeight() / 20);
-        getChildren().addAll(stepButton, runBtn, stopBtn, label, canvas);
+        getChildren().addAll(
+                stepButton,
+//                runBtn,
+//                stopBtn,
+                label,
+                canvas
+        );
 
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);

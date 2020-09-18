@@ -23,7 +23,7 @@ class Sudoku(s: Scanner) {
             println("Filling Row Number ${i + 1}")
             for (j in mat[i].indices) do {
                 initializedCell = false
-                println("Please enter a number between 1-${mat.size} for cell [${(i + 1)}, ${(j + 1)}]")
+                println("Please enter a number between 1-${mat.size} for cell [${i + 1}, ${j + 1}]")
                 temp = s.nextInt()
                 if (temp in 1..totalSize) {
                     mat[i][j] = temp
