@@ -15,6 +15,7 @@ class Sudoku(s: Scanner) {
     private val mat: Array<IntArray>
     private val totalSize: Int
     private val root: Int
+
     private fun init(s: Scanner) {
         var temp: Int
         var initializedCell: Boolean
