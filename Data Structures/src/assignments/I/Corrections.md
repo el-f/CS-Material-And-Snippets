@@ -1,1 +1,1 @@
-nlog(logn) is not nlogn, needs to be specified as nlog(logn)
+nlog(logn) is not O(nlogn), needs to be specified as O(nlog(logn))
