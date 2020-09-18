@@ -17,26 +17,18 @@ class Sudoku(s: Scanner) {
     private val root: Int
     private fun init(s: Scanner) {
         var temp: Int
-        var initilizedCell: Boolean
+        var initializedCell: Boolean
         for (i in mat.indices) {
-            println(
-                """
-                    
-                    Filling Row Number ${i + 1}
-                    """.trimIndent()
-            )
+            println("Filling Row Number ${i + 1}")
             for (j in mat[i].indices) do {
-                initilizedCell = false
-                println(
-                    "Please enter a number between 1-" + mat.size + " for cell [" + (i + 1)
-                            + "," + (j + 1) + "]"
-                )
+                initializedCell = false
+                println("Please enter a number between 1-${mat.size} for cell [${(i + 1)}, ${(j + 1)}]")
                 temp = s.nextInt()
                 if (temp in 1..totalSize) {
                     mat[i][j] = temp
-                    initilizedCell = true
+                    initializedCell = true
                 }
-            } while (!initilizedCell)
+            } while (!initializedCell)
         }
     }
 
