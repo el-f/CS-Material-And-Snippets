@@ -1,6 +1,7 @@
-package _legacy_copies
+package snippets
 
 import java.util.*
+import kotlin.math.sqrt
 
 fun main() {
     val sudokuBoard = Sudoku(Scanner(System.`in`))
@@ -48,7 +49,7 @@ class Sudoku(s: Scanner) {
 
     fun checkSudoku(): Boolean {
         for (i in 0 until totalSize) {
-            if (!isValidSudokuRow(i) || !isValidSudokuCol(i)) return false
+            if (!isValid(i)) return false
         }
         for (sRowIndex in 0 until root) {
             for (sColIndex in 0 until root) {
@@ -66,30 +67,19 @@ class Sudoku(s: Scanner) {
         return true
     }
 
-    private fun isValidSudokuRow(indexRow: Int): Boolean {
-        if (!checkIndexValidity(indexRow)) return false
-        val numberHasBeenSeenAlready = BooleanArray(totalSize + 1)
-        for (i in 0 until totalSize) {
-            if (numberHasBeenSeenAlready[mat[indexRow][i]] || !checkIndexValidity(
-                    mat[indexRow][i]
-                )
-            ) {
-                return false
-            } else numberHasBeenSeenAlready[mat[indexRow][i]] = true
-        }
-        return true
-    }
+    private fun checkNum(num: Boolean, index: Int) = !checkIndexValidity(index) || num
 
-    private fun isValidSudokuCol(indexCol: Int): Boolean {
-        if (!checkIndexValidity(indexCol)) return false
-        val numberHasBeenSeenAlready = BooleanArray(totalSize + 1)
+    private fun isValid(index: Int): Boolean {
+        if (!checkIndexValidity(index)) return false
+        val rowSeenNumbersTracker = BooleanArray(totalSize + 1)
+        val colSeenNumbersTracker = BooleanArray(totalSize + 1)
         for (i in 0 until totalSize) {
-            if (numberHasBeenSeenAlready[mat[i][indexCol]] || !checkIndexValidity(
-                    mat[i][indexCol]
-                )
-            ) {
+            if (checkNum(rowSeenNumbersTracker[mat[index][i]], mat[index][i])) {
                 return false
-            } else numberHasBeenSeenAlready[mat[i][indexCol]] = true
+            } else rowSeenNumbersTracker[mat[index][i]] = true
+            if (checkNum(colSeenNumbersTracker[mat[i][index]], mat[i][index])) {
+                return false
+            } else colSeenNumbersTracker[mat[i][index]] = true
         }
         return true
     }
@@ -99,16 +89,16 @@ class Sudoku(s: Scanner) {
             println("bad index")
             return false
         }
-        val numberHasBeenSeenAlready = BooleanArray(totalSize + 1)
+        val seenNumbersTracker = BooleanArray(totalSize + 1)
         val rowIndex = sR * root
         val colIndex = sC * root
         for (r in rowIndex until rowIndex + root) {
             for (c in colIndex until colIndex + root) {
                 // here i don't check that numbers are in range since all numbers were already
                 // checked in row/column checks.
-                if (numberHasBeenSeenAlready[mat[r][c]]) {
+                if (seenNumbersTracker[mat[r][c]]) {
                     return false
-                } else numberHasBeenSeenAlready[mat[r][c]] = true
+                } else seenNumbersTracker[mat[r][c]] = true
             }
         }
         return true
@@ -121,9 +111,9 @@ class Sudoku(s: Scanner) {
                 "Please enter a natural number N which has an natural square root for the total size NxN of the board"
             )
             temp = s.nextInt()
-        } while (Math.sqrt(temp.toDouble()) != Math.sqrt(temp.toDouble()) || temp < 1)
+        } while (sqrt(temp.toDouble()) != sqrt(temp.toDouble()) || temp < 1)
         totalSize = temp
-        root = Math.sqrt(totalSize.toDouble()).toInt()
+        root = sqrt(totalSize.toDouble()).toInt()
         mat = Array(totalSize) { IntArray(totalSize) }
         init(s)
         show()

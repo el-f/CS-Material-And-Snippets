@@ -1,4 +1,4 @@
-package _legacy_copies
+package snippets
 
 import java.util.*
 import kotlin.math.log10

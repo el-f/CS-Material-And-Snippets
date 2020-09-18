@@ -1,8 +1,8 @@
-package _legacy_copies
+package snippets
 
 
-fun main(args: Array<String>) {
-    val WANTED_PAIRS_NUM = 15
+fun main() {
+    val wantedPairs = 15
     // 220 is the lowest amicable number so no need to calculate below it
     var num1 = 220
     var num2: Int
@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
     var sum2: Int
     var pairs = 0
     var previousPair = 0
-    while (pairs < WANTED_PAIRS_NUM) {
+    while (pairs < wantedPairs) {
         sum1 = 0
         sum2 = 0
         /*
