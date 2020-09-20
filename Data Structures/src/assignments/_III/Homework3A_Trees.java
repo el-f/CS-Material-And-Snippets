@@ -1,6 +1,6 @@
-package assignments.III;
+package assignments._III;
 
-import static assignments.III.tNode.*;
+import static assignments._III.tNode.*;
 
 @SuppressWarnings({"all", "RedundantSuppression"})
 public class Homework3A_Trees {

@@ -1,11 +1,25 @@
 package sorts;
 
+import java.util.Random;
+
 public class InsertionSort {
 
     public static void main(String[] args) {
         int[] arr = {112, 1, 22, 55, 10, 5, 0};
         insertionSort(arr);
         for (int i : arr) System.out.print(i + " ");
+        /*---runtime testing---*/
+        for (int i = 25_000; i <= 1_000_000; i *= 2) {
+            Random r = new Random();
+            arr = new int[i];
+            for (int j = 0; j < i; j++)
+                arr[j] = r.nextInt();
+            long start = System.currentTimeMillis();
+            insertionSort(arr);
+            long time = System.currentTimeMillis() - start;
+            System.out.printf("Insertion sort of %,d elements took %.3f seconds%n",
+                    i, time / 1e3);
+        }
     }
 
 
