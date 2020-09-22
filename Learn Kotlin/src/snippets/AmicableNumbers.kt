@@ -3,8 +3,8 @@ package snippets
 
 fun main() {
     val wantedPairs = 15
-    // 220 is the lowest amicable number so no need to calculate below it
-    var num1 = 220
+
+    var num1 = 220 // 220 is the lowest amicable number so no need to calculate below it
     var num2: Int
     var sum1: Int
     var sum2: Int
