@@ -15,8 +15,9 @@ public class BinaryTreeLevelSort {
 
         Queue<Node> nodes = new LinkedList<>();
         nodes.add(_node);
+        Node current;
         while (!nodes.isEmpty()) {
-            Node current = nodes.remove();
+            current = nodes.remove();
             result.add(current.value);
             if (current.left != null) nodes.add(current.left);
             if (current.right != null) nodes.add(current.right);
