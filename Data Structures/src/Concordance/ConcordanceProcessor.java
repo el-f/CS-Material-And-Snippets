@@ -77,12 +77,7 @@ public class ConcordanceProcessor {
         @Override
         public String toString() {
             String separator = " -> ";
-            return String.format(
-                    "%s %s %s\n",
-                    word,
-                    separator,
-                    lineNumbers.toString(word.length() + separator.length())
-            );
+            return word + separator + lineNumbers.toString(word.length() + separator.length()) + '\n';
         }
     }
 

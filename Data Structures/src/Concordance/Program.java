@@ -42,7 +42,7 @@ public class Program {
                     break;
                 case 1:
                     System.out.println("Enter Word To Search:");
-                    concordanceProcessor.search(scanner.next());
+                    concordanceProcessor.search(scanner.next().toLowerCase());
                     break;
                 case 2:
                     concordanceProcessor.printToFile();

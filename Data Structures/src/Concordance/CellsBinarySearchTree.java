@@ -60,8 +60,9 @@ public class CellsBinarySearchTree {
         int comparison = current.value.word.compareTo(newCell.word);
         if (comparison == 0) {
             /*
-                in case of same word the new cell has only one word in its list
+                In case of same word the new cell has only one word in its list
                 so we just get it and insert it into the existing list.
+                Java's garbage collector will take care of the unused cell.
              */
             current.value.insert(newCell.lineNumbers.getCurrentVal());
         } else if (comparison > 0) {

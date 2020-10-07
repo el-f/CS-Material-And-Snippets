@@ -45,7 +45,7 @@ public class MyLinkedList {
         int counter = 0;
         String sizeStr = "{size=" + size +"} - [";
         sb.append(sizeStr);
-        indent += sizeStr.length() + 2;
+        indent += sizeStr.length();
         while (cur.next != null) {
             sb.append(cur.data).append(", ");
             cur = cur.next;
