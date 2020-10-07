@@ -13,11 +13,6 @@ public class ConcordanceProcessor {
 
         String[] lines = Files.lines(file.toPath()).toArray(String[]::new);
 
-        //O(n * m) when n is the number of lines and m is the number of characters in each line
-        for (int i = 0; i < lines.length; i++) {
-            lines[i] = lines[i].toLowerCase().replaceAll("[^a-zA-Z\\s+]", "").trim();
-        }
-
         /*
             Average Case: O(n * [(m * lg(m*n) + c])
             Worst Case: O([n*m]^2 + c)
@@ -27,9 +22,10 @@ public class ConcordanceProcessor {
          */
         for (int i = 0; i < lines.length; i++) {
             if (!lines[i].isEmpty())
-                for (String word : lines[i].split("[\\s]+")) { //Split operation - O(num of chars in line)
+                //Regex and Split operations - O(num of chars in line)
+                for (String word : lines[i].replaceAll("[^a-zA-Z\\s+]", "").trim().split("[\\s]+")) {
                     if (!word.isEmpty()) {
-                        tree.insert(new Cell(word, i + 1)); //lg(n*m)
+                        tree.insert(new Cell(word.toLowerCase(), i + 1)); //lg(n*m)
                     }
                 }
         }
