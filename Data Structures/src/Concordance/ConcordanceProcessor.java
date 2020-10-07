@@ -4,12 +4,12 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class ConcordanceProcessor {
-    CellsBinarySearchTree tree;
+    MyBinarySearchTree tree;
     String outputPath;
 
     public ConcordanceProcessor(File file, String _outputPath) throws IOException {
 
-        tree = new CellsBinarySearchTree();
+        tree = new MyBinarySearchTree();
 
         String[] lines = Files.lines(file.toPath()).toArray(String[]::new);
 
@@ -25,7 +25,7 @@ public class ConcordanceProcessor {
                 //Regex and Split operations - O(num of chars in line)
                 for (String word : lines[i].replaceAll("[^a-zA-Z\\s+]", "").trim().split("[\\s]+")) {
                     if (!word.isEmpty()) {
-                        tree.insert(new Cell(word.toLowerCase(), i + 1)); //lg(n*m)
+                        tree.insert(word.toLowerCase(), i + 1); //lg(n*m)
                     }
                 }
         }
@@ -55,30 +55,6 @@ public class ConcordanceProcessor {
      */
     public void search(String word) {
         System.out.println(tree.search(word));
-    }
-
-    static class Cell {
-        String word;
-        MyLinkedList lineNumbers;
-
-        Cell(String _word, int lineNumber) {
-            word = _word;
-
-            //O(1)
-            lineNumbers = new MyLinkedList(lineNumber);
-        }
-
-        //O(1)
-        void insert(int lineNumber) {
-            lineNumbers.insert(lineNumber);
-        }
-
-        //O(n) when n is the size of the lineNumbers List
-        @Override
-        public String toString() {
-            String separator = " -> ";
-            return word + separator + lineNumbers.toString(word.length() + separator.length()) + '\n';
-        }
     }
 
 }
