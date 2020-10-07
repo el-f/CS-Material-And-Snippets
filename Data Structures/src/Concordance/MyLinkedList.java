@@ -38,15 +38,23 @@ public class MyLinkedList {
     }
 
     //O(n) when n is the number of nodes
-    @Override
-    public String toString() {
+    public String toString(int indent) {
         if (head == null) return "[]";
         LLNode cur = head;
         StringBuilder sb = new StringBuilder();
-        sb.append("{size=").append(size).append("} - [");
+        int counter = 0;
+        String sizeStr = "{size=" + size +"} - [";
+        sb.append(sizeStr);
+        indent += sizeStr.length() + 2;
         while (cur.next != null) {
             sb.append(cur.data).append(", ");
             cur = cur.next;
+
+            counter++;
+            if (counter % 30 == 0) {
+                sb.append('\n');
+                sb.append(" ".repeat(indent));
+            }
         }
         sb.append(cur.data).append("]");
         return sb.toString();

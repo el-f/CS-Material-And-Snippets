@@ -6,17 +6,14 @@
 #
 #	Processing your own text files:
 #		- Please use Only UTF-8 plain text files
-#		- Enter The File Path When Prompted By The CLI
+#		- Enter The File Path (Or Just Its Name When Running From Same Path) When Prompted By The CLI
 #
+#   Running:
 #	1) Compile And Run Program
 #	2) Navigate Using The CLI Menu
 #	3) Use Accurate File Paths
 #
 #	Default output file is specified in Program.java
-#
-#
-#
-#
 #
 #
 #	------ Complexity Analysis: ------

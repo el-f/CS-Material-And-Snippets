@@ -14,9 +14,10 @@ public class Program {
     public static final String BIBLE_KING_JAMES_EDITION =
             "Data Structures/src/Concordance/DefaultInputFiles/BibleKingJamesEdition.txt";
 
+    public static final String LORD_OF_THE_RINGS = "Data Structures/src/Concordance/DefaultInputFiles/lotr.txt";
+
     public static final String DEFAULT_OUTPUT_FILE_PATH = "Data Structures/src/Concordance/output.txt";
 
-    private static String workingFilePath;
     private static ConcordanceProcessor concordanceProcessor;
 
     public static void main(String[] args) {
@@ -32,7 +33,7 @@ public class Program {
             System.out.println("> Choose:");
             System.out.println("1) Search For A Specific Word");
             System.out.println("2) Create Output File Again");
-            System.out.println("3) Print The Results In Console");
+            System.out.println("3) Print The Results In Console (may not print all for very large outputs)");
             System.out.println("4) Process Another File");
             System.out.println("\n0) Exit Program");
             choice = scanner.nextInt();
@@ -62,39 +63,37 @@ public class Program {
     }
 
     private static void init(Scanner scanner) {
-        boolean fileProcessed = false, gotInput = false;
+        boolean fileProcessed = false;
         while (!fileProcessed) try {
             System.out.println("\nPlease Choose Which File To Process:");
             System.out.println("1) Enter Your Own Text File Path/Name");
-            System.out.println("2) Shrek Movie Script");
-            System.out.println("3) Harry Potter and the Philosopher's Stone Book");
-            System.out.println("4) Bible - King James Edition");
-            System.out.println("5) --");
+            System.out.println("2) Shrek Movie Script (1653 lines)");
+            System.out.println("3) Harry Potter and the Philosopher's Stone Book (6065 lines)");
+            System.out.println("4) The Lord of the Rings Books (48722 lines)");
+            System.out.println("5) Bible - King James Edition (99809 lines)");
+            String workingFilePath = null;
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.println("Enter the file Path/Name");
-                    workingFilePath = scanner.next();
-                    gotInput = true;
+                    scanner.nextLine(); //clear buffer
+                    workingFilePath = scanner.nextLine();
                     break;
                 case 2:
                     workingFilePath = SHREK_MOVIE_SCRIPT;
-                    gotInput = true;
                     break;
                 case 3:
                     workingFilePath = HARRY_POTTER_BOOK_1;
-                    gotInput = true;
                     break;
                 case 4:
-                    workingFilePath = BIBLE_KING_JAMES_EDITION;
-                    gotInput = true;
+                    workingFilePath = LORD_OF_THE_RINGS;
                     break;
                 case 5:
-                    gotInput = true;
+                    workingFilePath = BIBLE_KING_JAMES_EDITION;
                     break;
                 default:
                     System.out.println("Invalid Input!");
             }
-            if (gotInput) {
+            if (workingFilePath != null) {
                 System.out.println("Please Choose Output File:");
                 System.out.println("1) Enter Your Own Output File Path/Name");
                 System.out.println("2) Save To Default Output File");
@@ -102,7 +101,8 @@ public class Program {
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("Enter the file Path/Name");
-                        outputPath = scanner.next();
+                        scanner.nextLine(); //clear buffer
+                        outputPath = scanner.nextLine();
                         break;
                     case 2:
                         outputPath = DEFAULT_OUTPUT_FILE_PATH;

@@ -76,10 +76,12 @@ public class ConcordanceProcessor {
         //O(n) when n is the size of the lineNumbers List
         @Override
         public String toString() {
+            String separator = " -> ";
             return String.format(
-                    "%s -> %s\n",
+                    "%s %s %s\n",
                     word,
-                    lineNumbers
+                    separator,
+                    lineNumbers.toString(word.length() + separator.length())
             );
         }
     }
