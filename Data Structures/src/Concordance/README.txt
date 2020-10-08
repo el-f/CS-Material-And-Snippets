@@ -33,10 +33,10 @@
 #		> n - total number of words in the file
 #		> c - total number of characters in the file
 #
-#       When considering that c ~ n * (k = average of chars per word):
+#       When considering that c ≈ n * (k = average of chars per word):
 #
-#		Average Case -> ~O(n*(lgn+k)) ~ O(nlgn)
-#		Worst Case -> ~O(n*(n+k)) ~ O(n^2) - (in case in which the words in the file are sorted/reverse sorted)
+#		Average Case -> ~O(n*(lgn+k)) ≈ O(nlgn)
+#		Worst Case -> ~O(n*(n+k)) ≈ O(n^2) - (in case in which the words in the file are sorted/reverse sorted)
 #
 #		O(c) - going through all the chars and leaving only letters and spaces + splitting by spaces
 #		O(nlgn)/O(n^2) - for each word (O(n)) insert it into the tree (O(lgn)/O(n)), (tree insertion is O(lgn)/O(n)).
@@ -70,10 +70,10 @@
 #		> n - total number of words in the file
 #		> c - total number of characters in the file
 #
-#       When considering that c ~ n * (k = average of chars per word):
+#       When considering that c ≈ n * (k = average of chars per word):
 #
-#		Average Case -> ~O(n*(lgn + 1 + k)) ~ O(nlgn)
-#		Worst Case -> ~O(n*(n + 1 + k)) ~ O(n^2) - (in case in which the words in the file are sorted/reverse sorted)
+#		Average Case -> ~O(n*(lgn + 1 + k)) ≈ O(nlgn)
+#		Worst Case -> ~O(n*(n + 1 + k)) ≈ O(n^2) - (in case in which the words in the file are sorted/reverse sorted)
 #
 #		O(nlgn + c)/O(n^2 + c) + O(n) - building structure + creating file
 #

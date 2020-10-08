@@ -52,7 +52,7 @@ public class ConcordanceProcessor {
     }
 
     private boolean checkForOneLetterWords(String word) {
-        return word.length() != 1 || "aiAI".contains(word);
+        return word.length() != 1 || "aioAIO".contains(word);
     }
 
     //O(n) when n is the number of words in the text file
