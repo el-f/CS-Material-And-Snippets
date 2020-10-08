@@ -39,7 +39,7 @@ public class ConcordanceProcessor {
                     We check with regex and leave only letters and whitespaces, then split by whitespaces
                  */
                 for (String word : lines[i].replaceAll("[^a-zA-Z\\s+]", "").trim().split("[\\s]+")) {
-                    if (!word.isEmpty()) {
+                    if (!word.isEmpty() && checkForOneLetterWords(word)) {
                         tree.insert(word.toLowerCase(), i + 1);
                     }
                 }
@@ -49,6 +49,10 @@ public class ConcordanceProcessor {
         );
 
         outputPath = _outputPath;
+    }
+
+    private boolean checkForOneLetterWords(String word) {
+        return word.length() != 1 || "aiAI".contains(word);
     }
 
     //O(n) when n is the number of words in the text file

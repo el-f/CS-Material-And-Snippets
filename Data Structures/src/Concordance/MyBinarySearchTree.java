@@ -33,7 +33,7 @@ public class MyBinarySearchTree {
     */
     public String search(String word) {
         MyNode searchResult = binarySearch(word, root);
-        if (searchResult == null) return "Word Not Found!";
+        if (searchResult == null) return "Word Not Found!\n";
         return searchResult.toString();
     }
 
