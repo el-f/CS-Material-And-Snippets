@@ -6,87 +6,90 @@
 #
 #	------ Instructions: ------
 #
-#   Java Language Level - 11
+#   Minimum Required Java Version - 11
 #
-#	Pay attention to the fact that the default paths that
-#	are in Program.java need to be changed according to which directory
-#	you are running the project from.
+#	In order to process the included input files and output to the default output file path,
+#   pay attention to the fact that the default project directory path in Program.java
+#   needs to be changed according to which directory you are running the project from,
+#   To change simply change the field PROJECT_DIR in Program.java according to your environment.
 #
 #	Processing your own text files:
 #		- Please use Only UTF-8 plain text files
 #		- Enter The File Path (Or Just Its Name When Running From Same Path) When Prompted By The CLI
 #
 #   Running:
-#	1) Compile And Run Program
+#	1) Compile Project And Run Program.class
 #	2) Navigate Using The CLI Menu
-#	3) Use Accurate File Paths
-#   4) Open Created Output File
+#   3) Open Created Output File Using Your Preferred Text Editor
 #
-#	Default output file is specified in Program.java
+#	Default input/output files are specified in Program.java
 #
 #
 #	------ Complexity Analysis: ------
 #
-#	Default Run (build tree + create output file) Complexity:
-#		Average Case -> O(n*(lgn + m) + m)
-#		Worst Case -> O(n*(n + m) + m)
-#
-#		> n - number of total words in the file
-#		> m - number of total characters in the file
-#
-#
 #	Complexity of Building The Structure:
 #
-#	    Average Case -> O(n * [(m * lg(m*n)) + c])
-#		Worst Case -> O([n*m]^2 + n*c) - (in case in which the words in the file are sorted)
+#		Average Case -> O(nlgn + c)
+#		Worst Case -> O(n^2 + c) - (in case in which the words in the file are sorted/reverse sorted)
 #
-#	    > n - number of lines
-#	    > m - number of words in each line
-#	    > c - number of characters in each line
+#		> n - total number of words in the file
+#		> c - total number of characters in the file
 #
-#	Or In Another Words:
+#		O(c) - going through all the chars and leaving only letters and spaces + splitting by spaces
+#		O(nlgn)/O(n^2) - for each word (O(n)) insert it into the tree (O(lgn)/O(n)), (tree insertion is O(lgn)/O(n)).
+#		O(1) - for each repeating word insert the current line number after the tail of the existing LinkedList
+#               {
+#                   MyLinkedList Analysis: (the list that holds the linenumbers)
 #
-#		Average Case -> O(nlgn + m)
-#		Worst Case -> O(n^2 + m) - (in case in which the words in the file are sorted)
+#                   Insertion - O(1) (inserting after tail)
+#                   Printing - O(size) - O(n) (going over each one and printing it)
 #
-#		> n - number of total words in the file
-#		> m - number of total characters in the file
-#
-#		O(m) - going through all the chars and leaving only letters and spaces + splitting by spaces
-#		O(nlgn)/O(n) - for each word (O(n)) insert it into the tree (O(lgn)/O(n))
-#		O(1) - for each repeating word insert the current line number into the existing LinkedList
+#                   The list is inherently sorted since we insert each word to the tree by increasing lines indexes.
+#                   No other operations are need in this implementation.
+#               }
 #
 #
 #	Complexity Of Printing/Creating Output File:
 #
-#		= O(n * m)
+#		All Cases: O(n)
 #
-#		> n - number of total words in the file
-#		> m - number of lines the word appears in
+#		> n - total number of words in the text file
 #
-#		O(n * m) - for each word print all line numbers it's in
+#		O(n) - for each word in the tree print it and all line numbers it appears in.
+#              total num of operations sums to the total number of words in the original file.
+#
+#
+#	Complexity Of A Default Program Run (build structure + create output file):
+#
+#		Average Case -> O(n*(lgn + 1) + c)
+#		Worst Case -> O(n*(n + 1) + c) - (in case in which the words in the file are sorted/reverse sorted)
+#
+#		> n - total number of words in the file
+#		> c - total number of characters in the file
+#
+#       O(nlgn)/O(n^2) + O(n) - building structure + creating file
 #
 #
 #	Complexity Of Searching For A Specific Word:
 #
 #		Average Case -> O(lgn)
-#		Worst Case -> O(n) - (in case in which the words in the file are sorted)
+#		Worst Case -> O(n) - (in case in which the words in the file are sorted/reverse sorted)
 #
-#		> n - number of total unique words in the file
+#		> n - total number of words in the tree (number of unique words in the text file)
 #
-#		O(lgn)/O(n) - BST Search Complexity is height dependant. height on average is <lgn> and worst case <n>
+#		O(lgn)/O(n) - BST Search Complexity is height proportional, height on average is <lgn> and worst case <n>
 #
 #
-#	Complexity Of Searching For A Specific Word + Displaying It:
+#	Complexity Of Searching For A Specific Word + Displaying It and Its Line Numbers:
 #
-#		Average Case -> O(lgn + m)
-#		Worst Case -> O(n + m) - (in case in which the words in the file are sorted)
+#		Average Case -> O(lgn + l)
+#		Worst Case -> O(n + l) - (in case in which the words in the file are sorted)
 #
-#		+ n - number of total unique words in the file
-#		+ m - number of lines the word appears in
+#		> n - total number of words in the tree (number of unique words in the text file)
+#		> l - total number of lines the word appears in
 #
-#		O(lgn)/O(n) - BST Search Complexity - height dependant, height is on average <lgn> and worst case <n>
-#		O(m) - for the found word print all the lines in which it appears
+#		O(lgn)/O(n) - BST Search Complexity is height proportional, height on average is <lgn> and worst case <n>
+#		O(l) - for the found word print all the lines in which it appears
 #
 #
 #

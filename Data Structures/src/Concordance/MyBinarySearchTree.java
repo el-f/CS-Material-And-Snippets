@@ -27,9 +27,9 @@ public class MyBinarySearchTree {
 
     /*
         Binary Search
-        Average Case: O(lgn + m)
-        Worst Case: O(n + m)
-        n is the number of words in the tree and m is the number of lines the found word appears in
+        Average Case: O(lgn + l)
+        Worst Case: O(n + l)
+        n is the number of words in the tree and l is the number of lines the found word appears in
     */
     public String search(String word) {
         MyNode searchResult = binarySearch(word, root);
@@ -53,7 +53,7 @@ public class MyBinarySearchTree {
     /*
         Average Case: O(lgn)
         Worst Case: O(n)
-        when n is the number of total words in the tree
+        when n is the total number of words in the tree
     */
     public void insert(String word, int lineNumber) {
         root = insert(root, word, lineNumber);
@@ -66,9 +66,7 @@ public class MyBinarySearchTree {
         }
         int comparison = current.word.compareTo(word);
         if (comparison == 0) {
-            /*
-                In case of same word we just enter the line number into the existing LinkedList
-             */
+            //In case of same word we just enter the line number into the existing LinkedList after the tail
             current.lineNumbers.insert(lineNumber);
         } else if (comparison > 0) {
             current.left = insert(current.left, word, lineNumber);
@@ -78,7 +76,7 @@ public class MyBinarySearchTree {
         return current;
     }
 
-    //O(n * m) when n is the number of words and m is number of lines the words appears in
+    //O(n) when n is the number of words in the original file
     @Override
     public String toString() {
         return getAllInOrderForTree(root, new StringBuilder()).toString();

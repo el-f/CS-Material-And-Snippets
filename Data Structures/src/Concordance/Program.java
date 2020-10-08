@@ -1,22 +1,19 @@
 package Concordance;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 public class Program {
-    public static final String SHREK_MOVIE_SCRIPT =
-            "Data Structures/src/Concordance/DefaultInputFiles/shrekMovieScript.txt";
-
-    public static final String HARRY_POTTER_BOOK_1 =
-            "Data Structures/src/Concordance/DefaultInputFiles/Harry Potter and the Philosopher's Stone.txt";
-
-    public static final String BIBLE_KING_JAMES_EDITION =
-            "Data Structures/src/Concordance/DefaultInputFiles/BibleKingJamesEdition.txt";
-
-    public static final String LORD_OF_THE_RINGS = "Data Structures/src/Concordance/DefaultInputFiles/lotr.txt";
-
-    public static final String DEFAULT_OUTPUT_FILE_PATH = "Data Structures/src/Concordance/output.txt";
+    //-------------------- Change This If Needed --------------------//
+    public static final String PROJECT_DIR = Paths.get("").toAbsolutePath() + "/Data Structures/src/Concordance/";
+    //---------------------------------------------------------------//
+    public static final String SHREK_MOVIE_SCRIPT = PROJECT_DIR + "DefaultInputFiles/shrekMovieScript.txt";
+    public static final String HARRY_POTTER_BOOK_1 = PROJECT_DIR + "DefaultInputFiles/Harry Potter Book 1.txt";
+    public static final String LORD_OF_THE_RINGS = PROJECT_DIR + "DefaultInputFiles/lotr.txt";
+    public static final String BIBLE_KING_JAMES_EDITION = PROJECT_DIR + "DefaultInputFiles/BibleKingJamesEdition.txt";
+    public static final String DEFAULT_OUTPUT_FILE_PATH = PROJECT_DIR + "output.txt";
 
     private static ConcordanceProcessor concordanceProcessor;
 
@@ -35,7 +32,7 @@ public class Program {
             System.out.println("2) Recreate Output File");
             System.out.println("3) Print The Results In Console (may not print all for very large outputs)");
             System.out.println("4) Process Another File");
-            System.out.println("5) Choose How The Output Looks");
+            System.out.println("5) Change How The Output Looks");
             System.out.println("\n0) Exit Program");
             choice = scanner.nextInt();
             switch (choice) {
@@ -82,10 +79,10 @@ public class Program {
         while (!fileProcessed) try {
             System.out.println("\nPlease Choose Which File To Process:");
             System.out.println("1) Enter Your Own Text File Path/Name");
-            System.out.println("2) Shrek Movie Script (1653 lines)");
-            System.out.println("3) Harry Potter and the Philosopher's Stone Book (6065 lines)");
-            System.out.println("4) The Lord of the Rings Books (48722 lines)");
-            System.out.println("5) Bible - King James Edition (99809 lines)");
+            System.out.println("2) Shrek Movie Script (1,653 lines)");
+            System.out.println("3) Harry Potter and the Philosopher's Stone Book (6,065 lines)");
+            System.out.println("4) The Lord of the Rings Books (48,722 lines)");
+            System.out.println("5) Bible - King James Edition (100,182 lines)");
             String workingFilePath = null;
             switch (scanner.nextInt()) {
                 case 1:
@@ -130,7 +127,7 @@ public class Program {
 
                 fileProcessed = true;
                 System.out.printf(
-                        "File Successfully Processed In %dms!\nCheck Output File (%s) For The Results Or Print Them Here\n",
+                        "File Processed In %dms!\nCheck Output File (%s) For The Results Or Print Them Here\n",
                         System.currentTimeMillis() - start,
                         outputPath
                 );
