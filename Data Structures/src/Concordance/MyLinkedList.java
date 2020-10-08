@@ -1,11 +1,13 @@
 package Concordance;
 
 public class MyLinkedList {
-    LLNode head;
-    LLNode current;
-    int size;
+    private final LLNode head;
+    private LLNode tail;
+    public int size;
 
-    static class LLNode {
+    public static boolean breakOutputLine = true;
+
+    private static class LLNode {
         int data;
         LLNode next;
 
@@ -19,21 +21,16 @@ public class MyLinkedList {
         }
     }
 
-    //O(1)
-    public int getCurrentVal() {
-        return current.data;
-    }
-
     public MyLinkedList(int headData) {
         head = new LLNode(headData);
-        current = head;
+        tail = head;
         size = 1;
     }
 
     // O(1)
     public void insert(int _data) {
-        current.next = new LLNode(_data);
-        current = current.next;
+        tail.next = new LLNode(_data);
+        tail = tail.next;
         size++;
     }
 
@@ -43,15 +40,15 @@ public class MyLinkedList {
         LLNode cur = head;
         StringBuilder sb = new StringBuilder();
         int counter = 0;
-        String sizeStr = "{size=" + size +"} - [";
+        String sizeStr = "(" + size + " instance" + (size > 1 ? 's' : "") + ") - [";
         sb.append(sizeStr);
         indent += sizeStr.length();
         while (cur.next != null) {
             sb.append(cur.data).append(", ");
             cur = cur.next;
 
-            counter++;
-            if (counter % 30 == 0) {
+            //every set interval go down a line and indent - for nicer output
+            if (breakOutputLine && ++counter % 30 == 0) {
                 sb.append('\n');
                 sb.append(" ".repeat(indent));
             }

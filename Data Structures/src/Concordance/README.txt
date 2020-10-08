@@ -1,8 +1,16 @@
+#	------ Structure Overview ------
+#
+#	Structure: a BinarySearchTree, in which each node holds a string for the word
+#	and a LinkedList containing all the line numbers in which the word appears in.
+#	
+#
 #	------ Instructions: ------
+#
+#   Java Language Level - 11
 #
 #	Pay attention to the fact that the default paths that
 #	are in Program.java need to be changed according to which directory
-#	you running the project from.
+#	you are running the project from.
 #
 #	Processing your own text files:
 #		- Please use Only UTF-8 plain text files
@@ -12,13 +20,14 @@
 #	1) Compile And Run Program
 #	2) Navigate Using The CLI Menu
 #	3) Use Accurate File Paths
+#   4) Open Created Output File
 #
 #	Default output file is specified in Program.java
 #
 #
 #	------ Complexity Analysis: ------
 #
-#	Default Run (build tree + output file) Complexity:
+#	Default Run (build tree + create output file) Complexity:
 #		Average Case -> O(n*(lgn + m) + m)
 #		Worst Case -> O(n*(n + m) + m)
 #
@@ -45,6 +54,7 @@
 #
 #		O(m) - going through all the chars and leaving only letters and spaces + splitting by spaces
 #		O(nlgn)/O(n) - for each word (O(n)) insert it into the tree (O(lgn)/O(n))
+#		O(1) - for each repeating word insert the current line number into the existing LinkedList
 #
 #
 #	Complexity Of Printing/Creating Output File:

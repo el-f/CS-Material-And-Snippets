@@ -2,7 +2,7 @@ package Concordance;
 
 public class MyBinarySearchTree {
 
-    static class MyNode {
+    private static class MyNode {
         String word;
         MyLinkedList lineNumbers;
         MyNode left;

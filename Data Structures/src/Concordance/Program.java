@@ -32,16 +32,17 @@ public class Program {
         while (choice != 0) try {
             System.out.println("> Choose:");
             System.out.println("1) Search For A Specific Word");
-            System.out.println("2) Create Output File Again");
+            System.out.println("2) Recreate Output File");
             System.out.println("3) Print The Results In Console (may not print all for very large outputs)");
             System.out.println("4) Process Another File");
+            System.out.println("5) Choose How The Output Looks");
             System.out.println("\n0) Exit Program");
             choice = scanner.nextInt();
             switch (choice) {
                 case 0:
                     break;
                 case 1:
-                    System.out.println("Enter Word To Search:");
+                    System.out.println("Enter The Word To Search For:");
                     concordanceProcessor.search(scanner.next().toLowerCase());
                     break;
                 case 2:
@@ -52,6 +53,20 @@ public class Program {
                     break;
                 case 4:
                     init(scanner);
+                    break;
+                case 5:
+                    System.out.println("1) Print All Line Numbers In One Line After Each Word");
+                    System.out.println("2) Print The Line Numbers With Line Breaks And Indentation");
+                    switch (scanner.nextInt()) {
+                        case 1:
+                            MyLinkedList.breakOutputLine = false;
+                            break;
+                        case 2:
+                            MyLinkedList.breakOutputLine = true;
+                            break;
+                        default:
+                            System.out.println("Invalid Input!");
+                    }
                     break;
                 default:
                     System.out.println("Invalid Input!");

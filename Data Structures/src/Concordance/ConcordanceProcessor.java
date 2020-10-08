@@ -11,6 +11,7 @@ public class ConcordanceProcessor {
 
         tree = new MyBinarySearchTree();
 
+        //O(n) when n is the number of lines
         String[] lines = Files.lines(file.toPath()).toArray(String[]::new);
 
         /*
@@ -35,11 +36,6 @@ public class ConcordanceProcessor {
         printToFile();
     }
 
-    //O(n * m) when n is the number of words and m is the number of lines the word appears in
-    public String toString() {
-        return tree.toString();
-    }
-
     //O(n * m) ~ O(n) when n is the number of words and m is number of lines the word appears in
     public void printToFile() throws FileNotFoundException {
         File outFile = new File(outputPath);
@@ -55,6 +51,11 @@ public class ConcordanceProcessor {
      */
     public void search(String word) {
         System.out.println(tree.search(word));
+    }
+
+    //O(n * m) when n is the number of words and m is the number of lines the word appears in
+    public String toString() {
+        return tree.toString();
     }
 
 }
