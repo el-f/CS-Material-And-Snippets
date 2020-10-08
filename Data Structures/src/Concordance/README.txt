@@ -10,7 +10,7 @@
 #
 #	In order to process the included input files and output to the default output file path,
 #   pay attention to the fact that the default project directory path in Program.java
-#   needs to be changed according to which directory you are running the project from,
+#   needs to be changed according to which directory you are running the project from.
 #   To change simply change the field PROJECT_DIR in Program.java according to your environment.
 #
 #	Processing your own text files:

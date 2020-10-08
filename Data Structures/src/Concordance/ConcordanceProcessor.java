@@ -4,10 +4,11 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class ConcordanceProcessor {
-    MyBinarySearchTree tree;
-    String outputPath;
+    private final MyBinarySearchTree tree;
+    private final String outputPath;
 
     public ConcordanceProcessor(File file, String _outputPath) throws IOException {
+        long start = System.currentTimeMillis();
 
         tree = new MyBinarySearchTree();
 
@@ -43,18 +44,28 @@ public class ConcordanceProcessor {
                     }
                 }
         }
-        System.out.println("~Processed " + lines.length + " Lines~");
+        System.out.println(
+                "File Processed In " + (System.currentTimeMillis() - start) + "ms (" + lines.length + " lines)"
+        );
 
         outputPath = _outputPath;
-        printToFile();
     }
 
     //O(n) when n is the number of words in the text file
     public void printToFile() throws FileNotFoundException {
-        File outFile = new File(outputPath);
+        printToFile(outputPath);
+    }
+
+    public void printToFile(String filePath) throws FileNotFoundException {
+        long start = System.currentTimeMillis();
+        File outFile = new File(filePath);
         PrintWriter printWriter = new PrintWriter(outFile);
         printWriter.println(tree);
         printWriter.close();
+        System.out.println(
+                "Output File Created In " + (System.currentTimeMillis() - start) + "ms, Open It At <" +
+                        filePath + "> For The Results"
+        );
     }
 
     /*
@@ -64,7 +75,7 @@ public class ConcordanceProcessor {
      */
     public void search(String word) {
         long start = System.currentTimeMillis();
-        System.out.println(tree.search(word));
+        System.out.print(tree.search(word));
         System.out.println("Search Finished In " + (System.currentTimeMillis() - start) + "ms");
     }
 

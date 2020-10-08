@@ -27,9 +27,9 @@ public class Program {
         init(scanner);
         int choice = -1;
         while (choice != 0) try {
-            System.out.println("> Choose:");
+            System.out.println("\n> Choose:");
             System.out.println("1) Search For A Specific Word");
-            System.out.println("2) Recreate Output File");
+            System.out.println("2) Create An Output File Again");
             System.out.println("3) Print The Results In Console (may not print all for very large outputs)");
             System.out.println("4) Process Another File");
             System.out.println("5) Change How The Output Looks");
@@ -43,10 +43,21 @@ public class Program {
                     concordanceProcessor.search(scanner.next().toLowerCase());
                     break;
                 case 2:
-                    concordanceProcessor.printToFile();
+                    System.out.println("1) Save To Originally Chosen File");
+                    System.out.println("2) Create A Different File");
+                    switch (scanner.nextInt()) {
+                        case 1:
+                            concordanceProcessor.printToFile();
+                            break;
+                        case 2:
+                            concordanceProcessor.printToFile(chooseOutputPath(scanner));
+                            break;
+                        default:
+                            throw new UnexpectedException("Invalid Input!");
+                    }
                     break;
                 case 3:
-                    System.out.println(concordanceProcessor);
+                    System.out.print(concordanceProcessor);
                     break;
                 case 4:
                     init(scanner);
@@ -106,35 +117,33 @@ public class Program {
                     System.out.println("Invalid Input!");
             }
             if (workingFilePath != null) {
-                System.out.println("Please Choose Output File:");
-                System.out.println("1) Enter Your Own Output File Path/Name");
-                System.out.println("2) Save To Default Output File");
-                String outputPath;
-                switch (scanner.nextInt()) {
-                    case 1:
-                        System.out.println("Enter the file Path/Name");
-                        scanner.nextLine(); //clear buffer
-                        outputPath = scanner.nextLine();
-                        break;
-                    case 2:
-                        outputPath = DEFAULT_OUTPUT_FILE_PATH;
-                        break;
-                    default:
-                        throw new UnexpectedException("Invalid Input!");
-                }
-                long start = System.currentTimeMillis();
-                concordanceProcessor = new ConcordanceProcessor(new File(workingFilePath), outputPath);
-
+                concordanceProcessor = new ConcordanceProcessor(new File(workingFilePath), chooseOutputPath(scanner));
                 fileProcessed = true;
-                System.out.printf(
-                        "File Processed In %dms!\nCheck Output File (%s) For The Results Or Print Them Here\n",
-                        System.currentTimeMillis() - start,
-                        outputPath
-                );
+                concordanceProcessor.printToFile();
             }
         } catch (Exception exception) {
             System.out.println(exception.toString());
             scanner.nextLine(); //clear buffer
         }
+    }
+
+    private static String chooseOutputPath(Scanner scanner) throws UnexpectedException {
+        System.out.println("Please Choose Output File:");
+        System.out.println("1) Enter Your Own Output File Path/Name");
+        System.out.println("2) Save To Default Output File");
+        String outputPath;
+        switch (scanner.nextInt()) {
+            case 1:
+                System.out.println("Enter the file Path/Name");
+                scanner.nextLine(); //clear buffer
+                outputPath = scanner.nextLine();
+                break;
+            case 2:
+                outputPath = DEFAULT_OUTPUT_FILE_PATH;
+                break;
+            default:
+                throw new UnexpectedException("Invalid Input!");
+        }
+        return outputPath;
     }
 }
