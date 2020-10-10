@@ -1,5 +1,6 @@
 package Concordance;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 
@@ -38,7 +39,13 @@ public class ConcordanceProcessor {
                     Regex and Split operations - O(num of chars in line) per line -> O(num of chars in file) in total
                     We check with regex and leave only letters and whitespaces, then split by whitespaces
                  */
-                for (String word : lines[i].replaceAll("[^a-zA-Z\\s+]", "").trim().split("[\\s]+")) {
+                for (String word :
+                        lines[i]
+                                .replaceAll("-", " ")
+                                .replaceAll("[^a-zA-Z\\s+]", "")
+                                .trim()
+                                .split("[\\s]+")
+                ) {
                     if (!word.isEmpty() && checkForOneLetterWords(word)) {
                         tree.insert(word.toLowerCase(), i + 1);
                     }
@@ -56,11 +63,11 @@ public class ConcordanceProcessor {
     }
 
     //O(n) when n is the number of words in the text file
-    public void printToFile() throws FileNotFoundException {
+    public void printToFile() throws IOException {
         printToFile(outputPath);
     }
 
-    public void printToFile(String filePath) throws FileNotFoundException {
+    public void printToFile(String filePath) throws IOException {
         long start = System.currentTimeMillis();
         File outFile = new File(filePath);
         PrintWriter printWriter = new PrintWriter(outFile);
@@ -70,6 +77,7 @@ public class ConcordanceProcessor {
                 "Output File Created In " + (System.currentTimeMillis() - start) + "ms, Open It At <" +
                         filePath + "> For The Results"
         );
+        Desktop.getDesktop().open(outFile);
     }
 
     /*
