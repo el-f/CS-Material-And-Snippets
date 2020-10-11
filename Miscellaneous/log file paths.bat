@@ -1,0 +1,1 @@
+dir /s /a-D /b /-p /o:gen /n /x /w >file_names.txt
