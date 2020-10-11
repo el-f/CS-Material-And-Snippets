@@ -3,6 +3,7 @@ from time import sleep
 
 # Made By Denis Karabitski (github.com/denisaka1)
 
+
 class WhatsAppSpammer:
     type_tab = None
     enter_button = None
