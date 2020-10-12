@@ -42,7 +42,7 @@ public class ConcordanceProcessor {
                 for (String word :
                         lines[i]
                                 .replaceAll("-", " ")
-                                .replaceAll("[^\\p{Alpha}\\s+]", "")
+                                .replaceAll("[^\\p{Alpha}\\s]", "")
                                 .trim()
                                 .split("[\\s]+")
                 ) {
