@@ -42,7 +42,7 @@ public class InvertingBinaryTree {
             since at the very least we have to visit each node to invert it.
 
             Because of recursion, O(h) function calls will be placed on the stack in the worst case,
-            where hh is the height of the tree. Because h∈O(n), the space complexity is O(n).
+            where h is the height of the tree. Because h∈O(n), the space complexity is O(n).
      */
     public TreeNode invertTreeRec(TreeNode root) {
         if (root == null) {
@@ -57,6 +57,15 @@ public class InvertingBinaryTree {
 
     /*
         ---[ Iterative Approach ]---
+
+            Algorithm
+
+            The idea is that we need to swap the left and right child of all nodes in the tree.
+            So we create a queue to store nodes whose left and right child have not been swapped yet.
+            Initially, only the root is in the queue. As long as the queue is not empty, remove the next
+            node from the queue, swap its children, and add the children to the queue. Null nodes are not
+            added to the queue. Eventually, the queue will be empty and all the children swapped,
+            and we return the original root.
 
             Complexity Analysis
 
