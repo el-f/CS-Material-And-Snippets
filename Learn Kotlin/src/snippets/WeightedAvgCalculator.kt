@@ -4,7 +4,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 fun main() {
-    val wac = WeightedAvgCalculator("src/myMarks")
+    val wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
     wac.printAll()
     wac.printAverage()
 }
