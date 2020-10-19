@@ -7,10 +7,10 @@ fun main() {
     val wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
     wac.printAll()
     wac.printAverage()
-    wac.printRange(70,80)
-    wac.printRange(80,90)
-    wac.printRange(90,100)
-    wac.printRange(100,101)
+    wac.printRange(70,79)
+    wac.printRange(80,89)
+    wac.printRange(90,99)
+    wac.printRange(100,100)
 }
 
 class WeightedAvgCalculator(
@@ -37,8 +37,8 @@ class WeightedAvgCalculator(
 
     fun printRange(low: Int, high: Int) {
         println(
-            "${list.filter { it.second in low until high }.size}" +
-                " Marks at Range of ($low-${high - 1}) Out of ${list.size} Marks"
+            "${list.filter { it.second in low..high }.size}" +
+                " Marks at Range of ($low-$high) Out of ${list.size} Marks"
         )
     }
 
