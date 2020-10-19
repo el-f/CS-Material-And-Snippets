@@ -21,10 +21,11 @@ public class MyHashMap {
         }
     }
 
-    Entry[] array;
+    private final Entry[] array;
 
     public MyHashMap(int size) {
-        array = new Entry[size];
+        //small tradeoff: memory for less conflicts
+        array = new Entry[Math.min(size * 2, Integer.MAX_VALUE)];
         System.out.println(size);
     }
 

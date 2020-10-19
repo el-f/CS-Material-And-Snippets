@@ -23,7 +23,7 @@ public class MyBinarySearchTree {
         }
     }
 
-    MyNode root = null;
+    private MyNode root = null;
 
     /*
         Binary Search
