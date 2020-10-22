@@ -2,7 +2,7 @@ package Concordance;
 
 import java.util.Arrays;
 
-// Turns Out To Be Much Slower Than BST!
+// Turns Out To Be Much Slower Than BST Overall For Our Use Case.
 public class MyHashMap {
     static class Entry {
         String word; //key
