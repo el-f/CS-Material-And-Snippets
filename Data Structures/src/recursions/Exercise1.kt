@@ -44,7 +44,7 @@ fun findNum(A: IntArray, first: Int, last: Int, num: Int): Int {
 
 //even places - 2 wheels. odd places - 4 wheels.
 fun countWheels(n: Int): Int {
-    return if (n <= 1) 4 else n % 2 * 2 + 2 + countWheels(n - 1)
+    return if (n <= 1) 4 * n else n % 2 * 2 + 2 + countWheels(n - 1)
 }
 
 fun isPalindrome(S: String, n: Int): Int {
