@@ -6,7 +6,7 @@ fun main() {
 }
 
 fun printSubgroups(j: Int, m: List<Char>) {
-    if (j <= 0) {
+    if (j == 0) {
         print('{')
         m.forEach { print(if (it == m.last()) it else "$it, ") }
         println('}')
