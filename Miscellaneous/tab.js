@@ -1,4 +1,4 @@
-/// twitch-videoad.js
+/// ttv player duper
 const origFetch = window.fetch;
 window.fetch = (url, init, ...args) => {
 	if (typeof url === "string") {
