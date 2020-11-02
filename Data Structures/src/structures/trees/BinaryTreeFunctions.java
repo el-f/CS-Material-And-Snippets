@@ -81,18 +81,49 @@ public abstract class BinaryTreeFunctions {
         return false;
     }
 
-    public static Node deleteRecursive(Node current, int value) {
+    public static Node deleteRecursive_Naive(Node current, int value) {
         if (current == null) return null;
 
         if (value == current.value)
             current.value = 0;
 
         if (value < current.value) {
-            current.left = deleteRecursive(current.left, value);
+            current.left = deleteRecursive_Naive(current.left, value);
             return current;
         }
-        current.right = deleteRecursive(current.right, value);
+        current.right = deleteRecursive_Naive(current.right, value);
         return current;
+    }
+
+    /* A recursive function to insert a new key in BST */
+    Node deleteRec(Node node, int key) {
+        /* Base Case: If the tree is empty */
+        if (node == null) return null;
+
+        /* Otherwise, recur down the tree */
+        if (key < node.value)
+            node.left = deleteRec(node.left, key);
+        else if (key > node.value)
+            node.right = deleteRec(node.right, key);
+
+            // if key is same as root's key, then This is the node
+            // to be deleted
+        else {
+            // node with only one child or no child
+            if (node.left == null)
+                return node.right;
+            else if (node.right == null)
+                return node.left;
+
+            // node with two children: Get the inorder successor (smallest
+            // in the right subtree)
+            node.value = findSmallestValue_REC(node.right);
+
+            // Delete the inorder successor
+            node.right = deleteRec(node.right, node.value);
+        }
+
+        return node;
     }
 
     public static int findSmallestValue_REC(Node root) {
