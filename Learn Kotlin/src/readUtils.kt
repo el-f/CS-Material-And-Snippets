@@ -45,8 +45,11 @@ fun isWhiteSpace(c: Char) = c in " \r\n\t"
 // JVM-only targeting code follows next
 
 // readString() via sequence is still slightly faster than Scanner
-fun readString() = generateSequence { System.`in`.read().toChar() }
-    .dropWhile { isWhiteSpace(it) }.takeWhile { !isWhiteSpace(it) }.joinToString("")
+fun readString() =
+    generateSequence { System.`in`.read().toChar() }
+        .dropWhile { isWhiteSpace(it) }
+        .takeWhile { !isWhiteSpace(it) }
+        .joinToString("")
 
 fun readByte() = readString().toByte()
 fun readShort() = readString().toShort()
