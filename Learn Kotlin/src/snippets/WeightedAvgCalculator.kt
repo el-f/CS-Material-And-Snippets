@@ -4,7 +4,17 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 fun main() {
-    val wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
+    println("------ All Marks ------")
+    var wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
+    wac.printAll()
+    wac.printAverage()
+    wac.printRange(70,79)
+    wac.printRange(80,89)
+    wac.printRange(90,99)
+    wac.printRange(100,100)
+
+    println("\n------ technology Marks ------")
+    wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myTechnologyMarks")
     wac.printAll()
     wac.printAverage()
     wac.printRange(70,79)
