@@ -57,17 +57,15 @@ public class MyHashMap {
         Entry entry = array[hash];
         int accesses = 0;
         while (accesses <= array.length) {
-            hash++; //linear traversal
-            if (hash == array.length) {
-                hash = 0;
-            }
-            entry = array[hash];
             if (entry != null && entry.word.equalsIgnoreCase(word))
-                break;
+                break; // found word
+
+            hash++; //linear traversal
+            if (hash == array.length) hash = 0;
+            entry = array[hash];
             accesses++;
         }
-        if (accesses <= array.length) return entry.toString();
-        return "Word Not Found!";
+        return accesses <= array.length ? entry.toString() : "Word Not Found!";
     }
 
     private int hash(String word) {
