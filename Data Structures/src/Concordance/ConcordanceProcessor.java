@@ -5,6 +5,7 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class ConcordanceProcessor {
+    public static boolean autoOpenOutput = true;
     private final MyBinarySearchTree tree;
     private final String outputPath;
 
@@ -77,7 +78,7 @@ public class ConcordanceProcessor {
                 "Output File Created In " + (System.currentTimeMillis() - start) + "ms, Open It At <" +
                         filePath + "> For The Results"
         );
-        Desktop.getDesktop().open(outFile);
+        if (autoOpenOutput) Desktop.getDesktop().open(outFile);
     }
 
     /*

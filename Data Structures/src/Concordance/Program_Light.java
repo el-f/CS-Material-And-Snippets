@@ -1,12 +1,17 @@
 package Concordance;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class Program {
+/*
+ *
+ * Same as Program.java, but without the slow javax.swing GUI
+ *
+ */
+
+
+public class Program_Light {
     //-------------------- Change This If Needed --------------------//
     public static final String PROJECT_DIR = Paths.get("").toAbsolutePath() + "/Data Structures/src/Concordance/";
     //---------------------------------------------------------------//
@@ -15,16 +20,6 @@ public class Program {
     public static final String LORD_OF_THE_RINGS = PROJECT_DIR + "DefaultInputFiles/lotr.txt";
     public static final String BIBLE_KING_JAMES_EDITION = PROJECT_DIR + "DefaultInputFiles/BibleKingJamesEdition.txt";
     public static final String DEFAULT_OUTPUT_FILE_PATH = PROJECT_DIR + "output.txt";
-
-    private static JFileChooser jfc;
-
-    //We may not use the FC at all, and this makes the startup quicker.
-    private static void checkInitFC() {
-        if (jfc == null) {
-            jfc = new JFileChooser(PROJECT_DIR);
-            jfc.setFileFilter(new FileNameExtensionFilter("*.txt", "txt"));
-        }
-    }
 
     private static ConcordanceProcessor concordanceProcessor;
 
@@ -115,7 +110,7 @@ public class Program {
         boolean fileProcessed = false;
         while (!fileProcessed) try {
             System.out.println("\nPlease Choose Which File To Process:");
-            System.out.println("1) Choose Your Own Text File");
+            System.out.println("1) Enter Your Own Text File Path/Name");
             System.out.println("2) Shrek Movie Script (1,653 lines)");
             System.out.println("3) Harry Potter and the Philosopher's Stone Book (6,065 lines)");
             System.out.println("4) The Lord of the Rings Books (48,722 lines)");
@@ -123,24 +118,9 @@ public class Program {
             String workingFilePath = null;
             switch (scanner.nextInt()) {
                 case 1:
-                    System.out.println("1) Open GUI Dialog");
-                    System.out.println("2) Enter File Path/Name Manually");
-                    switch (scanner.nextInt()) {
-                        case 1:
-                            checkInitFC();
-                            if (jfc.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
-                                throw new Exception("Canceled");
-                            }
-                            workingFilePath = jfc.getSelectedFile().getAbsolutePath();
-                            break;
-                        case 2:
-                            System.out.println("Enter the file Path/Name");
-                            scanner.nextLine(); //clear buffer
-                            workingFilePath = scanner.nextLine();
-                            break;
-                        default:
-                            throw new Exception("Invalid Input!");
-                    }
+                    System.out.println("Enter the file Path/Name");
+                    scanner.nextLine(); //clear buffer
+                    workingFilePath = scanner.nextLine();
                     break;
                 case 2:
                     workingFilePath = SHREK_MOVIE_SCRIPT;
@@ -170,30 +150,14 @@ public class Program {
 
     private static String chooseOutputPath(Scanner scanner) throws Exception {
         System.out.println("Please Choose Output File:");
-        System.out.println("1) Choose Your Own Output File");
+        System.out.println("1) Enter Your Own Output File Path/Name");
         System.out.println("2) Save To Default Output File");
         String outputPath;
         switch (scanner.nextInt()) {
             case 1:
-                System.out.println("1) Open GUI Dialog");
-                System.out.println("2) Enter File Path/Name Manually");
-                switch (scanner.nextInt()) {
-                    case 1:
-                        checkInitFC();
-                        jfc.setSelectedFile(new File(DEFAULT_OUTPUT_FILE_PATH));
-                        if (jfc.showSaveDialog(null) == JFileChooser.CANCEL_OPTION) {
-                            throw new Exception("Canceled");
-                        }
-                        outputPath = jfc.getSelectedFile().getAbsolutePath();
-                        break;
-                    case 2:
-                        System.out.println("Enter the file Path/Name");
-                        scanner.nextLine(); //clear buffer
-                        outputPath = scanner.nextLine();
-                        break;
-                    default:
-                        throw new Exception("Invalid Input!");
-                }
+                System.out.println("Enter the file Path/Name");
+                scanner.nextLine(); //clear buffer
+                outputPath = scanner.nextLine();
                 break;
             case 2:
                 outputPath = DEFAULT_OUTPUT_FILE_PATH;
