@@ -56,7 +56,7 @@ public class MyHashMap {
         int hash = hash(word);
         Entry entry = array[hash];
         int accesses = 0;
-        while (accesses <= array.length) {
+        while (accesses < array.length) {
             if (entry != null && entry.word.equalsIgnoreCase(word))
                 break; // found word
 
