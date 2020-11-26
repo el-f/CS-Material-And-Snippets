@@ -16,14 +16,18 @@ public class BONUS_ConcordanceProcessor_UsingHashMap {
         //O(n) when n is the number of lines
         String[] lines = Files.lines(file.toPath()).toArray(String[]::new);
 
-        /*
-            Regex and Split operations - O(num of chars in line) per line -> O(num of chars in file) in total
-            We check with regex and leave only letters and whitespaces, then split by whitespaces
-         */
+
 
         String[][] words = new String[lines.length][];
 
-        // O(n) when n is the number of words in the file
+        /*
+            O(n) when n is the number of words in the file
+
+            + Regex and Split operations - O(num of chars in line) per line -> O(num of chars in file) in total
+            We check with regex and leave only letters and whitespaces, then split by whitespaces
+
+            = O(n + c) ≈ O(n)
+         */
         Arrays.setAll(
                 words,
                 i -> lines[i]
@@ -33,8 +37,11 @@ public class BONUS_ConcordanceProcessor_UsingHashMap {
                         .toLowerCase()
                         .split("[\\s]+")
         );
-
-        myHashMap = new BONUS_MyHashMap(words.length);
+        int size = 0;
+        for (String[] lineOfWords : words) {
+            size += lineOfWords.length;
+        }
+        myHashMap = new BONUS_MyHashMap(size);
 
         // O(n) when n is the number of words in the file
         for (int l = 0; l < words.length; l++) {

@@ -75,15 +75,21 @@ public class BONUS_MyHashMap {
     public String toString() {
         Entry[] copy = new Entry[array.length];
         System.arraycopy(array, 0, copy, 0, array.length);
-        Arrays.sort(copy, (c1, c2) -> {
+        int nonNulls = 0;
+        for (Entry entry : copy) if (entry != null) nonNulls++;
+        Entry[] finalCopy = new Entry[nonNulls];
+        for (Entry entry : copy) {
+            if (entry != null) finalCopy[--nonNulls] = entry;
+        }
+//        sort(finalCopy);
+        Arrays.sort(finalCopy, (c1, c2) -> {
             if (c1 == null && c2 == null) return 0;
             if (c1 == null) return 1;
             if (c2 == null) return -1;
             return c1.word.compareTo(c2.word);
         });
-//        sort(copy);
         StringBuilder sb = new StringBuilder();
-        for (Entry entry : copy) {
+        for (Entry entry : finalCopy) {
             if (entry != null)
                 sb.append(entry);
         }
