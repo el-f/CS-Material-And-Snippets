@@ -25,9 +25,7 @@ public class BONUS_MyHashMap {
     private final Entry[] array;
 
     public BONUS_MyHashMap(int size) {
-        //small tradeoff: memory for less conflicts
         array = new Entry[size];
-        System.out.println(size);
     }
 
     private boolean insert(String word, int lineNumber, int hash) {
