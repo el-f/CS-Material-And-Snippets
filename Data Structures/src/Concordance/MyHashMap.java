@@ -65,7 +65,7 @@ public class MyHashMap {
             entry = array[hash];
             accesses++;
         }
-        return accesses <= array.length ? entry.toString() : "Word Not Found!";
+        return accesses < array.length ? entry.toString() : "Word Not Found!";
     }
 
     private int hash(String word) {
