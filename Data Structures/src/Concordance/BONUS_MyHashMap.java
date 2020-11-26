@@ -26,7 +26,7 @@ public class BONUS_MyHashMap {
 
     public BONUS_MyHashMap(int size) {
         //small tradeoff: memory for less conflicts
-        array = new Entry[Math.min(size * 2, Integer.MAX_VALUE)];
+        array = new Entry[size];
         System.out.println(size);
     }
 
@@ -73,20 +73,6 @@ public class BONUS_MyHashMap {
         int hash = word.hashCode();
         return ((hash ^ hash >>> 16) & 0x7fffffff) % array.length;
     }
-
-    private static int compare(Entry c1, Entry c2) {
-        if (c1 == null && c2 == null) return 0;
-        if (c1 == null) return 1;
-        if (c2 == null) return -1;
-        return c1.word.compareTo(c2.word);
-    }
-
-    private void swap(int i, int j) {
-        Entry temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
 
     public String toString() {
         Entry[] copy = new Entry[array.length];
@@ -142,6 +128,19 @@ public class BONUS_MyHashMap {
         swap(i + 1, end);
 
         return i + 1;
+    }
+
+    private void swap(int i, int j) {
+        Entry temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    private static int compare(Entry c1, Entry c2) {
+        if (c1 == null && c2 == null) return 0;
+        if (c1 == null) return 1;
+        if (c2 == null) return -1;
+        return c1.word.compareTo(c2.word);
     }
 
     //Basically XOR
