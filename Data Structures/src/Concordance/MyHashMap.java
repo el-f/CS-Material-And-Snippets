@@ -2,7 +2,8 @@ package Concordance;
 
 import java.util.Arrays;
 
-// Turns Out To Be Much Slower Than BST Overall For Our Use Case.
+// Faster than BST at building but slower at printing/outputing (because outputing sorted)
+
 public class MyHashMap {
     static class Entry {
         String word; //key

@@ -3,6 +3,7 @@ package Concordance;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Arrays;
 
 public class ConcordanceProcessor_UsingHashMap {
     public static boolean autoOpenOutput = true;
@@ -20,34 +21,28 @@ public class ConcordanceProcessor_UsingHashMap {
             We check with regex and leave only letters and whitespaces, then split by whitespaces
          */
 
-        for (int i = 0; i < lines.length; i++) {
-            lines[i] = lines[i]
-                    .replaceAll("-", " ")
-                    .replaceAll("[^\\p{Alpha}\\s]", "")
-                    .trim()
-                    .toLowerCase();
-        }
+        String[][] words = new String[lines.length][];
 
         // O(n) when n is the number of words in the file
-        int size = 0;
-        for (String line : lines) {
-            if (!line.isEmpty())
-                for (String word : line.split("[\\s]+")) {
-                    if (!word.isEmpty() && checkForOneLetterWords(word)) {
-                        size++;
-                    }
-                }
-        }
-        myHashMap = new MyHashMap(size);
+        Arrays.setAll(
+                words,
+                i -> lines[i]
+                        .replaceAll("-", " ")
+                        .replaceAll("[^\\p{Alpha}\\s]", "")
+                        .trim()
+                        .toLowerCase()
+                        .split("[\\s]+")
+        );
+
+        myHashMap = new MyHashMap(words.length);
 
         // O(n) when n is the number of words in the file
-        for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].isEmpty())
-                for (String word : lines[i].split("[\\s]+")) {
-                    if (!word.isEmpty() && checkForOneLetterWords(word)) {
-                        myHashMap.insert(word.toLowerCase(), i + 1);
-                    }
+        for (int l = 0; l < words.length; l++) {
+            for (int w = 0; w < words[l].length; w++) {
+                if (!words[l][w].isEmpty() && checkForOneLetterWords(words[l][w])) {
+                    myHashMap.insert(words[l][w], l + 1);
                 }
+            }
         }
         System.out.println(
                 "File Processed In " + (System.currentTimeMillis() - start) + "ms (" + lines.length + " lines)"
@@ -87,7 +82,10 @@ public class ConcordanceProcessor_UsingHashMap {
         System.out.println("Search Finished In " + (System.currentTimeMillis() - start) + "ms");
     }
 
-    //O(n) when n is the number of words in the text file
+    /*
+        O(nlgn) when n is the number of words in the text file
+        It's because the output is sorted alphabetically.
+     */
     public String toString() {
         return myHashMap.toString();
     }
