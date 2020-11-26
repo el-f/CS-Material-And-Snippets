@@ -5,12 +5,12 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-public class ConcordanceProcessor_UsingHashMap {
+public class BONUS_ConcordanceProcessor_UsingHashMap {
     public static boolean autoOpenOutput = true;
-    private final MyHashMap myHashMap;
+    private final BONUS_MyHashMap myHashMap;
     private final String outputPath;
 
-    public ConcordanceProcessor_UsingHashMap(File file, String _outputPath) throws IOException {
+    public BONUS_ConcordanceProcessor_UsingHashMap(File file, String _outputPath) throws IOException {
         long start = System.currentTimeMillis();
 
         //O(n) when n is the number of lines
@@ -34,7 +34,7 @@ public class ConcordanceProcessor_UsingHashMap {
                         .split("[\\s]+")
         );
 
-        myHashMap = new MyHashMap(words.length);
+        myHashMap = new BONUS_MyHashMap(words.length);
 
         // O(n) when n is the number of words in the file
         for (int l = 0; l < words.length; l++) {

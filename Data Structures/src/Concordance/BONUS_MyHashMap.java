@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 // Faster than BST at building but slower at printing/outputing (because outputing sorted)
 
-public class MyHashMap {
+public class BONUS_MyHashMap {
     static class Entry {
         String word; //key
         MyLinkedList lineNumbers; //value
@@ -24,7 +24,7 @@ public class MyHashMap {
 
     private final Entry[] array;
 
-    public MyHashMap(int size) {
+    public BONUS_MyHashMap(int size) {
         //small tradeoff: memory for less conflicts
         array = new Entry[Math.min(size * 2, Integer.MAX_VALUE)];
         System.out.println(size);
