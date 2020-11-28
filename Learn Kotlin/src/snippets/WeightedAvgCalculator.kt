@@ -8,19 +8,19 @@ fun main() {
     var wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
     wac.printAll()
     wac.printAverage()
-    wac.printRange(70,79)
-    wac.printRange(80,89)
-    wac.printRange(90,99)
-    wac.printRange(100,100)
+    wac.printRange(70, 79)
+    wac.printRange(80, 89)
+    wac.printRange(90, 99)
+    wac.printRange(100, 100)
 
     println("\n------ technology Marks ------")
     wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myTechnologyMarks")
     wac.printAll()
     wac.printAverage()
-    wac.printRange(70,79)
-    wac.printRange(80,89)
-    wac.printRange(90,99)
-    wac.printRange(100,100)
+    wac.printRange(70, 79)
+    wac.printRange(80, 89)
+    wac.printRange(90, 99)
+    wac.printRange(100, 100)
 }
 
 class WeightedAvgCalculator(
@@ -36,8 +36,8 @@ class WeightedAvgCalculator(
     private fun initListFromFile(filePath: String) {
         Files.lines(Path.of(filePath))
             .filter { it.isNotEmpty() }
-            .map { it.split(Regex("[\\s]+")) }
-            .forEach { list.add(Triple(it[0], it[1].toInt(), it[2].toDouble())) }
+            .map { it.split(Regex(",")) }
+            .forEach { list.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
         allNaz = list.map { it.third }.sum()
     }
 
@@ -48,7 +48,7 @@ class WeightedAvgCalculator(
     fun printRange(low: Int, high: Int) {
         println(
             "${list.filter { it.second in low..high }.size}" +
-                " Marks at Range of ($low-$high) Out of ${list.size} Marks"
+                    " Marks at Range of ($low-$high) Out of ${list.size} Marks"
         )
     }
 
