@@ -3,6 +3,8 @@ package recursions
 fun main() {
     val array = listOf('a', 'b', 'c', 'd')
     printSubgroups(array.size, array)
+
+    sumsPowerSets(sum = 10)
 }
 
 fun printSubgroups(j: Int, m: List<Char>) {
@@ -13,5 +15,13 @@ fun printSubgroups(j: Int, m: List<Char>) {
     } else {
         printSubgroups(j - 1, m)
         printSubgroups(j - 1, m - m[j - 1])
+    }
+}
+
+fun sumsPowerSets(sum: Int, results: List<Int> = ArrayList()) {
+    if (sum <= 0) println(results).also { return }
+
+    for (i in 1..sum) {
+        sumsPowerSets(sum - i, results + i)
     }
 }
