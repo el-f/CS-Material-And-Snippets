@@ -1,32 +1,26 @@
-package structures.hash_tables;
+package structures.hash_tables
+
+import java.util.*
 
 // Java code illustrating clear() and clone() methods
-
-import java.util.*;
-
 //@SuppressWarnings("unchecked")
-public class HashTableDemo {
-    public static void main(String[] arg) {
-        // creating a hash table
-        Hashtable<Integer, String> h = new Hashtable<>();
+fun main() {
+    // creating a hash table
+    val h = Hashtable<Int, String>()
+    val h1: Hashtable<*, *>
+    h[3] = "Geeks"
+    h[2] = "forGeeks"
+    h[1] = "isBest"
 
-        Hashtable<?, ?> h1;
+    // create a clone or shallow copy of hash table h
+    h1 = h.clone() as Hashtable<*, *>
 
-        h.put(3, "Geeks");
-        h.put(2, "forGeeks");
-        h.put(1, "isBest");
+    // checking clone h1
+    println("values in clone: $h1")
 
-        // create a clone or shallow copy of hash table h
+    // clear hash table h
+    h.clear()
 
-        h1 = (Hashtable<?, ?>) h.clone();
-
-        // checking clone h1
-        System.out.println("values in clone: " + h1);
-
-        // clear hash table h
-        h.clear();
-
-        // checking hash table h
-        System.out.println("after clearing: " + h);
-    }
+    // checking hash table h
+    println("after clearing: $h")
 }

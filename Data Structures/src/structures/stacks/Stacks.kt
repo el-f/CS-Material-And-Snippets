@@ -1,35 +1,31 @@
-package structures.stacks;
+package structures.stacks
 
-import java.util.*;
+import java.util.*
 
-public class Stacks {
-    public static void main(String[] args) {
-        Stack stack = new Stack();
-        for (int i = 0; i < 5; i++) {
-            stack.push(i);
-        }
-
-        System.out.println(stack.get(stack.size() - 5));  // java way
-        stack.forEach(System.out::println);             //
-
-        for (int i = 0; i < 4; i++) {
-            stack.pop();
-        }
-        int i = (int) stack.pop();
-        System.out.println(i);
+fun main() {
+    val stack: Stack<Int> = Stack()
+    for (i in 0..4) {
+        stack.push(i)
     }
+    println(stack[stack.size - 1])
 
-    static int getN(Stack stack, int n) {
-        int a = 0;
-        Stack s2 = new Stack();
-        for (int i = 0; i < n - 1; i++) {
-            a = (int) stack.pop();
-            s2.push(a);
-        }
-        for (int i = 0; i < n - 1; i++) {
-            stack.push(s2.pop());
-        }
-        return a;
+    stack.forEach { print(it) }.also { println() }
+    for (i in 0..3) {
+        stack.pop()
     }
+    val i = stack.pop()
+    println(i)
+}
 
+fun getN(stack: Stack<Int>, n: Int): Int {
+    var a = 0
+    val s2: Stack<Int> = Stack()
+    for (i in 0 until n - 1) {
+        a = stack.pop()
+        s2.push(a)
+    }
+    for (i in 0 until n - 1) {
+        stack.push(s2.pop())
+    }
+    return a
 }
