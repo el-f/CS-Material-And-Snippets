@@ -15,6 +15,14 @@ int scanChar() {
     return chr;
 }
 
+int scanBool() {
+    char bool = -1;
+    while (bool != 'Y' && bool != 'N') {
+        bool = toupper(scanChar());
+    }
+    return bool == 'Y' ? 1 : 0;
+}
+
 char *getStr(char *buf, size_t size) {
     if (buf != NULL && size > 0) {
         if (fgets(buf, size, stdin)) {
