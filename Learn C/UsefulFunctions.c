@@ -16,11 +16,12 @@ int scanChar() {
 }
 
 int scanBool() {
-    char bool = -1;
-    while (bool != 'Y' && bool != 'N') {
-        bool = toupper(scanChar());
+    char bool;
+    while (1) {
+        bool = (char) toupper(scanChar());
+        if (bool == 'Y' || bool == 'N') return bool == 'Y' ? 1 : 0;
+        else printf("Invalid Boolean!\n");
     }
-    return bool == 'Y' ? 1 : 0;
 }
 
 char *getStr(char *buf, size_t size) {
