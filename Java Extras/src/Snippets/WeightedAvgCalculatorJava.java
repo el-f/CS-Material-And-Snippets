@@ -12,7 +12,9 @@ import java.util.Scanner;
 
 public class WeightedAvgCalculatorJava {
 
-    public static final boolean GUI = false;
+    public static final boolean GUI = true;
+
+    private static Scanner s = new Scanner(System.in);
 
     public static void main(String[] args) {
         try {
@@ -22,12 +24,16 @@ public class WeightedAvgCalculatorJava {
             if (GUI) filePath = getFilePathFromJFC();
             else {
                 System.out.println("\nPleaser enter the file's path or just name if it's in the same directory");
-                filePath = new Scanner(System.in).nextLine();
+                filePath = s.nextLine();
             }
             WeightedAvgCalculatorJava wac = new WeightedAvgCalculatorJava(filePath);
             wac.printAll();
             wac.printAverage();
             wac.printAllRanges();
+
+            System.out.println("\nEnter any key to exit");
+            s.nextLine();
+
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
