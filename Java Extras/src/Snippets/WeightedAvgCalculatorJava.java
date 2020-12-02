@@ -14,17 +14,17 @@ public class WeightedAvgCalculatorJava {
 
     public static final boolean GUI = true;
 
-    private static Scanner s = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         try {
             System.out.println("--- Weighted Avg Calculator By Elazar Fine ---");
-            System.out.println("Please make sure your file is in the supported format!");
+            System.out.println("Please make sure your file is in the supported format!\n");
             String filePath;
             if (GUI) filePath = getFilePathFromJFC();
             else {
-                System.out.println("\nPleaser enter the file's path or just name if it's in the same directory");
-                filePath = s.nextLine();
+                System.out.println("Pleaser enter the file's path or just name if it's in the same directory");
+                filePath = scanner.nextLine();
             }
             WeightedAvgCalculatorJava wac = new WeightedAvgCalculatorJava(filePath);
             wac.printAll();
@@ -32,7 +32,7 @@ public class WeightedAvgCalculatorJava {
             wac.printAllRanges();
 
             System.out.println("\nEnter any key to exit");
-            s.nextLine();
+            scanner.nextLine();
 
 
         } catch (Exception e) {
