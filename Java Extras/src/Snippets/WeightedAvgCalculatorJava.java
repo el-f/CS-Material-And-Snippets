@@ -120,7 +120,13 @@ public class WeightedAvgCalculatorJava {
     }
 
     public void printAll() {
-        marks.forEach(t -> System.out.printf("%s - %d (%.1f nz)\n", t.first, t.second, t.third));
+        marks.forEach(t -> {
+            System.out.print(t.first);
+            for (int i = 0; i < Math.max(20, t.first.length() + 1) - t.first.length(); i++) System.out.print("-");
+            System.out.print(t.second);
+            for (int i = 0; i < 8 - t.second.toString().length(); i++) System.out.print("-");
+            System.out.println(t.third);
+        });
     }
 
 }

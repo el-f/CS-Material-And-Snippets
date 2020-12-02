@@ -2,6 +2,7 @@ package snippets
 
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.math.max
 
 fun main() {
     println("------ All Marks ------")
@@ -56,7 +57,17 @@ class WeightedAvgCalculator(
         printRange(100, 100)
     }
 
-    fun printAll() = marks.forEach {
-        println("${it.first} - ${it.second} (${it.third} nz)")
+//    fun printAll() = marks.forEach {
+//        println("${it.first} - ${it.second} (${it.third} nz)")
+//    }
+
+    fun printAll() {
+        marks.forEach {
+            print(it.first + " ")
+            for (i in 0 until max(20, it.first.length + 1) - it.first.length) print("-")
+            print(" " + it.second + " ")
+            for (i in 0 until 8 - it.second.toString().length) print("-")
+            println(" " + it.third)
+        }
     }
 }
