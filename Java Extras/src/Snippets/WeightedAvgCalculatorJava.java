@@ -8,12 +8,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class WeightedAvgCalculatorJava {
 
+    public static final boolean GUI = false;
+
     public static void main(String[] args) {
         try {
-            String filePath = getFilePathFromJFC();
+            System.out.println("--- Weighted Avg Calculator By Elazar Fine ---");
+            System.out.println("Please make sure your file is in the supported format!");
+            String filePath;
+            if (GUI) filePath = getFilePathFromJFC();
+            else {
+                System.out.println("\nPleaser enter the file's path or just name if it's in the same directory");
+                filePath = new Scanner(System.in).nextLine();
+            }
             WeightedAvgCalculatorJava wac = new WeightedAvgCalculatorJava(filePath);
             wac.printAll();
             wac.printAverage();
@@ -24,7 +34,8 @@ public class WeightedAvgCalculatorJava {
         }
     }
 
-    private static JFileChooser jfc;
+
+    private static final JFileChooser jfc;
 
     static {
         jfc = new JFileChooser(Paths.get("").toAbsolutePath() + "/");
