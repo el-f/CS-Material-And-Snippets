@@ -93,7 +93,7 @@ public class WeightedAvgCalculatorJava {
     }
 
     public void printAverage() {
-        System.out.printf("\nAverage - %.3f\n", getAvg());
+        System.out.printf("\n>>> Average: %.3f\n\n", getAvg());
     }
 
     public void printRange(int low, int high) {
