@@ -31,7 +31,7 @@ public class WeightedAvgCalculatorJava {
             wac.printAverage();
             wac.printAllRanges();
 
-            System.out.println("\nEnter any key to exit");
+            System.out.println("\nPress Enter to exit");
             scanner.nextLine();
 
 
@@ -120,6 +120,8 @@ public class WeightedAvgCalculatorJava {
     }
 
     public void printAll() {
+        System.out.println("Course                %          NZ");
+        System.out.println("-----------------------------------");
         marks.forEach(t -> {
             System.out.print(t.first + " ");
             for (int i = 0; i < Math.max(20, t.first.length() + 1) - t.first.length(); i++) System.out.print("-");

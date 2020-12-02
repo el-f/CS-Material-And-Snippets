@@ -5,14 +5,14 @@ import java.nio.file.Path
 import kotlin.math.max
 
 fun main() {
-    println("------ All Marks ------")
+    println("------------ All Marks ------------")
     var wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
     wac.printAll()
     wac.printAverage()
     wac.printAllRanges()
 
 
-    println("\n------ technology Marks ------")
+    println("\n-------- technology Marks ---------")
     wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myTechnologyMarks")
     wac.printAll()
     wac.printAverage()
@@ -57,11 +57,9 @@ class WeightedAvgCalculator(
         printRange(100, 100)
     }
 
-//    fun printAll() = marks.forEach {
-//        println("${it.first} - ${it.second} (${it.third} nz)")
-//    }
-
     fun printAll() {
+        println("Course                %          NZ")
+        println("-----------------------------------")
         marks.forEach {
             print(it.first + " ")
             for (i in 0 until max(20, it.first.length + 1) - it.first.length) print("-")
