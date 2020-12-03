@@ -1,10 +1,8 @@
 package recursions
 
-data class Flower(val name: String, val beauty: Int, val price: Int)
-
 /*
  * Implement the optimize_flowers_selection (flowers, budget) function,
- * which receives the flowers - the list of flowers available in the nursery and
+ * which receives the flowers - the list of flowers available and
  * the budget. The list of flowers is a list of tuples with three values (in order):
  * a string representing the name of the flower, the aesthetic value, and the cost
  * of the flower. The budget is a whole non-negative value. The function returns
@@ -44,6 +42,8 @@ fun main() {
 }
 
 // ---------- SOLUTION ---------- //
+
+data class Flower(val name: String, val beauty: Int, val price: Int)
 
 val results: MutableList<Pair<Int, Int>> = ArrayList()
 
