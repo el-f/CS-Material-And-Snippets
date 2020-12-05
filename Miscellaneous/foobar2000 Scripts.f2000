@@ -1,0 +1,42 @@
+----------- E. Fine's Scripts For foobar2000 -----------
+
+	Audioscrobbler (Field remappings):
+	
+		Artist:
+			[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))]
+		
+		Title:
+			[$if([%artist%],%title%,$substr(%filename%,$add($strchr(%filename%,-),2),$len(%filename%)))]
+		
+	
+	Playback state Display formatting:
+	
+		Window title:
+			[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%] - %playback_time%[ / %length%]
+		
+		Status bar:
+			%codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural%
+			
+		Notification area icon tooltip:
+			[%artist% - ]%title%
+			
+	
+	
+	On-Screen Display:
+		
+		Title auto-pop:
+			$rgb(255,255,255) [%artist% -] %title% [ '['$ifequal(%playback_time_seconds%, 0,,%_time_elapsed% / )%length%']']$if(%_ispaused%,'  <Paused>')
+			$ifgreater(%playback_time_seconds%, 4,$crlf() $progress2(%_time_elapsed_seconds%, %_time_total_seconds%,30,■,□),)
+			
+	
+	Text Display (Acting as now-playing display area):
+	
+		Settings:
+			$repeat(-,420)$crlf()
+			$if(%isplaying%,$if(%ispaused%,||,▶),■)$crlf()
+			[%title%$crlf()]
+			[%artist%$crlf()]
+			[%playback_time% / ][%length%]$crlf()
+			['//'%directoryname%]$crlf()
+			$repeat(-,420)
+			
