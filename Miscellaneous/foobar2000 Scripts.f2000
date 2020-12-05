@@ -7,7 +7,16 @@
 		
 		Title:
 			[$if([%artist%],%title%,$substr(%filename%,$add($strchr(%filename%,-),2),$len(%filename%)))]
-		
+
+
+	Playlist View (Custom Columns):
+
+        Artist:
+            [$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))]
+
+        Title:
+            [$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strchr(%filename%,-),2),$len(%filename%)))],%title%)]
+
 	
 	Playback state Display formatting:
 	
