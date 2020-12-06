@@ -42,8 +42,8 @@ Text Display (Acting as now-playing display area):
 	Settings:
 		$repeat(-,420)$crlf()
 		$if(%isplaying%,$if(%ispaused%,||,▶),■)$crlf()
-		[%title%$crlf()]
-		[%artist%$crlf()]
+		[[$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$strstr(%filename%, - )))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))],%title%)]$crlf()]
+		[[$if([%artist%],%artist%,$substr(%filename%,0,$strstr(%filename%, - )))]$crlf()]
 		[%playback_time% / ][%length%]$crlf()
 		['//'%directoryname%]$crlf()
 		$repeat(-,420)
