@@ -3,7 +3,7 @@
 Audioscrobbler/foo_scrobble (Field remappings):
 	
 	Artist:
-		[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))]
+		[$if([%artist%],%artist%,$substr(%filename%,0,$strstr(%filename%, - )))]
 		
 	Title:
 		[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))]
@@ -12,10 +12,10 @@ Audioscrobbler/foo_scrobble (Field remappings):
 Playlist View (Custom Columns):
 
 	Artist:
-		[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))]
+		[$if([%artist%],%artist%,$substr(%filename%,0,$strstr(%filename%, - )))]
 
 	Title:
-		[$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))],%title%)]
+		[$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$strstr(%filename%, - )))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))],%title%)]
 
 	
 Playback state Display formatting:
