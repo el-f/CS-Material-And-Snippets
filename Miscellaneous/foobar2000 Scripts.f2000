@@ -1,50 +1,50 @@
 ----------- E. Fine's Scripts For foobar2000 -----------
 
-	Audioscrobbler (Field remappings):
+Audioscrobbler/foo_scrobble (Field remappings):
 	
-		Artist:
-			[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))]
+	Artist:
+		[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))]
 		
-		Title:
-			[$if([%artist%],%title%,$substr(%filename%,$add($strchr(%filename%,-),2),$len(%filename%)))]
+	Title:
+		[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))]
 
 
-	Playlist View (Custom Columns):
+Playlist View (Custom Columns):
 
-		Artist:
-			[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))]
+	Artist:
+		[$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))]
 
-		Title:
-			[$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$sub($strchr(%filename%,-),2)))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strchr(%filename%,-),2),$len(%filename%)))],%title%)]
+	Title:
+		[$iflonger([$if([%artist%],%artist%,$substr(%filename%,0,$sub($strstr(%filename%, - ),0)))],1,[$if([%artist%],%title%,$substr(%filename%,$add($strstr(%filename%, - ),3),$len(%filename%)))],%title%)]
 
 	
-	Playback state Display formatting:
+Playback state Display formatting:
 	
-		Window title:
-			[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%] - %playback_time%[ / %length%]
+	Window title:
+		[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%] - %playback_time%[ / %length%]
 		
-		Status bar:
-			%codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural%
+	Status bar:
+		%codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural%
 			
-		Notification area icon tooltip:
-			[%artist% - ]%title%
-			
-	
-	On-Screen Display:
-		
-		Title auto-pop:
-			$rgb(255,255,255) [%artist% -] %title% [ '['$ifequal(%playback_time_seconds%, 0,,%_time_elapsed% / )%length%']']$if(%_ispaused%,'  <Paused>')
-			$ifgreater(%playback_time_seconds%, 4,$crlf() $progress2(%_time_elapsed_seconds%, %_time_total_seconds%,30,■,□),)
+	Notification area icon tooltip:
+		[%artist% - ]%title%
 			
 	
-	Text Display (Acting as now-playing display area):
+On-Screen Display:
+		
+	Title auto-pop:
+		$rgb(255,255,255) [%artist% -] %title% [ '['$ifequal(%playback_time_seconds%, 0,,%_time_elapsed% / )%length%']']$if(%_ispaused%,'  <Paused>')
+		$ifgreater(%playback_time_seconds%, 4,$crlf() $progress2(%_time_elapsed_seconds%, %_time_total_seconds%,30,■,□),)
+			
 	
-		Settings:
-			$repeat(-,420)$crlf()
-			$if(%isplaying%,$if(%ispaused%,||,▶),■)$crlf()
-			[%title%$crlf()]
-			[%artist%$crlf()]
-			[%playback_time% / ][%length%]$crlf()
-			['//'%directoryname%]$crlf()
-			$repeat(-,420)
+Text Display (Acting as now-playing display area):
+	
+	Settings:
+		$repeat(-,420)$crlf()
+		$if(%isplaying%,$if(%ispaused%,||,▶),■)$crlf()
+		[%title%$crlf()]
+		[%artist%$crlf()]
+		[%playback_time% / ][%length%]$crlf()
+		['//'%directoryname%]$crlf()
+		$repeat(-,420)
 			
