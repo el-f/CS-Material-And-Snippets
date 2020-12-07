@@ -1,4 +1,4 @@
-#include <mem.h>
+#include <string.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <ctype.h>
@@ -83,27 +83,69 @@ char *toHexString(int num) {
     return str;
 }
 
-void printArray(const int *arr, int size) {
+void printIntArray(const int *arr, int size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
 }
 
-void initArray(int *arr, int size) {
+void initIntArray(int *arr, int size) {
     for (int i = 0; i < size; i++) {
         printf("Enter int for index %d:\n", i);
         scanf(" %d", &arr[i]);
     }
 }
 
-void reverseArray(int *arr, int size)
-{
+void reverseArray(int *arr, int size) {
     int right = size - 1;
-    for (int left = 0; left < right; left++, right--)
-    {
+    for (int left = 0; left < right; left++, right--) {
         int temp = *(arr + right);
         *(arr + right) = *(arr + left);
         *(arr + left) = temp;
     }
 }
+
+
+// Generic implementation of swap - go over bytes and swap
+void swap(void *a, void *b, int typeSize) {
+    char temp;
+    char *first = (char *) a;
+    char *second = (char *) b;
+
+    for (int i = 0; i < typeSize; i++) {
+        temp = *(first + i);
+        *(first + i) = *(second + i);
+        *(second + i) = temp;
+    }
+}
+
+// Generic implementation of swap - just copy memory
+void swap2(void *a, void *b, int typeSize) {
+    char *temp = (char *) malloc(typeSize);
+
+    memcpy(temp, a, typeSize);
+    memcpy(a, b, typeSize);
+    memcpy(b, temp, typeSize);
+
+    free(temp);
+}
+
+/*
+ * print array of any type
+ * -----------------------------
+ * Usage:
+ *
+ *      void printInt(void *num) {
+ *        int *n = (int *) num;
+ *        printf("%d ", *n);
+ *      }
+ *
+ *      printArray(numbers, SIZE, sizeof(int), printInt);
+ */
+void printArray(void *arr, int size, int typeSize, void (*print)(void *)) {
+    for (int i = 0; i < size; i++) {
+        print((char *) arr + i * typeSize);
+    }
+}
+
