@@ -146,6 +146,8 @@ void swap2(void *a, void *b, int typeSize) {
 void printArray(void *arr, int size, int typeSize, void (*print)(void *)) {
     for (int i = 0; i < size; i++) {
         print((char *) arr + i * typeSize);
+        printf("%s", (i == size - 1 ? " " : ", "));
     }
+    printf("\n");
 }
 
