@@ -9,6 +9,30 @@ int scanInt() {
     return num;
 }
 
+#define STR_MAX_LENGTH 256
+
+int isAllDigits(char *string) {
+    int i;
+    for (i = 0; i < strlen(string) - 1; i++) {
+        if (!isdigit(string[i])) return 0;
+    }
+    return string[i] == '\n';
+}
+
+int betterScanInt() {
+    int num;
+    char buffer[STR_MAX_LENGTH];
+    while (1) {
+        if (fgets(buffer, STR_MAX_LENGTH, stdin)) {
+            if (isAllDigits(buffer)) {
+                sscanf(buffer, "%d", &num);
+                return num;
+            }
+        }
+        printf("Not an integer! Enter a valid integer\n");
+    }
+}
+
 int scanChar() {
     char chr;
     scanf(" %c", &chr);
@@ -41,7 +65,6 @@ char *getStrAuto() {
     char *theStr = NULL;
     int len;
     char inpStr[MAX_LENGTH]; //var to hold str that user gives
-    printf("Enter A String:");
     getStr(inpStr, sizeof(inpStr));
 
     len = strlen(inpStr) + 1; // +1 for '\0'
@@ -141,13 +164,49 @@ void swap2(void *a, void *b, int typeSize) {
  *        printf("%d ", *n);
  *      }
  *
- *      printArray(numbers, SIZE, sizeof(int), printInt);
+ *      printArr(numbers, SIZE, sizeof(int), printInt);
  */
-void printArray(void *arr, int size, int typeSize, void (*print)(void *)) {
+void printArr(void *arr, int size, int typeSize, void (*print)(void *)) {
     for (int i = 0; i < size; i++) {
         print((char *) arr + i * typeSize);
-        printf("%s", (i == size - 1 ? " " : ", "));
+        printf(" ");
     }
     printf("\n");
 }
 
+//int scanInt() {
+//    int num;
+//    char term;
+//    while (1) {
+//        if (scanf("%d%c", &num, &term) != 2 || term != '\n') {
+//            printf("Not an integer! Enter a valid integer\n");
+//            getchar(); //clear buffer
+//        } else return num;
+//    }
+
+//}
+
+
+void cleanBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+}
+
+void trim(char *str) {
+    char *end;
+
+    while (isspace((unsigned char) *str)) str++;
+
+    if (*str == 0) return;
+
+    end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char) *end)) end--;
+    end[1] = '\0';
+}
+
+int isAllLetters(const char *str) {
+    unsigned char c;
+    while ((c = *str) && (isalpha(c) || isblank(c))) ++str;
+    return *str == '\0';
+}
