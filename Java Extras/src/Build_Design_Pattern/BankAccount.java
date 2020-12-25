@@ -4,9 +4,10 @@ package Build_Design_Pattern;
 public class BankAccount {
 
     public static void main(String[] args) {
-        //BAD!
+//////////BAD!
 //        BankAccount account = new BankAccount(456L, "Marge", "Springfield", 100.00, 2.5);
 //        BankAccount anotherAccount = new BankAccount(789L, "Homer", null, 2.5, 100.00);  //Oops!
+
         BankAccount account =
                 new Builder()
                         .accountNumber(1234L)
@@ -22,7 +23,7 @@ public class BankAccount {
                         .branch("Springfield")
                         .balance(100)
                         .interestRate(2.5)
-                        .build();
+                        .build_V2();
 
 
     }
@@ -34,7 +35,7 @@ public class BankAccount {
     private double interestRate;
 
 
-    //BAD!
+//////BAD!
 //    public BankAccount(long accountNumber, String owner, String branch, double balance, double interestRate) {
 //        this.accountNumber = accountNumber;
 //        this.owner = owner;
@@ -86,12 +87,27 @@ public class BankAccount {
             account.interestRate = this.interestRate;
             return account;
         }
+
+        //another approach: (but no difference in outside interfacing)
+        //move fields initialization to private constructor instead of builder
+        public BankAccount build_V2() {
+            return new BankAccount(this);
+        }
     }
 
     //Fields omitted for brevity.
     private BankAccount() {
-        //Constructor is now private.
+        //Constructor is private to override the default constructor.
     }
     //Getters and setters omitted for brevity.
 
+    //another approach: (but no difference in outside interfacing)
+    //move fields initialization to private constructor instead of builder
+    private BankAccount(Builder builder) {
+        this.accountNumber = builder.accountNumber;
+        this.owner = builder.owner;
+        this.branch = builder.branch;
+        this.balance = builder.balance;
+        this.interestRate = builder.interestRate;
+    }
 }
