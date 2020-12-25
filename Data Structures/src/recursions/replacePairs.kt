@@ -13,5 +13,5 @@ fun main() {
 
 fun replaceWithLeft(n: Int): Int {
     return if (n / 10 == 0) n
-    else n % 10 * 10 + n / 10 % 10 + replaceWithLeft(n / 100) * 100
+    else (n % 10) * 10 + ((n / 10) % 10) + replaceWithLeft(n / 100) * 100
 }
