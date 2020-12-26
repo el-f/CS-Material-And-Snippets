@@ -1,66 +1,119 @@
 package Program;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
+
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainView extends VBox {
     private final Affine affine;
     private final Canvas canvas;
     private Simulation simulation;
-//    boolean run;
-
+    private Timer timer;
     private int drawMode = 1;
+    static final int SLOW_SPEED = 1000;
+    static final int MEDIUM_SPEED = 500;
+    static final int FAST_SPEED = 100;
+    private int currentSpeed = MEDIUM_SPEED;
+    private boolean running = false;
+
+    void pause() {
+        running = false;
+        timer.cancel();
+    }
+
+    void resume() {
+        timer.cancel();
+        running = true;
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+                           @Override
+                           public void run() {
+                               // Using runLater to avoid thread crashes.
+                               Platform.runLater(() -> {
+                                   simulation.step();
+                                   draw();
+                               });
+                           }
+                       }, 0, currentSpeed
+        );
+    }
+
+    void changeSpeed(int speed) {
+        currentSpeed = speed;
+        if (running) resume();
+
+        else pause();
+    }
 
     public MainView() {
-        Button stepButton = new Button("step");
-//        Button runBtn = new Button("Run");
-//        runBtn.setOnAction(event -> {
-//            run = true;
-//            while (run) {
-//                simulation.step();
-//                draw();
-//                try {
-////                    Thread.sleep(5000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        Button stopBtn = new Button("Stop");
-//        stopBtn.setOnAction(event -> run = false);
-        Label label = new Label("D-Draw E-Erase T-Toggle");
+        timer = new Timer();
+
+        Button stepButton = new Button("Step");
         stepButton.setOnAction(actionEvent -> {
             simulation.step();
             draw();
         });
-        canvas = new Canvas(640, 400);
-        canvas.setOnMousePressed(this::handleDraw);
-        canvas.setOnMouseDragged(this::handleDraw);
+
+
+        Button runButton = new Button("Run");
+        runButton.setOnAction(event -> resume());
+        Button slowButton = new Button("Slow Speed");
+        slowButton.setOnAction(event -> changeSpeed(SLOW_SPEED));
+        Button mediumButton = new Button("Medium Speed");
+        mediumButton.setOnAction(event -> changeSpeed(MEDIUM_SPEED));
+        Button fastButton = new Button("Fast Speed");
+        fastButton.setOnAction(event -> changeSpeed(FAST_SPEED));
+
+        HBox runButtons = new HBox(runButton, slowButton, mediumButton, fastButton);
+
+        Button pauseButton = new Button("Pause");
+        pauseButton.setOnAction(event -> pause());
+
+        Label label = new Label("Keys: D-Draw E-Erase T-Toggle");
+
+
+        canvas = new Canvas(640, 480);
+        // Using runLater to avoid thread crashes.
+        canvas.setOnMousePressed(event -> Platform.runLater(() -> handleDraw(event)));
+        canvas.setOnMouseDragged(event -> Platform.runLater(() -> handleDraw(event)));
 
         setOnKeyPressed(this::onKeyPressed);
 
         simulation = new Simulation((int) canvas.getWidth() / 20, (int) canvas.getHeight() / 20);
         getChildren().addAll(
                 stepButton,
-//                runBtn,
-//                stopBtn,
+                runButtons,
+                pauseButton,
                 label,
                 canvas
         );
+//        Arrays.asList(stepButton, runButton, pauseButton, label)
+//                .forEach(button -> button.setPadding(new Insets(5, 5, 5, 5)));
+//        setSpacing(5);
 
         affine = new Affine();
-        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
+        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height - 3.9);
 
         for (int x = 0; x < simulation.width; x++) {
             for (int y = 0; y < simulation.height; y++) {
@@ -71,12 +124,9 @@ public class MainView extends VBox {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.D) {
-            drawMode = 1;
-        } else if (keyEvent.getCode() == KeyCode.E) {
-            drawMode = 0;
-        } else if (keyEvent.getCode() == KeyCode.T)
-            drawMode = 2;
+        if (keyEvent.getCode() == KeyCode.D) drawMode = 1;
+        else if (keyEvent.getCode() == KeyCode.E) drawMode = 0;
+        else if (keyEvent.getCode() == KeyCode.T) drawMode = 2;
     }
 
     private void handleDraw(MouseEvent mouseEvent) {
@@ -110,12 +160,14 @@ public class MainView extends VBox {
         g.fillRect(0, 0, canvas.getWidth(), canvas.getWidth());
         g.setTransform(affine);
         g.setFill(Color.BLACK);
+
         for (int x = 0; x < simulation.width; x++) {
             for (int y = 0; y < simulation.height; y++) {
                 if (simulation.getCellValue(x, y) == 1)
                     g.fillRect(x, y, 1, 1);
             }
         }
+
         g.setLineWidth(0.05f);
         g.setStroke(Color.LIGHTGRAY);
         for (int x = 0; x <= canvas.getWidth(); x++) {

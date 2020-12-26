@@ -84,31 +84,29 @@ public class Simulation {
         board = newBoard;
     }
 
-
-    //
     public void toggleState(int x, int y) {
         if (getCellValue(x, y) == 0)
             setAlive(x, y);
         else setDead(x, y);
     }
 
-
-//    public static void main(String[] args) {
-//        Simulation simulation = new Simulation(5, 5);
-//        simulation.setAlive(0, 0);
-//        simulation.setAlive(0, 1);
-//        simulation.setAlive(1, 0);
-//        simulation.setAlive(0, 2);
-//        simulation.setAlive(0, 3);
-//        simulation.setAlive(1, 1);
-//        simulation.setAlive(1, 2);
-//        simulation.setAlive(1, 3);
-//        simulation.setAlive(2, 3);
-//        simulation.printBoard();
-//        simulation.step();
-//        simulation.printBoard();
-//        simulation.step();
-//        simulation.printBoard();
-//        System.out.println(simulation.countAliveNeighbours(3, 2));
-//    }
+    // testing without gui
+    public static void main(String[] args) {
+        Simulation simulation = new Simulation(5, 5);
+        simulation.setAlive(0, 0);
+        simulation.setAlive(0, 1);
+        simulation.setAlive(1, 0);
+        simulation.setAlive(0, 2);
+        simulation.setAlive(0, 3);
+        simulation.setAlive(1, 1);
+        simulation.setAlive(1, 2);
+        simulation.setAlive(1, 3);
+        simulation.setAlive(2, 3);
+        simulation.printBoard();
+        simulation.step();
+        simulation.printBoard();
+        simulation.step();
+        simulation.printBoard();
+        System.out.println(simulation.countAliveNeighbours(3, 2));
+    }
 }
