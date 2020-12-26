@@ -1,16 +1,11 @@
 package Program;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
 
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,7 +100,7 @@ public class MainView extends VBox {
 
         setOnKeyPressed(this::onKeyPressed);
 
-        simulation = new Simulation((int) canvas.getWidth() / 20, (int) canvas.getHeight() / 20);
+        simulation = new Simulation((int) canvas.getWidth() / 10, (int) canvas.getHeight() / 10);
         getChildren().addAll(
                 stepButton,
                 runButtons,
@@ -114,12 +108,9 @@ public class MainView extends VBox {
                 label,
                 canvas
         );
-//        Arrays.asList(stepButton, runButton, pauseButton, label)
-//                .forEach(button -> button.setPadding(new Insets(5, 5, 5, 5)));
-//        setSpacing(5);
 
         affine = new Affine();
-        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height - 3.9);
+        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height - 2);
 
         for (int x = 0; x < simulation.width; x++) {
             for (int y = 0; y < simulation.height; y++) {

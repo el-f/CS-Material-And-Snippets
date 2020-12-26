@@ -1,6 +1,7 @@
 package Program;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -8,6 +9,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setOnCloseRequest(r -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
         MainView mainView = new MainView();
         Scene scene = new Scene(mainView, 640, 480);
         primaryStage.setTitle("Game of Life");
