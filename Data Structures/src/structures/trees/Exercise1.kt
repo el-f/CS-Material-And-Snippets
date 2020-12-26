@@ -1,48 +1,38 @@
-package structures.trees;
-
-public class Exercise1 {
-    public static void main(String[] args) {
-        Node node = Node.buildTree(
-                'a',
-                Node.buildTree(
-                        'b',
-                        new Node('d'),
-                        new Node('e')
-                ),
-                Node.buildTree(
-                        'c',
-                        null,
-                        Node.buildTree(
-                                'f',
-                                new Node('g'),
-                                null
-                        )
-                )
-        );
-        BinaryTreeFunctions.chr = true;
-        BinaryTreeFunctions.traversePreOrder(node);
-        System.out.println();
-
-        BinaryTreeFunctions.traverseInOrder(node);
-        System.out.println();
-
-        BinaryTreeFunctions.traversePostOrder(node);
-        System.out.println("\n~~~");
+package structures.trees
 
 
-        Node Q3 = Node.sampleTree;
-
-        BinaryTreeFunctions.traversePreOrder(Q3);
-        System.out.println();
-
-        BinaryTreeFunctions.traverseInOrder(Q3);
-        System.out.println();
-
-        BinaryTreeFunctions.traversePostOrder(Q3);
-        System.out.println();
-
-        BinaryTreeFunctions.traverseLevelOrder(Q3);
-        System.out.println();
-
-    }
+fun main() {
+    val node = Node.buildTree(
+        'a'.toInt(),
+        Node.buildTree(
+            'b'.toInt(),
+            Node('d'.toInt()),
+            Node('e'.toInt())
+        ),
+        Node.buildTree(
+            'c'.toInt(),
+            null,
+            Node.buildTree(
+                'f'.toInt(),
+                Node('g'.toInt()),
+                null
+            )
+        )
+    )
+    BinaryTreeFunctions.chr = true
+    BinaryTreeFunctions.traversePreOrder(node)
+    println()
+    BinaryTreeFunctions.traverseInOrder(node)
+    println()
+    BinaryTreeFunctions.traversePostOrder(node)
+    println("\n~~~")
+    val Q3 = Node.sampleTree
+    BinaryTreeFunctions.traversePreOrder(Q3)
+    println()
+    BinaryTreeFunctions.traverseInOrder(Q3)
+    println()
+    BinaryTreeFunctions.traversePostOrder(Q3)
+    println()
+    BinaryTreeFunctions.traverseLevelOrder(Q3)
+    println()
 }

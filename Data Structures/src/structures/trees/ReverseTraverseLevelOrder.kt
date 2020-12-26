@@ -1,71 +1,55 @@
-package structures.trees;
+package structures.trees
+
 // A recursive java program to print reverse level order traversal
-
 // A binary tree node
+// Driver program to test above functions
+fun main() {
+    val tree = TreeForReverse()
 
-
-class ReverseTraverseLevelOrder {
-
-    // Driver program to test above functions
-    public static void main(String[] args) {
-        _TreeForReverse tree = new _TreeForReverse();
-
-        // Let us create trees shown in above diagram
-        tree.root = new Node(1);
-        tree.root.left = new Node(2);
-        tree.root.right = new Node(3);
-        tree.root.left.left = new Node(4);
-        tree.root.left.right = new Node(5);
-
-        System.out.println("Level Order traversal of binary tree is : ");
-        tree.reverseLevelOrder(tree.root);
-    }
+    // Let us create trees shown in above diagram
+    tree.root = Node(1)
+    tree.root!!.left = Node(2)
+    tree.root!!.right = Node(3)
+    tree.root!!.left.left = Node(4)
+    tree.root!!.left.right = Node(5)
+    println("Level Order traversal of binary tree is : ")
+    tree.reverseLevelOrder(tree.root)
 }
 
-class _TreeForReverse {
-    Node root;
+internal class TreeForReverse {
+    var root: Node? = null
 
     /* Function to print REVERSE level order traversal a tree*/
-    void reverseLevelOrder(Node node) {
-        int h = height(node);
-        int i;
-        for (i = h; i >= 1; i--)
-        //THE ONLY LINE DIFFERENT FROM NORMAL LEVEL ORDER
-        {
-            printGivenLevel(node, i);
+    fun reverseLevelOrder(node: Node?) {
+        val h = height(node)
+        var i: Int = h
+        while (i >= 1) {
+            printGivenLevel(node, i)
+            i--
         }
     }
 
     /* Print nodes at a given level */
-    void printGivenLevel(Node node, int level) {
-        if (node == null)
-            return;
-        if (level == 1)
-            System.out.print(node.value + " ");
+    private fun printGivenLevel(node: Node?, level: Int) {
+        if (node == null) return
+        if (level == 1) print(node.value.toString() + " ")
         else if (level > 1) {
-            printGivenLevel(node.left, level - 1);
-            printGivenLevel(node.right, level - 1);
+            printGivenLevel(node.left, level - 1)
+            printGivenLevel(node.right, level - 1)
         }
     }
 
     /* Compute the "height" of a tree -- the number of
     nodes along the longest path from the root node
     down to the farthest leaf node.*/
-    int height(Node node) {
-        if (node == null)
-            return 0;
+    fun height(node: Node?): Int {
+        return if (node == null) 0
         else {
             /* compute the height of each subtree */
-            int lheight = height(node.left);
-            int rheight = height(node.right);
+            val lheight = height(node.left)
+            val rheight = height(node.right)
 
-            /* use the larger one */
-            if (lheight > rheight)
-                return (lheight + 1);
-            else
-                return (rheight + 1);
+            /* use the larger one */if (lheight > rheight) lheight + 1 else rheight + 1
         }
     }
 }
-
-// This code has been contributed by Mayank Jaiswal

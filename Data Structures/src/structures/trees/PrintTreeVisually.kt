@@ -1,22 +1,32 @@
-package structures.trees;
+package structures.trees
 
-public class PrintTreeVisually {
+import java.lang.StringBuilder
 
-    public static void main(String[] args) {
-        System.out.println(printVisually(Node.sampleTree));
-    }
-    public static String printVisually(Node root) {
-        return printVisually(root, new StringBuilder(), true, new StringBuilder()).toString();
-    }
+fun main() {
+    println(printVisually(Node.sampleTree))
+}
 
-    public static StringBuilder printVisually(Node current, StringBuilder prefix, boolean isTail, StringBuilder sb) {
-        if (current.right != null) {
-            printVisually(current.right, new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, sb);
-        }
-        sb.append(prefix).append(isTail ? "└── " : "┌── ").append((char) current.value).append("\n");
-        if (current.left != null) {
-            printVisually(current.left, new StringBuilder().append(prefix).append(isTail ? "    " : "│   "), true, sb);
-        }
-        return sb;
+fun printVisually(root: Node): String {
+    return printVisually(root, StringBuilder(), true, StringBuilder()).toString()
+}
+
+fun printVisually(current: Node, prefix: StringBuilder?, isTail: Boolean, sb: StringBuilder): StringBuilder {
+    if (current.right != null) {
+        printVisually(
+            current.right,
+            StringBuilder().append(prefix).append(if (isTail) "│   " else "    "),
+            false,
+            sb
+        )
     }
+    sb.append(prefix).append(if (isTail) "└── " else "┌── ").append(current.value.toChar()).append("\n")
+    if (current.left != null) {
+        printVisually(
+            current.left,
+            StringBuilder().append(prefix).append(if (isTail) "    " else "│   "),
+            true,
+            sb
+        )
+    }
+    return sb
 }

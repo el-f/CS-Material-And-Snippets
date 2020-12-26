@@ -1,5 +1,7 @@
 package sorts;
 
+import static sorts.InsertionSortKt.insertionSort;
+
 // Java program for implementation of QuickSort
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public class QuickSort {
@@ -89,7 +91,7 @@ public class QuickSort {
     //O(nlgn) + O(20n)
     void improvedQuickSort(int[] arr) {
         improvedQuickSort(arr, 0, arr.length - 1);
-        InsertionSort.insertionSort(arr);
+        insertionSort(arr);
     }
 
 

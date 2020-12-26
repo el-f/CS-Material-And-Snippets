@@ -1,75 +1,66 @@
-package structures.trees;
+package structures.trees
 
-public class Exercise2_recursion {
+import kotlin.math.max
 
+fun main() {
+    println(countLeaves(Node.sampleTree))
+    printLeaves(Node.sampleTree) //Q1
+    println()
+    println(countNonLeaves(Node.sampleTree)) //Q2
+    println(getDepth(Node.sampleTree)) //Q3
+    println(getDepth(Node(1))) //Q3
+    println(getMaxValue(Node.sampleTree).toChar()) //Q4
+    println(isRouteWeightEqualW(Node.sampleTree, ('T' + 'Q'.toInt() + 'R'.toInt()).toInt(), 0)) //Q5
+    println(isRouteWeightEqualW_V2(Node.sampleTree, ('T' + 'Q'.toInt() + 'R'.toInt()).toInt())) //Q5
+}
 
-    public static void main(String[] args) {
-        System.out.println(countLeaves(Node.sampleTree));
-        printLeaves(Node.sampleTree);                                                            //Q1
-        System.out.println();
-        System.out.println(countNonLeaves(Node.sampleTree));                                     //Q2
-        System.out.println(getDepth(Node.sampleTree));                                           //Q3
-        System.out.println(getDepth(new Node(1)));                                   //Q3
-        System.out.println((char) getMaxValue(Node.sampleTree));                                 //Q4
-        System.out.println(isRouteWeightEqualW(Node.sampleTree, 'T' + 'Q' + 'R', 0));    //Q5
-        System.out.println(isRouteWeightEqualW_V2(Node.sampleTree, 'T' + 'Q' + 'R'));         //Q5
+fun countLeaves(root: Node?): Int {
+    if (root == null) return 0
+    return if (root.right == null && root.left == null) 1
+    else countLeaves(root.left) + countLeaves(root.right)
+}
 
-    }
+//Q1
+fun printLeaves(root: Node?) {
+    if (root == null) return
+    if (root.left == null && root.right == null) System.out.printf("%c ", root.value)
+    printLeaves(root.left)
+    printLeaves(root.right)
+}
 
-    static int countLeaves(Node root) {
-        if (root == null) return 0;
-        if (root.right == null && root.left == null)
-            return 1;
-        return countLeaves(root.left) + countLeaves(root.right);
-    }
+//Q2
+fun countNonLeaves(root: Node?): Int {
+    return if (root == null || root.right == null && root.left == null) 0
+    else 1 + countNonLeaves(root.left) + countNonLeaves(root.right)
+}
 
-    //Q1
-    static void printLeaves(Node root) {
-        if (root == null) return;
-        if (root.left == null && root.right == null)
-            System.out.printf("%c ", root.value);
-        printLeaves(root.left);
-        printLeaves(root.right);
-    }
+//Q3
+fun getDepth(root: Node?): Int {
+    return if (root == null) 0 else 1 + max(
+        getDepth(root.right),
+        getDepth(root.left)
+    )
+}
 
-    //Q2
-    static int countNonLeaves(Node root) {
-        if (root == null || (root.right == null && root.left == null))
-            return 0;
-        return 1 + countNonLeaves(root.left) + countNonLeaves(root.right);
-    }
+//Q4
+fun getMaxValue(root: Node?): Int {
+    return if (root == null) Int.MIN_VALUE
+    else max(
+        max(getMaxValue(root.left), getMaxValue(root.right)),
+        root.value
+    )
+}
 
-    //Q3
-    static int getDepth(Node root) {
-        if (root == null) return 0;
-        return 1 + Math.max(
-                getDepth(root.right),
-                getDepth(root.left)
-        );
-    }
+//Q5
+fun isRouteWeightEqualW(root: Node?, w: Int, sumIn: Int): Boolean {
+    var sum = sumIn
+    if (root == null) return sum == w
+    sum += root.value
+    return isRouteWeightEqualW(root.left, w, sum) || isRouteWeightEqualW(root.right, w, sum)
+}
 
-    //Q4
-    static int getMaxValue(Node root) {
-        if (root == null) return Integer.MIN_VALUE;
-        return Math.max(
-                Math.max(getMaxValue(root.left), getMaxValue(root.right)),
-                root.value
-        );
-    }
-
-    //Q5
-    static boolean isRouteWeightEqualW(Node root, int w, int sum) {
-        if (root == null) return sum == w;
-        sum += root.value;
-        return isRouteWeightEqualW(root.left, w, sum) ||
-                isRouteWeightEqualW(root.right, w, sum);
-    }
-
-    static boolean isRouteWeightEqualW_V2(Node root, int w) {
-        if (root == null) return w == 0;
-        return isRouteWeightEqualW_V2(root.left, w - root.value) ||
-                isRouteWeightEqualW_V2(root.right, w - root.value);
-    }
-
-
+fun isRouteWeightEqualW_V2(root: Node?, w: Int): Boolean {
+    return if (root == null) w == 0
+    else isRouteWeightEqualW_V2(root.left, w - root.value) ||
+            isRouteWeightEqualW_V2(root.right, w - root.value)
 }
