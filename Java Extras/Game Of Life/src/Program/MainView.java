@@ -58,7 +58,6 @@ public class MainView extends VBox {
     void changeSpeed(int speed) {
         currentSpeed = speed;
         if (running) resume();
-
         else pause();
     }
 
