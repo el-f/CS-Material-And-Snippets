@@ -34,6 +34,8 @@ public class MainView extends VBox {
     static final int SLOW_SPEED = 1000;
     static final int MEDIUM_SPEED = 500;
     static final int FAST_SPEED = 100;
+    static final int INSANE_SPEED = 10;
+    static final int SONIC = 1;
     private int currentSpeed = MEDIUM_SPEED;
     private boolean running = false;
 
@@ -84,8 +86,12 @@ public class MainView extends VBox {
         mediumButton.setOnAction(event -> changeSpeed(MEDIUM_SPEED));
         Button fastButton = new Button("Fast Speed");
         fastButton.setOnAction(event -> changeSpeed(FAST_SPEED));
+        Button insaneButton = new Button("Insane Speed");
+        insaneButton.setOnAction(event -> changeSpeed(INSANE_SPEED));
+        Button sonic = new Button("SONIC");
+        sonic.setOnAction(event -> changeSpeed(SONIC));
 
-        HBox runButtons = new HBox(runButton, slowButton, mediumButton, fastButton);
+        HBox runButtons = new HBox(runButton, slowButton, mediumButton, fastButton, insaneButton, sonic);
 
         Button pauseButton = new Button("Pause");
         pauseButton.setOnAction(event -> pause());
