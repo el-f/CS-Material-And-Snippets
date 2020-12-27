@@ -3,6 +3,7 @@ import time
 
 from Snippets.Spammers.pastas.beeScript import b as bee
 from Snippets.Spammers.pastas.breastfeed import breastfeed
+from Snippets.Spammers.pastas.hp import harry_potter
 from Snippets.Spammers.pastas.shrekScript import ss as shrek
 from Snippets.Spammers.pastas.NavySeal import navySeal
 from Snippets.Spammers.pastas.cd import cd
@@ -17,7 +18,7 @@ def spam():
     choice = -1
     while choice < 0:
         choice = input("1) bee movie \n2) shrek \n3) navy seal \n4) catholic daughter \n5) penguin of doom \n6) "
-                       "supermarket \n7) breastfeed")
+                       "supermarket \n7) breastfeed \n8) Harry Potter 1")
         choice = int(choice)
         if choice == 1:
             words = bee().split()
@@ -36,6 +37,8 @@ def spam():
         elif choice == 7:
             name = input("please enter name")
             words = breastfeed(name).split()
+        elif choice == 8:
+            words = harry_potter().split()
         else:
             choice = -1
 
