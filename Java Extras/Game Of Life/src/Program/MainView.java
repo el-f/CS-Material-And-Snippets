@@ -70,7 +70,6 @@ public class MainView extends VBox {
             draw();
         });
 
-
         Button runButton = new Button("Run");
         runButton.setOnAction(event -> resume());
         Button slowButton = new Button("Slow Speed");
@@ -99,7 +98,6 @@ public class MainView extends VBox {
 
         setOnKeyPressed(this::onKeyPressed);
 
-//        simulation = new Simulation((int) canvas.getWidth() / 10, (int) canvas.getHeight() / 10);
         simulation = new Simulation(Simulation.GILDER_GUN_80x80);
         getChildren().addAll(
                 stepButton,
@@ -111,15 +109,6 @@ public class MainView extends VBox {
 
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height - 1.16);
-
-//        for (int x = 0; x < simulation.width; x++) {
-//            for (int y = 0; y < simulation.height; y++) {
-//                if (x % 2 != 0 && x % (y + 1) / 2 != 0)
-//                    simulation.setAlive(x, y);
-//            }
-//        }
-
-
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -129,11 +118,8 @@ public class MainView extends VBox {
     }
 
     private void handleDraw(MouseEvent mouseEvent) {
-        double mx = mouseEvent.getX();
-        double my = mouseEvent.getY();
-
         try {
-            final Point2D simCoord = affine.inverseTransform(mx, my);
+            final Point2D simCoord = affine.inverseTransform(mouseEvent.getX(), mouseEvent.getY());
             int simX = (int) Math.floor(simCoord.getX());
             int simY = (int) Math.floor(simCoord.getY());
             switch (drawMode) {
