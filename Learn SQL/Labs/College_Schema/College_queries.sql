@@ -33,3 +33,16 @@ join (select * from evaluations where TID in
 ) as tt on (studentID = SID);
 
 -- 7
+select departmentName, count(TID)
+from (select * from departmentteacher join departmenttable on (DID = departmentID)) as dd group by departmentName;
+
+-- 8
+select teacherFirstName, teacherLastName, teacherSalary
+from teachertable
+where teacherDegree = 'Dr' and teacherSalary > (select min(teacherSalary) as minp from teachertable where teacherDegree = 'Prof')
+order by teacherSalary DESC;
+
+-- 9
+select courseName, (select courseName from coursetable where PID = courseID) as PName
+from (prerequisites join coursetable as namedt on (CID = courseID))
+order by courseName, PName ;

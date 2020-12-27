@@ -31,4 +31,7 @@ alter table prerequisites
 add constraint PCourseFK foreign key (CID) references coursetable (courseID);
 
 alter table prerequisites
+add constraint PprerequisiteFK foreign key (PID) references coursetable (courseID);
+
+alter table prerequisites
 add constraint PPK primary key (CID, PID);
