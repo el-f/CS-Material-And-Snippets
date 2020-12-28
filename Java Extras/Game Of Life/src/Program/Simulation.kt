@@ -60,40 +60,48 @@ class Simulation(private var board: Array<IntArray>) {
         board = newBoard
     }
 
+    fun clear() {
+        for (r in board.indices)
+            for (c in board[r].indices)
+                setDead(r, c)
+    }
+
     fun toggleState(r: Int, c: Int) {
         if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
     }
 
 
     companion object {
-        private const val size: Int = 148
+        private const val size: Int = 234
 
-        private fun getLives(x: Int, rotate: Boolean, shift: Int, vararg indices: Int): Int {
+        private fun getLives(x: Int, rotate: Boolean, mirror: Boolean, shift: Int, vararg indices: Int): Int {
             val y = x - shift
-            return if (indices.contains(if (rotate) size - y else y)) 1 else 0
+            var indexes = indices
+            if (mirror) indexes += indices.map { size - it - 1 + shift }
+            return if (indexes.contains(if (rotate) size - y else y)) 1 else 0
         }
 
-        private fun gliderGun(rotate: Boolean, shift: Int = 0) = arrayOf(
-            IntArray(size) { getLives(it, rotate, shift, 74) },
-            IntArray(size) { getLives(it, rotate, shift, 72, 74) },
-            IntArray(size) { getLives(it, rotate, shift, 62, 63, 70, 71, 84, 85) },
-            IntArray(size) { getLives(it, rotate, shift, 61, 65, 70, 71, 84, 85) },
-            IntArray(size) { getLives(it, rotate, shift, 50, 51, 60, 66, 70, 71) },
-            IntArray(size) { getLives(it, rotate, shift, 50, 51, 60, 64, 66, 67, 72, 74) },
-            IntArray(size) { getLives(it, rotate, shift, 60, 66, 74) },
-            IntArray(size) { getLives(it, rotate, shift, 61, 65) },
-            IntArray(size) { getLives(it, rotate, shift, 62, 63) },
+        private fun gliderGun(rotate: Boolean = false, shift: Int = 0, mirror: Boolean = false) = arrayOf(
+            IntArray(size) { getLives(it, rotate, mirror, shift, 24) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
+
+            IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
+
+            IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
+            IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
-        private val EMPTY_BLOCK = Array(26) { IntArray(size) { 0 } }
+        private val EMPTY_BLOCK = Array(36) { IntArray(size) { 0 } }
 
         @JvmField
         val DEFAULT_STARTER = arrayOf(
-            *EMPTY_BLOCK,
-            *gliderGun(true, 25),
-            *EMPTY_BLOCK, *EMPTY_BLOCK,
-            *gliderGun(false),
-            *EMPTY_BLOCK, *EMPTY_BLOCK,
+            *gliderGun(mirror = true),
+            *EMPTY_BLOCK, *EMPTY_BLOCK, *EMPTY_BLOCK, *EMPTY_BLOCK,
+            *gliderGun(mirror = true).reversedArray(),
         )
     }
 

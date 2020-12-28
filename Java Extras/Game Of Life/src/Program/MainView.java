@@ -98,7 +98,13 @@ public class MainView extends VBox {
             draw();
         });
 
-        HBox pause_reset = new HBox(pauseButton, resetButton);
+        Button clearButton = new Button("Clear");
+        clearButton.setOnAction(event -> {
+            simulation.clear();
+            draw();
+        });
+
+        HBox pause_reset = new HBox(pauseButton, resetButton, clearButton);
         pause_reset.setSpacing(10);
 
         canvas = new Canvas(950, 708);
@@ -120,6 +126,7 @@ public class MainView extends VBox {
         System.out.println(simulation.height + " " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
+        resume();
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
