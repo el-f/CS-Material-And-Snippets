@@ -60,6 +60,10 @@ public class MainView extends VBox {
         else pause();
     }
 
+    void reset() {
+        simulation = new Simulation(Simulation.GILDER_GUNS_148x148);
+    }
+
     public MainView() {
         timer = new Timer();
 
@@ -88,7 +92,14 @@ public class MainView extends VBox {
         Button pauseButton = new Button("Pause");
         pauseButton.setOnAction(event -> pause());
 
-        Label label = new Label("Keys: D-Draw E-Erase T-Toggle");
+        Button resetButton = new Button("Reset");
+        resetButton.setOnAction(event -> {
+            reset();
+            draw();
+        });
+
+        HBox pause_reset = new HBox(pauseButton, resetButton);
+        pause_reset.setSpacing(10);
 
         canvas = new Canvas(950, 708);
         // Using runLater to avoid thread crashes.
@@ -97,15 +108,15 @@ public class MainView extends VBox {
 
         setOnKeyPressed(this::onKeyPressed);
 
-        simulation = new Simulation(Simulation.GILDER_GUNS_148x148);
         getChildren().addAll(
                 stepButton,
-                pauseButton,
+                pause_reset,
                 runBox,
-                label,
+                new Label("Keys: D-Draw E-Erase T-Toggle"),
                 canvas
         );
 
+        reset();
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
     }
