@@ -15,7 +15,7 @@ public class App extends Application {
         });
 
         MainView mainView = new MainView();
-        Scene scene = new Scene(mainView, 950, 800);
+        Scene scene = new Scene(mainView, 950, 855);
         primaryStage.setTitle("Game of Life");
         primaryStage.setScene(scene);
         primaryStage.show();

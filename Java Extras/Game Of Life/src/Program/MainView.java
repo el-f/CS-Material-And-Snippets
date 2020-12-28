@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,12 +26,10 @@ public class MainView extends VBox {
     private Simulation simulation;
     private Timer timer;
     private int drawMode = 1;
-    static final int SLOW_SPEED = 1000;
-    static final int MEDIUM_SPEED = 500;
-    static final int FAST_SPEED = 100;
-    static final int INSANE_SPEED = 10;
+    static final int SLOW_SPEED = 500;
+    static final int FAST_SPEED = 50;
     static final int SONIC = 1;
-    private int currentSpeed = MEDIUM_SPEED;
+    private int currentSpeed = FAST_SPEED;
     private boolean running = false;
 
     void pause() {
@@ -72,24 +71,24 @@ public class MainView extends VBox {
 
         Button runButton = new Button("Run");
         runButton.setOnAction(event -> resume());
-        Button slowButton = new Button("Slow Speed");
-        slowButton.setOnAction(event -> changeSpeed(SLOW_SPEED));
-        Button mediumButton = new Button("Medium Speed");
-        mediumButton.setOnAction(event -> changeSpeed(MEDIUM_SPEED));
-        Button fastButton = new Button("Fast Speed");
-        fastButton.setOnAction(event -> changeSpeed(FAST_SPEED));
-        Button insaneButton = new Button("Insane Speed");
-        insaneButton.setOnAction(event -> changeSpeed(INSANE_SPEED));
-        Button sonic = new Button("SONIC");
-        sonic.setOnAction(event -> changeSpeed(SONIC));
 
-        HBox runButtons = new HBox(runButton, slowButton, mediumButton, fastButton, insaneButton, sonic);
+        Slider slider = new Slider();
+        slider.setValue(currentSpeed);
+        slider.setMax(SLOW_SPEED);
+        slider.setMin(SONIC);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.valueProperty().addListener((OBS, OLD, NEW) -> changeSpeed(NEW.intValue()));
+        slider.setMinWidth(650);
+
+        HBox runBox = new HBox(runButton, new Label("Delay Between Steps (ms) : "), slider);
+        runBox.setSpacing(10);
+        setSpacing(10);
 
         Button pauseButton = new Button("Pause");
         pauseButton.setOnAction(event -> pause());
 
         Label label = new Label("Keys: D-Draw E-Erase T-Toggle");
-
 
         canvas = new Canvas(950, 708);
         // Using runLater to avoid thread crashes.
@@ -101,8 +100,8 @@ public class MainView extends VBox {
         simulation = new Simulation(Simulation.GILDER_GUNS_148x148);
         getChildren().addAll(
                 stepButton,
-                runButtons,
                 pauseButton,
+                runBox,
                 label,
                 canvas
         );
