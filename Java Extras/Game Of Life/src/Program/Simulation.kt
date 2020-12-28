@@ -95,12 +95,12 @@ class Simulation(private var board: Array<IntArray>) {
             IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
-        private val EMPTY_BLOCK = Array(36) { IntArray(size) { 0 } }
+        private fun emptyBlock(amount: Int) = Array(amount) { IntArray(size) { 0 } }
 
         @JvmField
         val DEFAULT_STARTER = arrayOf(
             *gliderGun(mirror = true),
-            *EMPTY_BLOCK, *EMPTY_BLOCK, *EMPTY_BLOCK, *EMPTY_BLOCK,
+            *emptyBlock(144),
             *gliderGun(mirror = true).reversedArray(),
         )
     }
