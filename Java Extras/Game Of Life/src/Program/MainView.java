@@ -91,14 +91,14 @@ public class MainView extends VBox {
         Label label = new Label("Keys: D-Draw E-Erase T-Toggle");
 
 
-        canvas = new Canvas(640, 480);
+        canvas = new Canvas(950, 708);
         // Using runLater to avoid thread crashes.
         canvas.setOnMousePressed(event -> Platform.runLater(() -> handleDraw(event)));
         canvas.setOnMouseDragged(event -> Platform.runLater(() -> handleDraw(event)));
 
         setOnKeyPressed(this::onKeyPressed);
 
-        simulation = new Simulation(Simulation.GILDER_GUN_80x80);
+        simulation = new Simulation(Simulation.GILDER_GUNS_148x148);
         getChildren().addAll(
                 stepButton,
                 runButtons,
@@ -108,7 +108,7 @@ public class MainView extends VBox {
         );
 
         affine = new Affine();
-        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height - 1.16);
+        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -124,13 +124,13 @@ public class MainView extends VBox {
             int simY = (int) Math.floor(simCoord.getY());
             switch (drawMode) {
                 case 0:
-                    simulation.setDead(simX, simY);
+                    simulation.setDead(simY, simX);
                     break;
                 case 1:
-                    simulation.setAlive(simX, simY);
+                    simulation.setAlive(simY, simX);
                     break;
                 case 2:
-                    simulation.toggleState(simX, simY);
+                    simulation.toggleState(simY, simX);
                     break;
             }
             draw();
@@ -145,11 +145,10 @@ public class MainView extends VBox {
         g.fillRect(0, 0, canvas.getWidth(), canvas.getWidth());
         g.setTransform(affine);
         g.setFill(Color.BLACK);
-
-        for (int x = 0; x < simulation.width; x++) {
-            for (int y = 0; y < simulation.height; y++) {
-                if (simulation.getCellValue(x, y) == 1)
-                    g.fillRect(x, y, 1, 1);
+        for (int r = 0; r < simulation.height; r++) {
+            for (int c = 0; c < simulation.width; c++) {
+                if (simulation.getCellValue(r, c) == 1)
+                    g.fillRect(c, r, 1, 1);
             }
         }
 
