@@ -61,7 +61,7 @@ public class MainView extends VBox {
     }
 
     void reset() {
-        simulation = new Simulation(Simulation.GILDER_GUNS_148x148);
+        simulation = new Simulation(Simulation.DEFAULT_STARTER);
     }
 
     public MainView() {
@@ -117,6 +117,7 @@ public class MainView extends VBox {
         );
 
         reset();
+        System.out.println(simulation.height + " " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
     }
