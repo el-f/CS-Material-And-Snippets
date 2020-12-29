@@ -62,6 +62,7 @@ public class MainView extends VBox {
 
     void reset() {
         simulation = new Simulation(Simulation.DEFAULT_STARTER);
+        simulation.step();
     }
 
     public MainView() {
@@ -126,7 +127,6 @@ public class MainView extends VBox {
         System.out.println(simulation.height + " " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
-        resume();
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
