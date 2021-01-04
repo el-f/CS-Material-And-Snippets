@@ -1,7 +1,7 @@
 # Created by: Elazar Fine
 # Created on: 9/12/2020
 
-setwd("C:/Projects/CS Material And Snippets/Learn R/Statistics Course/Assignment1")
+setwd("C:/Projects/CS Material And Snippets/Learn Statistics + R/Statistics Course/Assignment1")
 rm(list = ls())
 library(mlbench)
 library(Rmisc)
