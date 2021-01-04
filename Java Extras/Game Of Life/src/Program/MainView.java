@@ -25,12 +25,16 @@ public class MainView extends VBox {
     private final Canvas canvas;
     private Simulation simulation;
     private Timer timer;
-    private int drawMode = 1;
+    private int drawMode = DRAW_MODE;
     static final int SLOW_SPEED = 500;
     static final int FAST_SPEED = 50;
     static final int SONIC = 1;
     private int currentSpeed = FAST_SPEED;
     private boolean running = false;
+    private final Label drawIndicator = new Label("D - Draw"),
+            toggleIndicator = new Label("T - Toggle"),
+            eraseIndicator = new Label("E - Erase");
+    public static final int ERASE_MODE = 0, DRAW_MODE = 1, TOGGLE_MODE = 2;
 
     void pause() {
         running = false;
@@ -108,6 +112,9 @@ public class MainView extends VBox {
         HBox pause_reset = new HBox(pauseButton, resetButton, clearButton);
         pause_reset.setSpacing(10);
 
+        HBox keys = new HBox(new Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator);
+        keys.setSpacing(10);
+
         canvas = new Canvas(950, 708);
         // Using runLater to avoid thread crashes.
         canvas.setOnMousePressed(event -> Platform.runLater(() -> handleDraw(event)));
@@ -119,7 +126,7 @@ public class MainView extends VBox {
                 stepButton,
                 pause_reset,
                 runBox,
-                new Label("Keys: D-Draw E-Erase T-Toggle"),
+                keys,
                 canvas
         );
 
@@ -127,12 +134,35 @@ public class MainView extends VBox {
         System.out.println(simulation.height + " " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
+        updateModeIndicator();
+    }
+
+    private void updateModeIndicator() {
+        switch (drawMode) {
+            case DRAW_MODE:
+                drawIndicator.setTextFill(Color.RED);
+                eraseIndicator.setTextFill(Color.BLACK);
+                toggleIndicator.setTextFill(Color.BLACK);
+                break;
+            case ERASE_MODE:
+                drawIndicator.setTextFill(Color.BLACK);
+                eraseIndicator.setTextFill(Color.RED);
+                toggleIndicator.setTextFill(Color.BLACK);
+                break;
+            case TOGGLE_MODE:
+                drawIndicator.setTextFill(Color.BLACK);
+                eraseIndicator.setTextFill(Color.BLACK);
+                toggleIndicator.setTextFill(Color.RED);
+                break;
+        }
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.D) drawMode = 1;
-        else if (keyEvent.getCode() == KeyCode.E) drawMode = 0;
-        else if (keyEvent.getCode() == KeyCode.T) drawMode = 2;
+        if (keyEvent.getCode() == KeyCode.D) drawMode = DRAW_MODE;
+        else if (keyEvent.getCode() == KeyCode.E) drawMode = ERASE_MODE;
+        else if (keyEvent.getCode() == KeyCode.T) drawMode = TOGGLE_MODE;
+
+        updateModeIndicator();
     }
 
     private void handleDraw(MouseEvent mouseEvent) {
