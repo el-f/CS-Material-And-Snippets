@@ -54,7 +54,7 @@ public class MainView extends VBox {
                                    draw();
                                });
                            }
-                       }, 0, currentSpeed
+                       }, 15, currentSpeed
         );
     }
 
