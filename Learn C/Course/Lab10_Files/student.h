@@ -1,16 +1,18 @@
 #pragma once
+
 #include <stdio.h>
 
-typedef struct
-{
-	char*	name;
-	int		id;
-	float	avg;
-}Student;
+typedef struct {
+    char *name;
+    int id;
+    float avg;
+} Student;
 
 
+void showStudent(Student *st);
 
-void showStudent(Student* st);
-void initStudent(Student* st);
-void showStudentArr(Student* st,int count);
-void freeStudentArr(Student* stArr, int count);
+void initStudent(Student *st);
+
+void showStudentArr(Student *st, int count);
+
+void freeStudentArr(Student *stArr, int count);

@@ -9,47 +9,45 @@
 //#define TEXT_TO_BIN
 
 void TextToBin();
+
 void BinToText();
 
-void main()
-{
+void main() {
 #ifdef TEXT_TO_BIN
-	TextToBin();
+    TextToBin();
 #else
-	BinToText();
+    BinToText();
 #endif
-	
-	
-	system("pause");
+
+
+    system("pause");
 }
 
-void TextToBin()
-{
-	Student* arr;
-	int count;
+void TextToBin() {
+    Student *arr;
+    int count;
 
-	arr = readStudentArrFromTextFile(TEXT_FILE, &count);
+    arr = readStudentArrFromTextFile(TEXT_FILE, &count);
 
-	showStudentArr(arr, count);
+    showStudentArr(arr, count);
 
-	writeStudentArrToBFile(BIN_FILE, arr, count);
+    writeStudentArrToBFile(BIN_FILE, arr, count);
 //	addStudentToEndOfBFile(BIN_FILE);
 
-	freeStudentArr(arr, count);
+    freeStudentArr(arr, count);
 
 }
 
-void BinToText()
-{
-	Student* arr;
-	int count;
+void BinToText() {
+    Student *arr;
+    int count;
 
-	arr = readStudentArrFromBFile(BIN_FILE, &count);
+    arr = readStudentArrFromBFile(BIN_FILE, &count);
 
-	showStudentArr(arr, count);
+    showStudentArr(arr, count);
 
-	writeStudentArrToTextFile(TEXT_FILE, arr, count);
+    writeStudentArrToTextFile(TEXT_FILE, arr, count);
 //	addStudentToEndOfTextFile(TEXT_FILE);
 
-	freeStudentArr(arr, count);
+    freeStudentArr(arr, count);
 }

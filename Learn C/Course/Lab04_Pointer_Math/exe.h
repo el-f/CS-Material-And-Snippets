@@ -3,9 +3,13 @@
 
 
 void Q_ReverseArr();
+
 void Q_PrintMat();
+
 void Q_PrintArrReverse();
+
 void Q_PrintMixMatrix();
+
 void Q_Palindrome();
 
 #endif

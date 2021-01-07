@@ -5,50 +5,42 @@
 #include "functions3.h"
 #include "arrays.h"
 
-void Q_DivMult()
-{
+void Q_DivMult() {
     float x;
     float y;
     float div = 0;
     float mult = 0;
 
     printf("Please Enter Two Numbers To Div And Mult: ");
-    do
-    {
+    do {
         scanf("%f", &x);
     } while (isspace(x));
-    do
-    {
+    do {
         scanf("%f", &y);
     } while (isspace(y));
 
-    if (Calc(x, y, &div, &mult) != 0)
-    {
+    if (Calc(x, y, &div, &mult) != 0) {
         printf("%f * %f = %f\n", x, y, mult);
         printf("%f / %f = %f\n", x, y, div);
-    }
-    else
+    } else
         printf("Cannot Divide By 0!\n");
 }
 
-void Q_Char()
-{
+void Q_Char() {
     char ch = 'A';
     printf("Before - %c\n", ch);
     ChangeChar(&ch);
     printf("After - %c\n", ch);
 }
 
-void Q_Reverse()
-{
+void Q_Reverse() {
     int num = 123456;
     printf("Before - %d\n", num);
     ReversePositive(&num);
     printf("After - %d\n", num);
 }
 
-void Q_Arr_Sum_Evens()
-{
+void Q_Arr_Sum_Evens() {
     int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     int sum = 0;
     int evens = 0;
@@ -59,8 +51,7 @@ void Q_Arr_Sum_Evens()
     printf("sum: %d\n", sum);
 }
 
-void Q_Arr_Div_SumDig()
-{
+void Q_Arr_Div_SumDig() {
     int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 111, 21};
     int size = sizeof(arr) / sizeof(arr[0]);
     int nSumsNum = 0;
