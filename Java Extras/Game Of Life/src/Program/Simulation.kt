@@ -34,8 +34,8 @@ class Simulation(private var board: Array<IntArray>) {
     }
 
     fun getCellValue(r: Int, c: Int): Int {
-        if (r < 0 || r >= height) return 0
-        return if (c < 0 || c >= width) 0
+        return if (r < 0 || r >= height) 0
+        else if (c < 0 || c >= width) 0
         else board[r][c]
     }
 
