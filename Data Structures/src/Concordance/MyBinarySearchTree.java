@@ -76,6 +76,22 @@ public class MyBinarySearchTree {
         return current;
     }
 
+    public String getMostCommonWord() {
+        return GMCW_HELPER(root).toString();
+    }
+
+    private MyNode GMCW_HELPER(MyNode node) {
+        if (node == null) return null;
+        MyNode max = node;
+        MyNode leftMaxNode = GMCW_HELPER(node.left);
+        MyNode rightMaxNode = GMCW_HELPER(node.right);
+        int leftMax = leftMaxNode == null ? -1 : leftMaxNode.lineNumbers.size;
+        int rightMax = rightMaxNode == null ? -1 : rightMaxNode.lineNumbers.size;
+        if (leftMax > max.lineNumbers.size) max = node.left;
+        if (rightMax > max.lineNumbers.size) max = node.right;
+        return max;
+    }
+
     //O(n) when n is the number of words in the original file
     @Override
     public String toString() {

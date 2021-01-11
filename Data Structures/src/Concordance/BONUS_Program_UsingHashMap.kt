@@ -37,6 +37,7 @@ private fun showMenu() {
         println("4) Process Another File")
         println("5) Change How The Output Looks")
         println("6) Toggle Automatic Output File Opening")
+        println("7) Get Most Common Word")
         println("\n0) Exit Program")
         choice = scanner.nextInt()
         when (choice) {
@@ -75,6 +76,7 @@ private fun showMenu() {
                     else -> println("Invalid Input!")
                 }
             }
+            7 -> concordanceProcessor!!.printMostCommonWord()
             else -> println("Invalid Input!")
         }
     } catch (exception: Exception) {

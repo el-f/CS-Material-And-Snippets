@@ -92,6 +92,11 @@ public class ConcordanceProcessor {
         System.out.println("Search Finished In " + (System.currentTimeMillis() - start) + "ms");
     }
 
+    public void printMostCommonWord(){
+        System.out.println(tree.getMostCommonWord());
+    }
+
+
     //O(n) when n is the number of words in the text file
     public String toString() {
         return tree.toString();

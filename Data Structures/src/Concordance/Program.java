@@ -45,6 +45,7 @@ public class Program {
             System.out.println("4) Process Another File");
             System.out.println("5) Change How The Output Looks");
             System.out.println("6) Toggle Automatic Output File Opening");
+            System.out.println("7) Get Most Common Word");
             System.out.println("\n0) Exit Program");
             choice = scanner.nextInt();
             switch (choice) {
@@ -101,6 +102,9 @@ public class Program {
                         default:
                             System.out.println("Invalid Input!");
                     }
+                    break;
+                case 7:
+                    concordanceProcessor.printMostCommonWord();
                     break;
                 default:
                     System.out.println("Invalid Input!");

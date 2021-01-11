@@ -1,6 +1,7 @@
 package Concordance;
 
 import java.util.Arrays;
+import java.util.Map.Entry;
 
 // Faster than BST at building but slower at printing/outputing (because outputing sorted)
 
@@ -70,6 +71,16 @@ public class BONUS_MyHashMap {
     private int hash(String word) {
         int hash = word.hashCode();
         return ((hash ^ hash >>> 16) & 0x7fffffff) % array.length;
+    }
+
+    public String getMostCommonWord() {
+        Entry max = array[0];
+        for (Entry entry : array) {
+            if (entry != null && (max == null || entry.lineNumbers.size > max.lineNumbers.size))
+                max = entry;
+        }
+        assert max != null;
+        return max.toString();
     }
 
     public String toString() {

@@ -89,6 +89,10 @@ public class BONUS_ConcordanceProcessor_UsingHashMap {
         System.out.println("Search Finished In " + (System.currentTimeMillis() - start) + "ms");
     }
 
+    public void printMostCommonWord(){
+        System.out.println(myHashMap.getMostCommonWord());
+    }
+
     /*
         O(nlgn) when n is the number of words in the text file
         It's because the output is sorted alphabetically.
