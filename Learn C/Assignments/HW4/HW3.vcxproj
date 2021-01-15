@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4DF22316-BD71-4F0D-833E-BB6C24D4C6EE}</ProjectGuid>
-    <RootNamespace>MacroCondComp</RootNamespace>
+    <ProjectGuid>{8E2C162A-416A-4FE2-B7A1-38EE0AB13D3A}</ProjectGuid>
+    <RootNamespace>HW3</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>HW4</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -110,14 +111,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DateTime.c" />
-    <ClCompile Include="exe.c" />
+    <ClCompile Include="Airport.c" />
+    <ClCompile Include="AirportManager.c" />
+    <ClCompile Include="Company.c" />
+    <ClCompile Include="Date.c" />
+    <ClCompile Include="fileHelper.c" />
+    <ClCompile Include="Flight.c" />
+    <ClCompile Include="General.c" />
+    <ClCompile Include="GeneralList.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DateTime.h" />
-    <ClInclude Include="exe.h" />
+    <ClInclude Include="Airport.h" />
+    <ClInclude Include="AirportManager.h" />
+    <ClInclude Include="Company.h" />
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="fileHelper.h" />
+    <ClInclude Include="Flight.h" />
+    <ClInclude Include="General.h" />
+    <ClInclude Include="GeneralList.h" />
     <ClInclude Include="macros.h" />
+    <ClInclude Include="main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
