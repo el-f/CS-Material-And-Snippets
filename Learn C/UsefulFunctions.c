@@ -22,9 +22,9 @@ int isAllDigits(char *string) {
 
 int betterScanInt() {
     int num;
-    char buffer[STR_MAX_LENGTH];
+    char buffer[10]; // 10 - max length of integer (2,147,483,647)
     while (1) {
-        if (fgets(buffer, STR_MAX_LENGTH, stdin)) {
+        if (fgets(buffer, 10, stdin)) {
             if (isAllDigits(buffer)) {
                 sscanf(buffer, "%d", &num);
                 return num;
@@ -34,7 +34,7 @@ int betterScanInt() {
     }
 }
 
-int scanChar() {
+char scanChar() {
     char chr;
     scanf(" %c", &chr);
     return chr;
