@@ -30,9 +30,9 @@ y$R_Ozone_Pressure <- y$Z_Ozone * y$Z_Pressure
 R_Ozone_Pressure <- sum(y$R_Ozone_Pressure) / (nrow(y) - 1)
 
 # 1st Solution for statistical estimate
-# r_star = 0.5*log((1+R_Ozone_Pressure)/(1-R_Ozone_Pressure))
-# z = r_star*sqrt(nrow(y)-3)
-# pv_Ozone_Pressure = 2*pnorm(z,lower.tail = F)
+r_star <- 0.5*log((1+R_Ozone_Pressure)/(1-R_Ozone_Pressure))
+z <- r_star*sqrt(nrow(y)-3)
+pv_Ozone_Pressure_alt <-  2*pnorm(z,lower.tail = F)
 
 # 2nd Solution for statistical estimation - Correct form!
 t <- R_Ozone_Pressure * sqrt(nrow(y) - 2) / sqrt(1 - R_Ozone_Pressure^2) #
