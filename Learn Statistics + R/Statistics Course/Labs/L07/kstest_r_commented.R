@@ -4,7 +4,7 @@
 # Created on: 04-Dec-20
 
 
-setwd("C:/Users/Denis/Documents/Afeka Studies/Year 2 - Sem A/Statistics/Statistics/Practice6")
+setwd("C:/Projects/Statistics/L07")
 rm(list = ls())
 
 # load data and show distributions

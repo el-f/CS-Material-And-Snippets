@@ -1,4 +1,4 @@
-setwd("C:/Projects/Statistics")
+setwd("C:/Projects/Statistics/L05")
 rm(list = ls())
 library(mlbench)
 # list the contents of the library

@@ -1,5 +1,5 @@
 # Multiple hypothesis testing ANOVA
-setwd("D:/afeka_st/targil13/")
+setwd("C:/Projects/Statistics/L13")
 rm(list = ls())
 library("car")
 

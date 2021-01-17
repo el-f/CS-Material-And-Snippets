@@ -1,6 +1,6 @@
 'this tutorial practices analysis of contigency tables by ch2/fisher exact test'
 
-setwd("C:/Projects/Statistics/L8")
+setwd("C:/Projects/Statistics/L08")
 rm(list = ls())
 # init data from question in a table format
 df <- data.frame(Israel = c(45, 15), Abroad = c(31, 17), row.names = c("won", "lost"))

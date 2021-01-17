@@ -1,6 +1,6 @@
 'this tutorial practices kolmogorov-smirnov test'
 
-setwd("C:/Projects/Statistics/L7")
+setwd("C:/Projects/Statistics/L07")
 rm(list = ls())
 
 # load data and show distributions

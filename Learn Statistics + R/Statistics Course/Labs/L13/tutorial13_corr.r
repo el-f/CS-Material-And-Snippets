@@ -1,5 +1,5 @@
 # Correlation
-setwd("D:/Hadas/courses/2020/10015 Statistics for Exact Sciences/13/tutorial/")
+setwd("C:/Projects/Statistics/L13")
 rm(list = ls())
 library(mlbench)
 # load data

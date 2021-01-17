@@ -1,4 +1,4 @@
-setwd("C:/Projects/Statistics")
+setwd("C:/Projects/Statistics/L06")
 rm(list = ls())
 p_expected <-  c(0.5, 0.3, 0.18, 0.02)
 observed <- c(115, 76, 45, 4)

@@ -1,4 +1,4 @@
-setwd("C:/Projects/Statistics")
+setwd("C:/Projects/Statistics/L01_02")
 rm(list = ls())
 library(ggplot2)
 library(tidyr)

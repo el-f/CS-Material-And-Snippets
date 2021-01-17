@@ -1,4 +1,4 @@
-setwd("C:/Projects/Statistics/L9")
+setwd("C:/Projects/Statistics/L09")
 rm(list = ls())
 library("car")
 
