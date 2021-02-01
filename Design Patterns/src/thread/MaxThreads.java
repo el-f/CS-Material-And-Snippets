@@ -14,8 +14,8 @@ public class MaxThreads {
                 for (; ; ) {
                     try {
                         Thread.sleep(1000);
-                    } catch (Exception e) {
-                        System.err.println(e);
+                    } catch (InterruptedException e) {
+                        System.err.println(e.toString());
                     }
                 }
             }).start();
