@@ -1,4 +1,4 @@
-package Build_Design_Pattern;
+package builder;
 
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public class BankAccount {
