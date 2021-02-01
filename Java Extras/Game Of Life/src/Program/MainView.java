@@ -131,7 +131,8 @@ public class MainView extends VBox {
         );
 
         reset();
-        System.out.println(simulation.height + " " + simulation.width);
+        System.out.println("Initialized simulation...");
+        System.out.println("Height: "+ simulation.height + ", Width: " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
         updateModeIndicator();
@@ -171,13 +172,13 @@ public class MainView extends VBox {
             int simX = (int) Math.floor(simCoord.getX());
             int simY = (int) Math.floor(simCoord.getY());
             switch (drawMode) {
-                case 0:
+                case ERASE_MODE:
                     simulation.setDead(simY, simX);
                     break;
-                case 1:
+                case DRAW_MODE:
                     simulation.setAlive(simY, simX);
                     break;
-                case 2:
+                case TOGGLE_MODE:
                     simulation.toggleState(simY, simX);
                     break;
             }
