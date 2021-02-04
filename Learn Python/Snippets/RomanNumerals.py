@@ -18,14 +18,15 @@ def convert(num):
             1000: 'M',
         }
 
-        # create a  list of all main cases in descending order
+        # create a list of all main cases in descending order
         cases = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 
         result = ""
         for case in cases:
-            if num // case >= 1:
-                result += roman_dict[case] * (num // case)
-                num = num - (num // case) * case
+            case_occurrences = num // case
+            if case_occurrences >= 1:
+                result += roman_dict[case] * case_occurrences
+                num -= case_occurrences * case
         return result
 
     else:
