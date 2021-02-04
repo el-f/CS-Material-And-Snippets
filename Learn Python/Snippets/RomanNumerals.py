@@ -1,6 +1,6 @@
 # Convert Integer up to a 1000 to a roman numeral
-def convert(n):
-    if n <= 1000:
+def convert(num):
+    if num <= 1000:
         # create dict of integer to roman digits mapping
         roman_dict = {
             1: 'I',
@@ -17,20 +17,21 @@ def convert(n):
             900: 'CM',
             1000: 'M',
         }
-        # create a  list of all the numbers in descending order
-        arr = [1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000][::-1]
-        # empty list for characters
+
+        # create a  list of all main cases in descending order
+        cases = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+
         result = ""
-        for i in arr:
-            if n // i >= 1:
-                result += roman_dict[i] * (n // i)
-                n = n - (n // i) * i
+        for case in cases:
+            if num // case >= 1:
+                result += roman_dict[case] * (num // case)
+                num = num - (num // case) * case
         return result
 
     else:
         return None
 
 
-print(convert(928))
-print(convert(124))
-print(convert(239))
+print(convert(928))  # CMXXVIII
+print(convert(124))  # CXXIV
+print(convert(239))  # CCXXXIX
