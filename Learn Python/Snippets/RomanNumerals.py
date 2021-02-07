@@ -3,30 +3,27 @@ def convert(num):
     if num <= 1000:
         # create dict of integer to roman digits mapping
         roman_dict = {
-            1: 'I',
-            4: 'IV',
-            5: 'V',
-            9: 'IX',
-            10: 'X',
-            40: 'XV',
-            50: 'L',
-            90: 'XC',
-            100: 'C',
-            400: 'CD',
-            500: 'D',
-            900: 'CM',
             1000: 'M',
+            900: 'CM',
+            500: 'D',
+            400: 'CD',
+            100: 'C',
+            90: 'XC',
+            50: 'L',
+            40: 'XV',
+            10: 'X',
+            9: 'IX',
+            5: 'V',
+            4: 'IV',
+            1: 'I',
         }
 
-        # create a list of all main cases in descending order
-        cases = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-
         result = ""
-        for case in cases:
-            case_occurrences = num // case
+        for key in roman_dict.keys():
+            case_occurrences = num // key
             if case_occurrences >= 1:
-                result += roman_dict[case] * case_occurrences
-                num -= case_occurrences * case
+                result += roman_dict[key] * case_occurrences
+                num -= case_occurrences * key
         return result
 
     else:
