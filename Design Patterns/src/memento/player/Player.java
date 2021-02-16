@@ -1,4 +1,4 @@
-package memento;
+package memento.player;
 
 public class Player implements Originator {
 

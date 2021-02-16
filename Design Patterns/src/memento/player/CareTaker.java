@@ -1,4 +1,4 @@
-package memento;
+package memento.player;
 
 import java.util.ArrayList;
 import java.util.List;
