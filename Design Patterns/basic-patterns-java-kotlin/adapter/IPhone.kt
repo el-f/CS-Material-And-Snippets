@@ -1,7 +1,6 @@
-package adapter;
+package adapter
 
-public interface IPhone {
-    String getName();
-
-    void chargeIPhone();
+interface IPhone {
+    val name: String?
+    fun chargeIPhone()
 }

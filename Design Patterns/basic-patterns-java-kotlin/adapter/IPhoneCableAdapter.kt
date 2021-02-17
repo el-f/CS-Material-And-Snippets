@@ -1,16 +1,9 @@
-package adapter;
+package adapter
 
-public class IPhoneCableAdapter implements SamsungCable {
-    private IPhoneCable iphoneCable;
 
-    public IPhoneCableAdapter(IPhoneCable iphoneCable) {
-        this.iphoneCable = iphoneCable;
+class IPhoneCableAdapter(private val iphoneCable: IPhoneCable) : SamsungCable {
+    override fun connectToSamsung(samsung: Samsung?) {
+        println("Iphone Cable Adapter Connected to " + samsung!!.name)
+        samsung.chargeSamsung()
     }
-
-    @Override
-    public void connectToSamsung(Samsung samsung) {
-        System.out.println("Iphone Cable Adapter Connected to " + samsung.getName());
-        samsung.chargeSamsung();
-    }
-
 }

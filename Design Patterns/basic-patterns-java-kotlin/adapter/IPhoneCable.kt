@@ -1,5 +1,5 @@
-package adapter;
+package adapter
 
-public interface IPhoneCable {
-    void connectToIPhone(IPhone iphone);
+interface IPhoneCable {
+    fun connectToIPhone(iphone: IPhone?)
 }

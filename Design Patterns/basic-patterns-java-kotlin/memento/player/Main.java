@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         CareTaker ct = new CareTaker();
         Player p = new Player("Yosi");
-        Player p2 = new Player("Mosher");
+        Player p2 = new Player("Moshe");
         System.out.println(p);
 
         p.setLevel(5);

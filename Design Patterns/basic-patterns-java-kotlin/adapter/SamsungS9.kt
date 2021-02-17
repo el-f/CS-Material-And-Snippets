@@ -1,15 +1,10 @@
-package adapter;
+package adapter
 
-public class SamsungS9 implements Samsung {
+class SamsungS9 : Samsung {
+    override val name: String
+        get() = "Samsung S9"
 
-    @Override
-    public String getName() {
-        return "Samsung S9";
+    override fun chargeSamsung() {
+        println("$name is charging...")
     }
-
-    @Override
-    public void chargeSamsung() {
-        System.out.println(getName() + " is charging...");
-    }
-
 }

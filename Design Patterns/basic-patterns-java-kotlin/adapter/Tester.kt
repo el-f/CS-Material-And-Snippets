@@ -1,16 +1,12 @@
-package adapter;
+package adapter
 
-public class Tester {
 
-    public static void main(String[] args) {
-        IPhone iPhoneX = new IPhoneX();
-        IPhoneCable whiteCable = new WhiteIPhoneCable();
-        whiteCable.connectToIPhone(iPhoneX);
+fun main() {
+    val iPhoneX: IPhone = IPhoneX()
+    val whiteCable: IPhoneCable = WhiteIPhoneCable()
+    whiteCable.connectToIPhone(iPhoneX)
 
-        Samsung s9 = new SamsungS9();
-        IPhoneCableAdapter adapter = new IPhoneCableAdapter(whiteCable);
-        adapter.connectToSamsung(s9);
-
-    }
-
+    val s9: Samsung = SamsungS9()
+    val adapter = IPhoneCableAdapter(whiteCable)
+    adapter.connectToSamsung(s9)
 }

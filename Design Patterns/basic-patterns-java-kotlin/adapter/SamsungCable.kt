@@ -1,5 +1,5 @@
-package adapter;
+package adapter
 
-public interface SamsungCable {
-    void connectToSamsung(Samsung samsung);
+interface SamsungCable {
+    fun connectToSamsung(samsung: Samsung?)
 }

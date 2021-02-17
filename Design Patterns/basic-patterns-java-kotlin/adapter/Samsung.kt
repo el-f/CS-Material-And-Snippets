@@ -1,7 +1,6 @@
-package adapter;
+package adapter
 
-public interface Samsung {
-    String getName();
-
-    void chargeSamsung();
+interface Samsung {
+    val name: String?
+    fun chargeSamsung()
 }

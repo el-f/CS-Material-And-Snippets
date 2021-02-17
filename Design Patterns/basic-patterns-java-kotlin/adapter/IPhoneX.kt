@@ -1,15 +1,10 @@
-package adapter;
+package adapter
 
-public class IPhoneX implements IPhone {
+class IPhoneX : IPhone {
+    override val name: String
+        get() = "IPhone X"
 
-    @Override
-    public String getName() {
-        return "IPhone X";
+    override fun chargeIPhone() {
+        println("$name is charging...")
     }
-
-    @Override
-    public void chargeIPhone() {
-        System.out.println(getName() + " is charging...");
-    }
-
 }

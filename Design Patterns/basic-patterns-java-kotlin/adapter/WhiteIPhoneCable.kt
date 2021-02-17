@@ -1,11 +1,9 @@
-package adapter;
+package adapter
 
-public class WhiteIPhoneCable implements IPhoneCable {
 
-    @Override
-    public void connectToIPhone(IPhone iphone) {
-        System.out.println("Iphone Cable Connected to " + iphone.getName());
-        iphone.chargeIPhone();
+class WhiteIPhoneCable : IPhoneCable {
+    override fun connectToIPhone(iphone: IPhone?) {
+        println("Iphone Cable Connected to " + iphone!!.name)
+        iphone.chargeIPhone()
     }
-
 }
