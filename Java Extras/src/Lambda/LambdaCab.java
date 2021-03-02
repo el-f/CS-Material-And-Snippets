@@ -1,58 +1,55 @@
 package Lambda;
 
-interface Cab {// when an interface has exactly 1 abstract method it's called functional
-	void bookCab(); // abstract of cause
+// when an interface has exactly 1 (abstract) method it's called functional
+
+interface Cab {
+    void bookCab();
 }
 
-interface Cab2 {// when an interface has exactly 1 abstract method it's called functional
-	void bookCab(String source, String dest); // abstract of cause
+interface Cab2 {
+    void bookCab(String source, String dest);
 }
 
-interface Cab3 {// when an interface has exactly 1 abstract method it's called functional
-	int bookCab(String source, String dest); // abstract of cause
+interface Cab3 {
+    int bookCab(String source, String dest);
 }
 
-//class Uber implements Cab {
-//	public void bookCab() {
-//		System.out.println("uber booked!");
-//	}
-//}
 public class LambdaCab {
 
-	static int instanceVar = 10;
+    public static void main(String[] args) {
 
-	static int sVar = 100;
+//        1.
+        Cab polyCab = new Uber(); //polymorphic
+        polyCab.bookCab();
 
-	public static void main(String[] args) {
+//        2.
+        Cab anonCab = new Cab() { // anonymous class
+            @Override
+            public void bookCab() {
+                System.out.println("uber booked!");
+            }
+        };
+        anonCab.bookCab();
 
-		// 1.
-//		Cab cab = new Uber(); //polymorphic
-//		cab.bookCab();
-		// 2.
-//		Cab cab = new Cab() { // anonymous class
-//
-//			@Override
-//			public void bookCab() {
-//				System.out.println("uber booked!");
-//			}
-//		};
-//		cab.bookCab();
-		// 3.
-		Cab cab = () -> { // Lambda
-			System.out.println("uber booked!");
-		};
-		cab.bookCab();
+//        3.
+        Cab cab = () -> System.out.println("uber booked!"); // Lambda
+        cab.bookCab();
 
-		Cab2 cab2 = (s, d) -> System.out.println("going from " + s + " to " + d);
-		cab2.bookCab("tel-aviv", "jeruslaem");
+        Cab2 cab2 = (s, d) -> System.out.println("going from " + s + " to " + d);
+        cab2.bookCab("tel-aviv", "jeruslaem");
 
-		Cab3 cab3 = (s, d) -> {
-			System.out.println("going from " + s + " to " + d);
-			System.out.println("insVar is: " + instanceVar);
-			return 180;
-		};
-		System.out.println(cab3.bookCab("haifa", "LA"));
+        Cab3 cab3 = (s, d) -> {
+            System.out.println("going from " + s + " to " + d);
+            return 180;
+        };
+        System.out.println(cab3.bookCab("haifa", "LA"));
+    }
 
-	}
+    private static class Uber implements Cab {
+        @Override
+        public void bookCab() {
+            System.out.println("uber booked!");
+        }
+    }
 
 }
