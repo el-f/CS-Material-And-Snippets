@@ -1,7 +1,5 @@
 package snippets
 
-import java.util.ArrayList
-
 /*
     Solution for:
     https://www.codewars.com/kata/5426d7a2c2c7784365000783/java
