@@ -17,6 +17,6 @@ INFORMATION FILES:
 
 SQL CODE FILES (In the order of running them):
     1) vac_operation_create.sql     (Tables, Triggers, Procedures, Security)
-    2) vac_operation_insert.sql     (Inserttions into entity/relation tables)
+    2) vac_operation_insert.sql     (Insertions into entity/relation tables)
     3) vac_operation_queries.sql    (Select, Update/Insert/Delete)
 
