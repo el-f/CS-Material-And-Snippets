@@ -18,20 +18,19 @@ int veryAnnoyingCalc(int a, int b, char symbol) {
     return arr[62 - (int) symbol] - ((a - b) & ((a - b) >> (sizeof(int) * 8 - 1)));
 }
 
-// Brute Force Solution - Elazar Fine - github.com/Elfein7Night
+/*
+ *  Brute Force Solution - Elazar Fine - github.com/Elfein7Night
+ *
+ *          sign | operation | return
+ *          -------------------------
+ *            0  |     0     |   b
+ *            0  |     1     |   a
+ *            1  |     0     |   a
+ *            1  |     1     |   b
+ */
 int getMinMax(int a, int b, char symbol) {
-    int operation = (symbol & 0b10) >> 1; // 1: get max, 0: get min
-    int sign = !(1 + ((a - b) >> 31));    // 1: a < b, 0: a > b
-    /*
-     *          sign | operation | return
-     *          -------------------------
-     *            0  |     0     |   b
-     *            0  |     1     |   a
-     *            1  |     0     |   a
-     *            1  |     1     |   b
-     */
-    return (((!sign) & (!operation)) * b) |
-           (((!sign) & operation) * a) |
-           ((sign & (!operation)) * a) |
-           ((sign & operation) * b);
+    int operation = (symbol & 2) >> 1;      // 1: get max, 0: get min
+    int sign = !(1 + ((a - b) >> 31));      // 1: a < b, 0: a > b
+    int xor = sign ^ operation;
+    return xor * a | !xor * b;
 }
