@@ -30,3 +30,20 @@ int minMax(int a, int b, char symbol) {
     int abs = ((a - b) + sign) ^ sign;
     return ((a + b) - choice * abs) / 2;
 }
+
+/*
+ *  Trivial Solution - Elazar Fine - github.com/Elfein7Night
+ *
+ *          choice | result | return
+ *          -------------------------
+ *            0  |     0     |   a
+ *            0  |     1     |   b
+ *            1  |     0     |   b
+ *            1  |     1     |   a
+ */
+int trivialMM(int a, int b, char symbol) {
+    int choice = symbol == '>';
+    int result = a > b;
+    int xor = choice ^ result;
+    return xor * b + !xor * a;
+}
