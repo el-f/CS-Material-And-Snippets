@@ -5,21 +5,9 @@
  *      without using 'if' statements
  */
 
-// Mathematical Solution - Denis Karabitski - github.com/denisaka1
-int minMax(int a, int b, char symbol) {
-    char tempSymbol = '=';
-    int result = tempSymbol - symbol;
-    return ((a + b) + result * (a - b)) / 2;
-}
-
-// Programming Solution - Barak Moskovich - github.com/BarakMoskovich
-int veryAnnoyingCalc(int a, int b, char symbol) {
-    int arr[] = {a, 0, b};
-    return arr[62 - (int) symbol] - ((a - b) & ((a - b) >> (sizeof(int) * 8 - 1)));
-}
 
 /*
- *  Brute Force Solution - Elazar Fine - github.com/Elfein7Night
+ *  Solution - Elazar Fine - github.com/Elfein7Night
  *
  *          sign | operation | return
  *          -------------------------
