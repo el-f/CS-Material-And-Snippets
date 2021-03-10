@@ -22,3 +22,11 @@ int getMinMax(int a, int b, char symbol) {
     int xor = sign ^ operation;
     return xor * a | !xor * b;
 }
+
+// Another Solution - Denis Karabitski - github.com/denisaka1
+int minMax(int a, int b, char symbol) {
+    int choice = '=' - symbol;
+    int sign = (a - b) >> (sizeof(int) * 8 - 1);
+    int abs = ((a - b) + sign) ^ sign;
+    return ((a + b) - choice * abs) / 2;
+}
