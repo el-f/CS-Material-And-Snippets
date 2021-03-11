@@ -10,7 +10,7 @@ def convert(num):
             100: 'C',
             90: 'XC',
             50: 'L',
-            40: 'XV',
+            40: 'XL',
             10: 'X',
             9: 'IX',
             5: 'V',
@@ -33,3 +33,4 @@ def convert(num):
 print(convert(928))  # CMXXVIII
 print(convert(124))  # CXXIV
 print(convert(239))  # CCXXXIX
+print(convert(3))
