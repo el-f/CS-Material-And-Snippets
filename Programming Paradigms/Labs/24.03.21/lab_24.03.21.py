@@ -62,19 +62,25 @@ def twoLetterSubs_V2(arr):
 
 
 if __name__ == '__main__':
-    is_palindrome("racecar")
+    print("'racecar' is a palindrome: ", is_palindrome("racecar"))
+    print("'palindrome' is a palindrome: ", is_palindrome("palindrome"))
+
     easy_filter()
+
     print(encrypt("this is so fun"))
     print(decrypt("tthhiss  iss  sso  ffunn"))
+
     # recursive_bs(99)
 
     strings = ["wow", "this", "is", "so", ["easy", "long_ass_word"], ["hmmm"], "lol"]
     print(longest_string(strings))
 
     print(lengths(strings[:4]))
+
     l1 = ["a", "b", "c"]
     l2 = ["1", "2", "3", "4"]
     print(concat(l1, l2))
     print(concat_zip_version(l1, l2))
+
     print(twoLetterSubs(['hello', 'world']))
     print(twoLetterSubs_V2(['hello', 'world']))
