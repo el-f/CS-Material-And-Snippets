@@ -49,15 +49,15 @@ def concat(list1, list2):
     return [w1 + w2 for w1 in list1 for w2 in list2]
 
 
-def concat_zip_version(list1, list2):
+def concat_non_cartesian(list1, list2):
     return [w1 + w2 for w1, w2 in zip(list1, list2)]
 
 
-def twoLetterSubs(arr):
+def two_letter_subs(arr):
     return sum([[word[i:i + 2] for i in range(len(word) - 1)] for word in arr], [])
 
 
-def twoLetterSubs_V2(arr):
+def two_letter_subs_v2(arr):
     return [word[i:i + 2] for word in arr for i in range(len(word) - 1)]
 
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
     l1 = ["a", "b", "c"]
     l2 = ["1", "2", "3", "4"]
     print(concat(l1, l2))
-    print(concat_zip_version(l1, l2))
+    print(concat_non_cartesian(l1, l2))
 
-    print(twoLetterSubs(['hello', 'world']))
-    print(twoLetterSubs_V2(['hello', 'world']))
+    print(two_letter_subs(['hello', 'world']))
+    print(two_letter_subs_v2(['hello', 'world']))
