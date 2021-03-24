@@ -16,7 +16,8 @@ fun main() {
         /*
          * The loop stops already at half the number because proper divisors of a number
          * are always equal to or less than half the number.
-         */for (i in 1..num1 / 2) {
+         */
+        for (i in 1..num1 / 2) {
             if (num1 % i == 0) sum1 += i
         }
         num2 = sum1
