@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     # recursive_bs(99)
 
-    strings = ["wow", "this", "is", "so", ["easy", "long_ass_word"], ["hmmm"], "lol"]
+    strings = ["wow", "this", "is", "so", ["easy", "long_ass_word"], ["hmmm", [[[[["deep"]]]]]], "lol"]
     print(longest_string(strings))
 
     print(lengths(strings[:4]))
