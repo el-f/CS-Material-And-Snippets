@@ -7,15 +7,17 @@ from functools import cache
 
 @cache
 def fib(n: int):
-    if n <= 0:
-        raise ValueError("n must be positive")
+    if n < 0:
+        raise ValueError("n can't be negative")
+    if n == 0:
+        return 0
     if n == 1 or n == 2:
         return 1
     return fib(n - 1) + fib(n - 2)
 
 
 def main():
-    for i in range(1, 401):
+    for i in range(401):
         print(i, fib(i))
     print("done!")
 
