@@ -14,7 +14,7 @@ msg1:   .asciiz "\n The positive even numbers of array1:\n "
 .text
 .globl main
 
-main:							# main program entry
+main:						# main program entry
 
 	li      $v0,4				# print message
 	la      $a0,msg1
@@ -39,10 +39,10 @@ dont_div_by_four:
 	move    $t2,$a0
 	andi    $t2,0x1				# check if divisible by 2 using mask of 0b1=0x1
 	bnez    $t2,cont
-	syscall						# print the number (still in $a0)
+	syscall					# print the number (still in $a0)
 	li      $v0,11
 	la      $a0,32
-	syscall						# print space
+	syscall					# print space
 
 cont:
 	addi    $a1,$a1,4
