@@ -27,7 +27,7 @@ loop:
 	sb      $t7,str($t0)
 	j       cont
 not_zero:
-	andi    $t1,$t1,0x1 #mask with 1
+	andi    $t1,$t1,0x1		# mask with 1
 	bnez    $t1,not_even
 	sb      $t5,str($t0)
 	j       cont
@@ -38,7 +38,7 @@ cont:
 	addi    $t0,$t0,1
 	blt     $t0,7,loop
 
-	li      $v0,4 #print result
+	li      $v0,4			# print result
 	la      $a0,str
 	syscall	
 exit:
