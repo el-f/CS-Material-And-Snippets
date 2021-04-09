@@ -14,7 +14,7 @@ msg6:	.asciiz "\n The string after reduction in reverse is:\n "
 .text
 .globl main
 
-main:                   # main program entry
+main:				# main program entry
 #############
 ##### A #####
 li      $v0,4
