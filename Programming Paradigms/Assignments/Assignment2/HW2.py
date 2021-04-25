@@ -98,32 +98,28 @@ def q8a(a, b):
 
 
 # q8a with user_choice
+# I added debug prints for easier understanding of the function behavior.
 def q8b(a, b):
     lower, upper = min(a, b), max(a, b)
     number = lower
     mode = 'U'
     while True:
-        yield number
+        user_choice = yield number
 
-        print("Choose direction for next iteration:")
-        user_input = input("Please enter a number [positive - count up, negative - count down, 0 / nothing / non-number"
-                           " - default]: ")
-        try:
-            if int(user_input) != 0:
-                mode = 'U' if int(user_input) > 0 else 'D'
-        except ValueError:
-            pass
+        if user_choice is not None:
+            print(f"choosing dir based on user choice: {user_choice}")
+            mode = 'U' if int(user_choice) >= 0 else 'D'
 
         if mode == 'U':
             number += 1
             if number >= upper:
-                print("got to the edge! changing direction!")
+                print("got to the upper edge! changing direction!")
                 mode = 'D'
                 number = min(upper, number)
         else:
             number -= 1
             if number <= lower:
-                print("got to the edge! changing direction!")
+                print("got to the lower edge! changing direction!")
                 mode = 'U'
                 number = max(lower, number)
 
@@ -177,5 +173,11 @@ if __name__ == "__main__":
 
     # q8b #
     g2 = q8b(3, 11)
-    for i in range(20):
+    for i in range(5):
+        print(next(g2))
+    print(g2.send(-1))
+    for i in range(15):
+        print(next(g2))
+    print(g2.send(1))
+    for i in range(5):
         print(next(g2))
