@@ -2,6 +2,7 @@ package Program;
 
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -112,6 +114,11 @@ public class MainView extends VBox {
         HBox pause_reset = new HBox(pauseButton, resetButton, clearButton);
         pause_reset.setSpacing(10);
 
+        Arrays.asList(drawIndicator, eraseIndicator, toggleIndicator).forEach(label -> label.setCursor(Cursor.HAND));
+        handleMouseAsKey(drawIndicator, KeyCode.D);
+        handleMouseAsKey(eraseIndicator, KeyCode.E);
+        handleMouseAsKey(toggleIndicator, KeyCode.T);
+
         HBox keys = new HBox(new Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator);
         keys.setSpacing(10);
 
@@ -132,10 +139,14 @@ public class MainView extends VBox {
 
         reset();
         System.out.println("Initialized simulation...");
-        System.out.println("Height: "+ simulation.height + ", Width: " + simulation.width);
+        System.out.println("Height: " + simulation.height + ", Width: " + simulation.width);
         affine = new Affine();
         affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
         updateModeIndicator();
+    }
+
+    private void handleMouseAsKey(Label label, KeyCode kc) {
+        label.setOnMousePressed(e -> onKeyPressed(new KeyEvent(null, null, null, kc, false, false, false, false)));
     }
 
     private void updateModeIndicator() {
