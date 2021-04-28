@@ -13,7 +13,7 @@ def q1a(_input_num):
             return self
 
         def __next__(self):
-            while self.current_index < input_num:
+            while self.current_index < self.input_num:
                 self.current_index += 1
                 if all(self.current_index % y != 0 for y in range(2, int(self.current_index ** 0.5) + 1)):
                     return self.current_index
