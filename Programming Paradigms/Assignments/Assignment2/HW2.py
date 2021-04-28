@@ -1,32 +1,26 @@
 # Fill in the functions content & think about the return values. (Don't forget to remove the 'pass' statement)
 # In questions with classes you can create the class & write the logic inside the function.
 
-# Iterator template to eliminate code duplication:
-class MyIterator:
-    def __init__(self):  # add parameters
-        self.arr = []
-        self.current_index = -1
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        self.current_index += 1
-
-        if self.current_index >= len(self.arr):
-            raise StopIteration
-
-        return self.arr[self.current_index]
-
 
 # Class
 def q1a(_input_num):
-    class PrimeSmallerThan(MyIterator):
-        def __init__(self):  # add parameters
-            super().__init__()
-            self.arr = [x for x in range(2, _input_num + 1) if all(x % y != 0 for y in range(2, int(x ** 0.5) + 1))]
+    class PrimeSmallerThan:
+        def __init__(self, _input_num):  # add parameters
+            self.current_index = 1
+            self.input_num = _input_num
 
-    instance = PrimeSmallerThan()  # add parameters
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            while self.current_index < input_num:
+                self.current_index += 1
+                if all(self.current_index % y != 0 for y in range(2, int(self.current_index ** 0.5) + 1)):
+                    return self.current_index
+
+            raise StopIteration
+
+    instance = PrimeSmallerThan(_input_num)  # add parameters
     return instance
 
 
@@ -65,12 +59,25 @@ def q6a(str1: str, str2: str):
 
 # Class
 def q6b(str1, str2):
-    class StringsCompare(MyIterator):  # add class functions
-        def __init__(self):  # add parameters
-            super().__init__()
-            self.arr = [str1[j] for j in range(len(str1)) if str1[j] == str2[j]]
+    class StringsCompare:  # add class functions
+        def __init__(self, _str1, _str2):  # add parameters
+            self.str1 = _str1
+            self.str2 = _str2
+            self.current_index = -1
+            self.arr = [self.str1[j] for j in range(len(self.str1)) if self.str1[j] == self.str2[j]]
 
-    instance = StringsCompare()  # add parameters
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            self.current_index += 1
+
+            if self.current_index >= len(self.arr):
+                raise StopIteration
+
+            return self.arr[self.current_index]
+
+    instance = StringsCompare(str1, str2)  # add parameters
     return instance
 
 
