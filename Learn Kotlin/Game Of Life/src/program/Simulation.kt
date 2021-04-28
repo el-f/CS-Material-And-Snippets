@@ -1,4 +1,4 @@
-package Program
+package program
 
 class Simulation(private var board: Array<IntArray>) {
     @JvmField

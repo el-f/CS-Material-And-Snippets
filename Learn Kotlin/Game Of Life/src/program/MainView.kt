@@ -1,224 +1,222 @@
-package Program;
+package program
 
-import javafx.application.Platform;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.transform.Affine;
-import javafx.scene.transform.NonInvertibleTransformException;
+import javafx.scene.layout.VBox
+import javafx.scene.transform.Affine
+import javafx.application.Platform
+import javafx.scene.input.KeyCode
+import javafx.scene.transform.NonInvertibleTransformException
+import javafx.scene.control.Slider
+import javafx.event.EventHandler
+import javafx.scene.Cursor
+import javafx.scene.canvas.Canvas
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.input.KeyEvent
+import javafx.scene.input.MouseEvent
+import javafx.scene.layout.HBox
+import javafx.scene.paint.Color
+import java.util.*
+import kotlin.math.floor
 
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+class MainView : VBox() {
 
-
-public class MainView extends VBox {
-    private final Affine affine;
-    private final Canvas canvas;
-    private Simulation simulation;
-    private Timer timer;
-    private int drawMode = DRAW_MODE;
-    static final int SLOW_SPEED = 500;
-    static final int FAST_SPEED = 50;
-    static final int SONIC = 1;
-    private int currentSpeed = FAST_SPEED;
-    private boolean running = false;
-    private final Label drawIndicator = new Label("D - Draw"),
-            toggleIndicator = new Label("T - Toggle"),
-            eraseIndicator = new Label("E - Erase");
-    public static final int ERASE_MODE = 0, DRAW_MODE = 1, TOGGLE_MODE = 2;
-
-    void pause() {
-        running = false;
-        timer.cancel();
+    companion object Constants {
+        const val SLOW_SPEED = 500
+        const val FAST_SPEED = 50
+        const val SONIC = 1
+        const val ERASE_MODE = 0
+        const val DRAW_MODE = 1
+        const val TOGGLE_MODE = 2
     }
 
-    void resume() {
-        timer.cancel();
-        running = true;
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-                           @Override
-                           public void run() {
-                               // Using runLater to avoid thread crashes.
-                               Platform.runLater(() -> {
-                                   simulation.step();
-                                   draw();
-                               });
-                           }
-                       }, 15, currentSpeed
-        );
+    private val affine: Affine
+    private val canvas: Canvas
+    private var simulation: Simulation? = null
+    private var timer: Timer
+    private var drawMode = DRAW_MODE
+    private var currentSpeed = FAST_SPEED
+    private var running = false
+    private val drawIndicator = Label("D - Draw")
+    private val toggleIndicator = Label("T - Toggle")
+    private val eraseIndicator = Label("E - Erase")
+
+    private fun pause() {
+        running = false
+        timer.cancel()
     }
 
-    void changeSpeed(int speed) {
-        currentSpeed = speed;
-        if (running) resume();
-        else pause();
+    private fun resume() {
+        timer.cancel()
+        running = true
+        timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                // Using runLater to avoid thread crashes.
+                Platform.runLater {
+                    simulation!!.step()
+                    draw()
+                }
+            }
+        }, 15, currentSpeed.toLong())
     }
 
-    void reset() {
-        simulation = new Simulation(Simulation.DEFAULT_STARTER);
-        simulation.step();
+    private fun changeSpeed(speed: Int) {
+        currentSpeed = speed
+        if (running) resume() else pause()
     }
 
-    public MainView() {
-        timer = new Timer();
+    private fun reset() {
+        simulation = Simulation(Simulation.DEFAULT_STARTER)
+        simulation!!.step()
+    }
 
-        Button stepButton = new Button("Step");
-        stepButton.setOnAction(actionEvent -> {
-            simulation.step();
-            draw();
-        });
+    private fun handleMouseAsKey(label: Label, kc: KeyCode) {
+        label.onMousePressed = EventHandler { onKeyPressed(KeyEvent(null, null, null, kc, false, false, false, false)) }
+    }
 
-        Button runButton = new Button("Run");
-        runButton.setOnAction(event -> resume());
+    private fun updateModeIndicator() {
+        when (drawMode) {
+            DRAW_MODE -> {
+                drawIndicator.textFill = Color.RED
+                eraseIndicator.textFill = Color.BLACK
+                toggleIndicator.textFill = Color.BLACK
+            }
+            ERASE_MODE -> {
+                drawIndicator.textFill = Color.BLACK
+                eraseIndicator.textFill = Color.RED
+                toggleIndicator.textFill = Color.BLACK
+            }
+            TOGGLE_MODE -> {
+                drawIndicator.textFill = Color.BLACK
+                eraseIndicator.textFill = Color.BLACK
+                toggleIndicator.textFill = Color.RED
+            }
+        }
+    }
 
-        Slider slider = new Slider();
-        slider.setValue(currentSpeed);
-        slider.setMax(SLOW_SPEED);
-        slider.setMin(SONIC);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        slider.valueProperty().addListener((OBS, OLD, NEW) -> changeSpeed(NEW.intValue()));
-        slider.setMinWidth(650);
+    private fun onKeyPressed(keyEvent: KeyEvent) {
+        when (keyEvent.code) {
+            KeyCode.D -> drawMode = DRAW_MODE
+            KeyCode.E -> drawMode = ERASE_MODE
+            KeyCode.T -> drawMode = TOGGLE_MODE
+            else -> {}
+        }
+        updateModeIndicator()
+    }
 
-        HBox runBox = new HBox(runButton, new Label("Delay Between Steps (ms) : "), slider);
-        runBox.setSpacing(10);
-        setSpacing(10);
+    private fun handleDraw(mouseEvent: MouseEvent) {
+        try {
+            val simCoord = affine.inverseTransform(mouseEvent.x, mouseEvent.y)
+            val simX = floor(simCoord.x).toInt()
+            val simY = floor(simCoord.y).toInt()
+            when (drawMode) {
+                ERASE_MODE -> simulation!!.setDead(simY, simX)
+                DRAW_MODE -> simulation!!.setAlive(simY, simX)
+                TOGGLE_MODE -> simulation!!.toggleState(simY, simX)
+            }
+            draw()
+        } catch (e: NonInvertibleTransformException) {
+            e.printStackTrace()
+        }
+    }
 
-        Button pauseButton = new Button("Pause");
-        pauseButton.setOnAction(event -> pause());
+    fun draw() {
+        val g = canvas.graphicsContext2D
+        g.fill = Color.LIGHTGRAY
+        g.fillRect(0.0, 0.0, canvas.width, canvas.width)
+        g.transform = affine
+        g.fill = Color.BLACK
+        for (r in 0 until simulation!!.height) {
+            for (c in 0 until simulation!!.width) {
+                if (simulation!!.getCellValue(r, c) == 1) {
+                    g.fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
+                }
+            }
+        }
+        g.lineWidth = 0.05
+        g.stroke = Color.LIGHTGRAY
+        var x = 0
+        while (x <= canvas.width) {
+            g.strokeLine(x.toDouble(), 0.0, x.toDouble(), canvas.width)
+            x++
+        }
+        var y = 0
+        while (y <= canvas.height) {
+            g.strokeLine(0.0, y.toDouble(), canvas.height, y.toDouble())
+            y++
+        }
+    }
 
-        Button resetButton = new Button("Reset");
-        resetButton.setOnAction(event -> {
-            reset();
-            draw();
-        });
 
-        Button clearButton = new Button("Clear");
-        clearButton.setOnAction(event -> {
-            simulation.clear();
-            draw();
-        });
+    init {
+        timer = Timer()
+        val stepButton = Button("Step")
+        stepButton.onAction = EventHandler {
+            simulation!!.step()
+            draw()
+        }
 
-        HBox pause_reset = new HBox(pauseButton, resetButton, clearButton);
-        pause_reset.setSpacing(10);
+        val runButton = Button("Run")
+        runButton.onAction = EventHandler { resume() }
 
-        Arrays.asList(drawIndicator, eraseIndicator, toggleIndicator).forEach(label -> label.setCursor(Cursor.HAND));
-        handleMouseAsKey(drawIndicator, KeyCode.D);
-        handleMouseAsKey(eraseIndicator, KeyCode.E);
-        handleMouseAsKey(toggleIndicator, KeyCode.T);
+        val slider = Slider()
+        slider.value = currentSpeed.toDouble()
+        slider.max = SLOW_SPEED.toDouble()
+        slider.min = SONIC.toDouble()
+        slider.isShowTickLabels = true
+        slider.isShowTickMarks = true
+        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW.toInt()) }
+        slider.minWidth = 650.0
 
-        HBox keys = new HBox(new Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator);
-        keys.setSpacing(10);
+        val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
+        runBox.spacing = 10.0
+        spacing = 10.0
 
-        canvas = new Canvas(950, 708);
+        val pauseButton = Button("Pause")
+        pauseButton.onAction = EventHandler { pause() }
+
+        val resetButton = Button("Reset")
+        resetButton.onAction = EventHandler {
+            reset()
+            draw()
+        }
+
+        val clearButton = Button("Clear")
+        clearButton.onAction = EventHandler {
+            simulation!!.clear()
+            draw()
+        }
+
+        val controlButtons = HBox(pauseButton, resetButton, clearButton)
+        controlButtons.spacing = 10.0
+
+        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach { label -> label.cursor = Cursor.HAND }
+        handleMouseAsKey(drawIndicator, KeyCode.D)
+        handleMouseAsKey(eraseIndicator, KeyCode.E)
+        handleMouseAsKey(toggleIndicator, KeyCode.T)
+
+        val keys = HBox(Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator)
+        keys.spacing = 10.0
+
+        canvas = Canvas(950.0, 708.0)
         // Using runLater to avoid thread crashes.
-        canvas.setOnMousePressed(event -> Platform.runLater(() -> handleDraw(event)));
-        canvas.setOnMouseDragged(event -> Platform.runLater(() -> handleDraw(event)));
+        canvas.onMousePressed = EventHandler { event -> Platform.runLater { handleDraw(event) } }
+        canvas.onMouseDragged = EventHandler { event -> Platform.runLater { handleDraw(event) } }
+        onKeyPressed = EventHandler { keyEvent -> onKeyPressed(keyEvent) }
 
-        setOnKeyPressed(this::onKeyPressed);
-
-        getChildren().addAll(
+        children.addAll(
                 stepButton,
-                pause_reset,
+                controlButtons,
                 runBox,
                 keys,
                 canvas
-        );
+        )
 
-        reset();
-        System.out.println("Initialized simulation...");
-        System.out.println("Height: " + simulation.height + ", Width: " + simulation.width);
-        affine = new Affine();
-        affine.appendScale(canvas.getWidth() / simulation.width, canvas.getHeight() / simulation.height);
-        updateModeIndicator();
-    }
-
-    private void handleMouseAsKey(Label label, KeyCode kc) {
-        label.setOnMousePressed(e -> onKeyPressed(new KeyEvent(null, null, null, kc, false, false, false, false)));
-    }
-
-    private void updateModeIndicator() {
-        switch (drawMode) {
-            case DRAW_MODE:
-                drawIndicator.setTextFill(Color.RED);
-                eraseIndicator.setTextFill(Color.BLACK);
-                toggleIndicator.setTextFill(Color.BLACK);
-                break;
-            case ERASE_MODE:
-                drawIndicator.setTextFill(Color.BLACK);
-                eraseIndicator.setTextFill(Color.RED);
-                toggleIndicator.setTextFill(Color.BLACK);
-                break;
-            case TOGGLE_MODE:
-                drawIndicator.setTextFill(Color.BLACK);
-                eraseIndicator.setTextFill(Color.BLACK);
-                toggleIndicator.setTextFill(Color.RED);
-                break;
-        }
-    }
-
-    private void onKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.D) drawMode = DRAW_MODE;
-        else if (keyEvent.getCode() == KeyCode.E) drawMode = ERASE_MODE;
-        else if (keyEvent.getCode() == KeyCode.T) drawMode = TOGGLE_MODE;
-
-        updateModeIndicator();
-    }
-
-    private void handleDraw(MouseEvent mouseEvent) {
-        try {
-            final Point2D simCoord = affine.inverseTransform(mouseEvent.getX(), mouseEvent.getY());
-            int simX = (int) Math.floor(simCoord.getX());
-            int simY = (int) Math.floor(simCoord.getY());
-            switch (drawMode) {
-                case ERASE_MODE:
-                    simulation.setDead(simY, simX);
-                    break;
-                case DRAW_MODE:
-                    simulation.setAlive(simY, simX);
-                    break;
-                case TOGGLE_MODE:
-                    simulation.toggleState(simY, simX);
-                    break;
-            }
-            draw();
-        } catch (NonInvertibleTransformException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void draw() {
-        GraphicsContext g = canvas.getGraphicsContext2D();
-        g.setFill(Color.LIGHTGRAY);
-        g.fillRect(0, 0, canvas.getWidth(), canvas.getWidth());
-        g.setTransform(affine);
-        g.setFill(Color.BLACK);
-        for (int r = 0; r < simulation.height; r++) {
-            for (int c = 0; c < simulation.width; c++) {
-                if (simulation.getCellValue(r, c) == 1)
-                    g.fillRect(c, r, 1, 1);
-            }
-        }
-
-        g.setLineWidth(0.05f);
-        g.setStroke(Color.LIGHTGRAY);
-        for (int x = 0; x <= canvas.getWidth(); x++) {
-            g.strokeLine(x, 0, x, canvas.getWidth());
-        }
-        for (int y = 0; y <= canvas.getHeight(); y++) {
-            g.strokeLine(0, y, canvas.getHeight(), y);
-        }
+        reset()
+        println("Initialized simulation...")
+        println("Height: " + simulation!!.height + ", Width: " + simulation!!.width)
+        affine = Affine()
+        affine.appendScale(canvas.width / simulation!!.width, canvas.height / simulation!!.height)
+        updateModeIndicator()
     }
 }
