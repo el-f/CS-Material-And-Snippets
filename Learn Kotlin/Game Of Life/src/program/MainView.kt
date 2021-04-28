@@ -24,14 +24,15 @@ class MainView : VBox() {
         const val SLOW_SPEED = 500
         const val FAST_SPEED = 50
         const val SONIC = 1
+
         const val ERASE_MODE = 0
         const val DRAW_MODE = 1
         const val TOGGLE_MODE = 2
     }
 
+    private lateinit var simulation: Simulation
     private val affine: Affine
     private val canvas: Canvas
-    private var simulation: Simulation? = null
     private var timer: Timer
     private var drawMode = DRAW_MODE
     private var currentSpeed = FAST_SPEED
@@ -53,7 +54,7 @@ class MainView : VBox() {
             override fun run() {
                 // Using runLater to avoid thread crashes.
                 Platform.runLater {
-                    simulation!!.step()
+                    simulation.step()
                     draw()
                 }
             }
@@ -67,7 +68,7 @@ class MainView : VBox() {
 
     private fun reset() {
         simulation = Simulation(Simulation.DEFAULT_STARTER)
-        simulation!!.step()
+        simulation.step()
     }
 
     private fun handleMouseAsKey(label: Label, kc: KeyCode) {
@@ -110,9 +111,9 @@ class MainView : VBox() {
             val simX = floor(simCoord.x).toInt()
             val simY = floor(simCoord.y).toInt()
             when (drawMode) {
-                ERASE_MODE -> simulation!!.setDead(simY, simX)
-                DRAW_MODE -> simulation!!.setAlive(simY, simX)
-                TOGGLE_MODE -> simulation!!.toggleState(simY, simX)
+                ERASE_MODE -> simulation.setDead(simY, simX)
+                DRAW_MODE -> simulation.setAlive(simY, simX)
+                TOGGLE_MODE -> simulation.toggleState(simY, simX)
             }
             draw()
         } catch (e: NonInvertibleTransformException) {
@@ -126,9 +127,9 @@ class MainView : VBox() {
         g.fillRect(0.0, 0.0, canvas.width, canvas.width)
         g.transform = affine
         g.fill = Color.BLACK
-        for (r in 0 until simulation!!.height) {
-            for (c in 0 until simulation!!.width) {
-                if (simulation!!.getCellValue(r, c) == 1) {
+        for (r in 0 until simulation.height) {
+            for (c in 0 until simulation.width) {
+                if (simulation.getCellValue(r, c) == 1) {
                     g.fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
                 }
             }
@@ -152,7 +153,7 @@ class MainView : VBox() {
         timer = Timer()
         val stepButton = Button("Step")
         stepButton.onAction = EventHandler {
-            simulation!!.step()
+            simulation.step()
             draw()
         }
 
@@ -183,7 +184,7 @@ class MainView : VBox() {
 
         val clearButton = Button("Clear")
         clearButton.onAction = EventHandler {
-            simulation!!.clear()
+            simulation.clear()
             draw()
         }
 
@@ -214,9 +215,9 @@ class MainView : VBox() {
 
         reset()
         println("Initialized simulation...")
-        println("Height: " + simulation!!.height + ", Width: " + simulation!!.width)
+        println("Height: " + simulation.height + ", Width: " + simulation.width)
         affine = Affine()
-        affine.appendScale(canvas.width / simulation!!.width, canvas.height / simulation!!.height)
+        affine.appendScale(canvas.width / simulation.width, canvas.height / simulation.height)
         updateModeIndicator()
     }
 }
