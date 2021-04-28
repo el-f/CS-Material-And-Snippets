@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
 import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.math.floor
 
 class MainView : VBox() {
@@ -50,15 +51,13 @@ class MainView : VBox() {
         timer.cancel()
         running = true
         timer = Timer()
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                // Using runLater to avoid thread crashes.
-                Platform.runLater {
-                    simulation.step()
-                    draw()
-                }
+        timer.schedule(15, currentSpeed.toLong()) {
+            // Using runLater to avoid thread crashes.
+            Platform.runLater {
+                simulation.step()
+                draw()
             }
-        }, 15, currentSpeed.toLong())
+        }
     }
 
     private fun changeSpeed(speed: Number) {
@@ -100,7 +99,8 @@ class MainView : VBox() {
             KeyCode.D -> drawMode = DRAW_MODE
             KeyCode.E -> drawMode = ERASE_MODE
             KeyCode.T -> drawMode = TOGGLE_MODE
-            else -> {}
+            else -> {
+            }
         }
         updateModeIndicator()
     }
