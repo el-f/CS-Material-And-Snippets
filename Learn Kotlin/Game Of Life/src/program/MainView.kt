@@ -190,7 +190,7 @@ class MainView : VBox() {
         val controlButtons = HBox(pauseButton, resetButton, clearButton)
         controlButtons.spacing = 10.0
 
-        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach { label -> label.cursor = Cursor.HAND }
+        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach { it.cursor = Cursor.HAND }
         handleMouseAsKey(drawIndicator, KeyCode.D)
         handleMouseAsKey(eraseIndicator, KeyCode.E)
         handleMouseAsKey(toggleIndicator, KeyCode.T)
