@@ -21,9 +21,9 @@ import kotlin.math.floor
 class MainView : VBox() {
 
     companion object Constants {
-        const val SLOW_SPEED = 500
-        const val FAST_SPEED = 50
-        const val SONIC = 1
+        const val SLOW_SPEED = 500.0
+        const val FAST_SPEED = 50.0
+        const val SONIC = 1.0
 
         const val ERASE_MODE = 0
         const val DRAW_MODE = 1
@@ -61,8 +61,8 @@ class MainView : VBox() {
         }, 15, currentSpeed.toLong())
     }
 
-    private fun changeSpeed(speed: Int) {
-        currentSpeed = speed
+    private fun changeSpeed(speed: Number) {
+        currentSpeed = speed.toDouble()
         if (running) resume() else pause()
     }
 
@@ -136,14 +136,14 @@ class MainView : VBox() {
         }
         g.lineWidth = 0.05
         g.stroke = Color.LIGHTGRAY
-        var x = 0
+        var x = 0.0
         while (x <= canvas.width) {
-            g.strokeLine(x.toDouble(), 0.0, x.toDouble(), canvas.width)
+            g.strokeLine(x, 0.0, x, canvas.width)
             x++
         }
-        var y = 0
+        var y = 0.0
         while (y <= canvas.height) {
-            g.strokeLine(0.0, y.toDouble(), canvas.height, y.toDouble())
+            g.strokeLine(0.0, y, canvas.height, y)
             y++
         }
     }
@@ -161,12 +161,12 @@ class MainView : VBox() {
         runButton.onAction = EventHandler { resume() }
 
         val slider = Slider()
-        slider.value = currentSpeed.toDouble()
-        slider.max = SLOW_SPEED.toDouble()
-        slider.min = SONIC.toDouble()
+        slider.value = currentSpeed
+        slider.max = SLOW_SPEED
+        slider.min = SONIC
         slider.isShowTickLabels = true
         slider.isShowTickMarks = true
-        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW.toInt()) }
+        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
         slider.minWidth = 650.0
 
         val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
