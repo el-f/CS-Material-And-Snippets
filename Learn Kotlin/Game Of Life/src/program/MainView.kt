@@ -7,16 +7,20 @@ import javafx.scene.input.KeyCode
 import javafx.scene.transform.NonInvertibleTransformException
 import javafx.scene.control.Slider
 import javafx.event.EventHandler
+import javafx.geometry.Orientation
 import javafx.scene.Cursor
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.control.Separator
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
 
 class MainView : VBox() {
 
@@ -30,7 +34,7 @@ class MainView : VBox() {
         const val TOGGLE_MODE = 2
 
         const val CANVAS_WIDTH = 950.0
-        const val CANVAS_HEIGHT = 708.0
+        const val CANVAS_HEIGHT = 699.0
         const val SLIDER_WIDTH = CANVAS_WIDTH - 300.0
         const val BOX_SPACING = 10.0
 
@@ -40,6 +44,8 @@ class MainView : VBox() {
 
         val SIM_BACKGROUND_COLOR: Color = Color.LIGHTGRAY
         val SIM_CELL_COLOR: Color = Color.BLACK
+
+        val BRUSH_SIZES = arrayOf(1, 4, 9, 16, 25)
     }
 
     private lateinit var simulation: Simulation
@@ -49,9 +55,13 @@ class MainView : VBox() {
     private var editMode = DRAW_MODE
     private var currentSpeed = FAST_SPEED
     private var running = false
+
     private val drawIndicator = Label("D - Draw")
     private val toggleIndicator = Label("T - Toggle")
     private val eraseIndicator = Label("E - Erase")
+
+    private var currentBrush = 0
+    private val brushSizeLabel = Label("Brush Size: ${BRUSH_SIZES[currentBrush]}\t")
 
     init {
         timer = Timer()
@@ -104,7 +114,24 @@ class MainView : VBox() {
         handleMouseAsKey(eraseIndicator, KeyCode.E)
         handleMouseAsKey(toggleIndicator, KeyCode.T)
 
-        val keys = HBox(Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator)
+
+        val brushIncrease = Button("+")
+        val brushDecrease = Button("-")
+        val sep = Separator()
+        sep.orientation = Orientation.VERTICAL
+
+        brushIncrease.setOnAction { changeBrushSize(true) }
+        brushDecrease.setOnAction { changeBrushSize(false) }
+
+        val keys = HBox(
+                Label("Draw Mode Keys: "),
+                drawIndicator,
+                eraseIndicator,
+                toggleIndicator,
+                sep,
+                brushSizeLabel,
+                brushDecrease,
+                brushIncrease)
         keys.spacing = BOX_SPACING
 
         canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -161,6 +188,15 @@ class MainView : VBox() {
         label.onMousePressed = EventHandler { onKeyPressed(kc) }
     }
 
+    private fun changeBrushSize(increase: Boolean) {
+        currentBrush = if (increase) {
+            min((currentBrush + 1), BRUSH_SIZES.size - 1)
+        } else {
+            max(currentBrush - 1, 0)
+        }
+        brushSizeLabel.text = "Brush Size: ${BRUSH_SIZES[currentBrush]}\t"
+    }
+
     private fun updateModeIndicator() {
         when (editMode) {
             DRAW_MODE -> {
@@ -198,14 +234,43 @@ class MainView : VBox() {
             val simX = floor(simCoord.x).toInt()
             val simY = floor(simCoord.y).toInt()
             when (editMode) {
-                ERASE_MODE -> simulation.setDead(simY, simX)
-                DRAW_MODE -> simulation.setAlive(simY, simX)
-                TOGGLE_MODE -> simulation.toggleState(simY, simX)
+                ERASE_MODE -> simOperate(simY, simX) { y, x -> simulation.setDead(y, x) }
+                DRAW_MODE -> simOperate(simY, simX) { y, x -> simulation.setAlive(y, x) }
+                TOGGLE_MODE -> simOperate(simY, simX) { y, x -> simulation.toggleState(y, x) }
             }
             draw()
         } catch (e: NonInvertibleTransformException) {
             e.printStackTrace()
         }
+
+    }
+
+    private fun simOperate(y: Int, x: Int, operation: (Int, Int) -> Unit) {
+        val lower: Int
+        val upper: Int
+        when (BRUSH_SIZES[currentBrush]) {
+            1 -> operation(y, x).also { return }
+            4 -> {
+                lower = 0
+                upper = 1
+            }
+            9 -> {
+                lower = 1
+                upper = 1
+            }
+            16 -> {
+                lower = 1
+                upper = 2
+            }
+            25 -> {
+                lower = 2
+                upper = 2
+            }
+            else -> return
+        }
+        for (i in y - lower..y + upper)
+            for (j in x - lower..x + upper)
+                operation(i, j)
     }
 
     fun draw() {
