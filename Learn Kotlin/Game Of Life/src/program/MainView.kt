@@ -28,6 +28,17 @@ class MainView : VBox() {
         const val ERASE_MODE = 0
         const val DRAW_MODE = 1
         const val TOGGLE_MODE = 2
+
+        const val CANVAS_WIDTH = 950.0
+        const val CANVAS_HEIGHT = 708.0
+        const val SLIDER_WIDTH = CANVAS_WIDTH - 300.0
+        const val BOX_SPACING = 10.0
+
+        val ACTIVE_COLOR: Color = Color.RED
+        val INACTIVE_COLOR: Color = Color.BLACK
+        val HOVER_COLOR: Color = Color.DODGERBLUE
+        val SIM_BACKGROUND_COLOR: Color = Color.LIGHTGRAY
+        val SIM_CELL_COLOR: Color = Color.BLACK
     }
 
     private lateinit var simulation: Simulation
@@ -59,11 +70,11 @@ class MainView : VBox() {
         slider.isShowTickLabels = true
         slider.isShowTickMarks = true
         slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
-        slider.minWidth = 650.0
+        slider.minWidth = SLIDER_WIDTH
 
         val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
-        runBox.spacing = 10.0
-        spacing = 10.0
+        runBox.spacing = BOX_SPACING
+        spacing = BOX_SPACING
 
         val pauseButton = Button("Pause")
         pauseButton.onAction = EventHandler { pause() }
@@ -85,7 +96,7 @@ class MainView : VBox() {
 
         listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach {
             it.cursor = Cursor.HAND
-            it.onMouseEntered = EventHandler { _ -> if (it.textFill != Color.RED) it.textFill = Color.DODGERBLUE }
+            it.onMouseEntered = EventHandler { _ -> if (it.textFill != ACTIVE_COLOR) it.textFill = HOVER_COLOR }
             it.onMouseExited = EventHandler { updateModeIndicator() }
         }
         handleMouseAsKey(drawIndicator, KeyCode.D)
@@ -93,9 +104,9 @@ class MainView : VBox() {
         handleMouseAsKey(toggleIndicator, KeyCode.T)
 
         val keys = HBox(Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator)
-        keys.spacing = 10.0
+        keys.spacing = BOX_SPACING
 
-        canvas = Canvas(950.0, 708.0)
+        canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
         // Using runLater to avoid thread crashes.
         canvas.onMousePressed = EventHandler { event -> Platform.runLater { handleDraw(event) } }
         canvas.onMouseDragged = EventHandler { event -> Platform.runLater { handleDraw(event) } }
@@ -152,19 +163,19 @@ class MainView : VBox() {
     private fun updateModeIndicator() {
         when (drawMode) {
             DRAW_MODE -> {
-                drawIndicator.textFill = Color.RED
-                eraseIndicator.textFill = Color.BLACK
-                toggleIndicator.textFill = Color.BLACK
+                drawIndicator.textFill = ACTIVE_COLOR
+                eraseIndicator.textFill = INACTIVE_COLOR
+                toggleIndicator.textFill = INACTIVE_COLOR
             }
             ERASE_MODE -> {
-                drawIndicator.textFill = Color.BLACK
-                eraseIndicator.textFill = Color.RED
-                toggleIndicator.textFill = Color.BLACK
+                drawIndicator.textFill = INACTIVE_COLOR
+                eraseIndicator.textFill = ACTIVE_COLOR
+                toggleIndicator.textFill = INACTIVE_COLOR
             }
             TOGGLE_MODE -> {
-                drawIndicator.textFill = Color.BLACK
-                eraseIndicator.textFill = Color.BLACK
-                toggleIndicator.textFill = Color.RED
+                drawIndicator.textFill = INACTIVE_COLOR
+                eraseIndicator.textFill = INACTIVE_COLOR
+                toggleIndicator.textFill = ACTIVE_COLOR
             }
         }
     }
@@ -198,10 +209,10 @@ class MainView : VBox() {
 
     fun draw() {
         val g = canvas.graphicsContext2D
-        g.fill = Color.LIGHTGRAY
+        g.fill = SIM_BACKGROUND_COLOR
         g.fillRect(0.0, 0.0, canvas.width, canvas.width)
         g.transform = affine
-        g.fill = Color.BLACK
+        g.fill = SIM_CELL_COLOR
         for (r in 0 until simulation.height) {
             for (c in 0 until simulation.width) {
                 if (simulation.getCellValue(r, c) == 1) {
@@ -210,7 +221,7 @@ class MainView : VBox() {
             }
         }
         g.lineWidth = 0.05
-        g.stroke = Color.LIGHTGRAY
+        g.stroke = SIM_BACKGROUND_COLOR
         var x = 0.0
         while (x <= canvas.width) {
             g.strokeLine(x, 0.0, x, canvas.width)
