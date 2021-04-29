@@ -114,7 +114,6 @@ class MainView : VBox() {
         handleMouseAsKey(eraseIndicator, KeyCode.E)
         handleMouseAsKey(toggleIndicator, KeyCode.T)
 
-
         val brushIncrease = Button("+")
         val brushDecrease = Button("-")
 
@@ -135,8 +134,8 @@ class MainView : VBox() {
 
         canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
         // Using runLater to avoid thread crashes.
-        canvas.onMousePressed = EventHandler { event -> Platform.runLater { handleDraw(event) } }
-        canvas.onMouseDragged = EventHandler { event -> Platform.runLater { handleDraw(event) } }
+        canvas.onMousePressed = EventHandler { Platform.runLater { handleDraw(it) } }
+        canvas.onMouseDragged = EventHandler { Platform.runLater { handleDraw(it) } }
         onKeyPressed = EventHandler { keyEvent -> onKeyPressed(keyEvent.code) }
 
         children.addAll(
@@ -233,9 +232,9 @@ class MainView : VBox() {
             val simX = floor(simCoord.x).toInt()
             val simY = floor(simCoord.y).toInt()
             when (editMode) {
-                ERASE_MODE -> simOperate(simY, simX) { y, x -> simulation.setDead(y, x) }
-                DRAW_MODE -> simOperate(simY, simX) { y, x -> simulation.setAlive(y, x) }
-                TOGGLE_MODE -> simOperate(simY, simX) { y, x -> simulation.toggleState(y, x) }
+                ERASE_MODE -> simOperate(simY, simX, simulation::setDead)
+                DRAW_MODE -> simOperate(simY, simX, simulation::setAlive)
+                TOGGLE_MODE -> simOperate(simY, simX, simulation::toggleState)
             }
             draw()
         } catch (e: NonInvertibleTransformException) {
