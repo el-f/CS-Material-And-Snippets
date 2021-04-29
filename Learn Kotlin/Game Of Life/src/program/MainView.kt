@@ -117,8 +117,6 @@ class MainView : VBox() {
 
         val brushIncrease = Button("+")
         val brushDecrease = Button("-")
-        val sep = Separator()
-        sep.orientation = Orientation.VERTICAL
 
         brushIncrease.setOnAction { changeBrushSize(true) }
         brushDecrease.setOnAction { changeBrushSize(false) }
@@ -128,10 +126,11 @@ class MainView : VBox() {
                 drawIndicator,
                 eraseIndicator,
                 toggleIndicator,
-                sep,
+                Separator(Orientation.VERTICAL),
                 brushSizeLabel,
                 brushDecrease,
-                brushIncrease)
+                brushIncrease
+        )
         keys.spacing = BOX_SPACING
 
         canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
