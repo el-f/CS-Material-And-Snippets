@@ -11,7 +11,6 @@ import javafx.scene.Cursor
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
@@ -42,14 +41,90 @@ class MainView : VBox() {
     private val toggleIndicator = Label("T - Toggle")
     private val eraseIndicator = Label("E - Erase")
 
+    init {
+        timer = Timer()
+        val stepButton = Button("Step")
+        stepButton.onAction = EventHandler {
+            simulation.step()
+            draw()
+        }
+
+        val runButton = Button("Run")
+        runButton.onAction = EventHandler { resume() }
+
+        val slider = Slider()
+        slider.value = currentSpeed
+        slider.max = SLOW_SPEED
+        slider.min = SONIC
+        slider.isShowTickLabels = true
+        slider.isShowTickMarks = true
+        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
+        slider.minWidth = 650.0
+
+        val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
+        runBox.spacing = 10.0
+        spacing = 10.0
+
+        val pauseButton = Button("Pause")
+        pauseButton.onAction = EventHandler { pause() }
+
+        val resetButton = Button("Reset")
+        resetButton.onAction = EventHandler {
+            reset()
+            draw()
+        }
+
+        val clearButton = Button("Clear")
+        clearButton.onAction = EventHandler {
+            simulation.clear()
+            draw()
+        }
+
+        val controlButtons = HBox(pauseButton, resetButton, clearButton)
+        controlButtons.spacing = 10.0
+
+        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach {
+            it.cursor = Cursor.HAND
+            it.onMouseEntered = EventHandler { _ -> if (it.textFill != Color.RED) it.textFill = Color.DODGERBLUE }
+            it.onMouseExited = EventHandler { updateModeIndicator() }
+        }
+        handleMouseAsKey(drawIndicator, KeyCode.D)
+        handleMouseAsKey(eraseIndicator, KeyCode.E)
+        handleMouseAsKey(toggleIndicator, KeyCode.T)
+
+        val keys = HBox(Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator)
+        keys.spacing = 10.0
+
+        canvas = Canvas(950.0, 708.0)
+        // Using runLater to avoid thread crashes.
+        canvas.onMousePressed = EventHandler { event -> Platform.runLater { handleDraw(event) } }
+        canvas.onMouseDragged = EventHandler { event -> Platform.runLater { handleDraw(event) } }
+        onKeyPressed = EventHandler { keyEvent -> onKeyPressed(keyEvent.code) }
+
+        children.addAll(
+                stepButton,
+                controlButtons,
+                runBox,
+                keys,
+                canvas
+        )
+
+        reset()
+        println("Initialized simulation...")
+        println("Height: " + simulation.height + ", Width: " + simulation.width)
+        affine = Affine()
+        affine.appendScale(canvas.width / simulation.width, canvas.height / simulation.height)
+        updateModeIndicator()
+    }
+
     private fun pause() {
         running = false
         timer.cancel()
     }
 
     private fun resume() {
-        timer.cancel()
         running = true
+        timer.cancel()
         timer = Timer()
         timer.schedule(15, currentSpeed.toLong()) {
             // Using runLater to avoid thread crashes.
@@ -71,7 +146,7 @@ class MainView : VBox() {
     }
 
     private fun handleMouseAsKey(label: Label, kc: KeyCode) {
-        label.onMousePressed = EventHandler { onKeyPressed(KeyEvent(null, null, null, kc, false, false, false, false)) }
+        label.onMousePressed = EventHandler { onKeyPressed(kc) }
     }
 
     private fun updateModeIndicator() {
@@ -94,8 +169,8 @@ class MainView : VBox() {
         }
     }
 
-    private fun onKeyPressed(keyEvent: KeyEvent) {
-        when (keyEvent.code) {
+    private fun onKeyPressed(keyCode: KeyCode) {
+        when (keyCode) {
             KeyCode.D -> drawMode = DRAW_MODE
             KeyCode.E -> drawMode = ERASE_MODE
             KeyCode.T -> drawMode = TOGGLE_MODE
@@ -148,76 +223,4 @@ class MainView : VBox() {
         }
     }
 
-
-    init {
-        timer = Timer()
-        val stepButton = Button("Step")
-        stepButton.onAction = EventHandler {
-            simulation.step()
-            draw()
-        }
-
-        val runButton = Button("Run")
-        runButton.onAction = EventHandler { resume() }
-
-        val slider = Slider()
-        slider.value = currentSpeed
-        slider.max = SLOW_SPEED
-        slider.min = SONIC
-        slider.isShowTickLabels = true
-        slider.isShowTickMarks = true
-        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
-        slider.minWidth = 650.0
-
-        val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
-        runBox.spacing = 10.0
-        spacing = 10.0
-
-        val pauseButton = Button("Pause")
-        pauseButton.onAction = EventHandler { pause() }
-
-        val resetButton = Button("Reset")
-        resetButton.onAction = EventHandler {
-            reset()
-            draw()
-        }
-
-        val clearButton = Button("Clear")
-        clearButton.onAction = EventHandler {
-            simulation.clear()
-            draw()
-        }
-
-        val controlButtons = HBox(pauseButton, resetButton, clearButton)
-        controlButtons.spacing = 10.0
-
-        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach { it.cursor = Cursor.HAND }
-        handleMouseAsKey(drawIndicator, KeyCode.D)
-        handleMouseAsKey(eraseIndicator, KeyCode.E)
-        handleMouseAsKey(toggleIndicator, KeyCode.T)
-
-        val keys = HBox(Label("Draw Mode Keys: "), drawIndicator, eraseIndicator, toggleIndicator)
-        keys.spacing = 10.0
-
-        canvas = Canvas(950.0, 708.0)
-        // Using runLater to avoid thread crashes.
-        canvas.onMousePressed = EventHandler { event -> Platform.runLater { handleDraw(event) } }
-        canvas.onMouseDragged = EventHandler { event -> Platform.runLater { handleDraw(event) } }
-        onKeyPressed = EventHandler { keyEvent -> onKeyPressed(keyEvent) }
-
-        children.addAll(
-                stepButton,
-                controlButtons,
-                runBox,
-                keys,
-                canvas
-        )
-
-        reset()
-        println("Initialized simulation...")
-        println("Height: " + simulation.height + ", Width: " + simulation.width)
-        affine = Affine()
-        affine.appendScale(canvas.width / simulation.width, canvas.height / simulation.height)
-        updateModeIndicator()
-    }
 }
