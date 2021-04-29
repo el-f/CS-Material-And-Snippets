@@ -37,6 +37,7 @@ class MainView : VBox() {
         val ACTIVE_COLOR: Color = Color.RED
         val INACTIVE_COLOR: Color = Color.BLACK
         val HOVER_COLOR: Color = Color.DODGERBLUE
+
         val SIM_BACKGROUND_COLOR: Color = Color.LIGHTGRAY
         val SIM_CELL_COLOR: Color = Color.BLACK
     }
@@ -45,7 +46,7 @@ class MainView : VBox() {
     private val affine: Affine
     private val canvas: Canvas
     private var timer: Timer
-    private var drawMode = DRAW_MODE
+    private var editMode = DRAW_MODE
     private var currentSpeed = FAST_SPEED
     private var running = false
     private val drawIndicator = Label("D - Draw")
@@ -161,7 +162,7 @@ class MainView : VBox() {
     }
 
     private fun updateModeIndicator() {
-        when (drawMode) {
+        when (editMode) {
             DRAW_MODE -> {
                 drawIndicator.textFill = ACTIVE_COLOR
                 eraseIndicator.textFill = INACTIVE_COLOR
@@ -182,9 +183,9 @@ class MainView : VBox() {
 
     private fun onKeyPressed(keyCode: KeyCode) {
         when (keyCode) {
-            KeyCode.D -> drawMode = DRAW_MODE
-            KeyCode.E -> drawMode = ERASE_MODE
-            KeyCode.T -> drawMode = TOGGLE_MODE
+            KeyCode.D -> editMode = DRAW_MODE
+            KeyCode.E -> editMode = ERASE_MODE
+            KeyCode.T -> editMode = TOGGLE_MODE
             else -> {
             }
         }
@@ -196,7 +197,7 @@ class MainView : VBox() {
             val simCoord = affine.inverseTransform(mouseEvent.x, mouseEvent.y)
             val simX = floor(simCoord.x).toInt()
             val simY = floor(simCoord.y).toInt()
-            when (drawMode) {
+            when (editMode) {
                 ERASE_MODE -> simulation.setDead(simY, simX)
                 DRAW_MODE -> simulation.setAlive(simY, simX)
                 TOGGLE_MODE -> simulation.toggleState(simY, simX)
