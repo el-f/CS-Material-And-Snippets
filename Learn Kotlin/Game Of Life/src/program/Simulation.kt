@@ -24,7 +24,6 @@ class Simulation(private var board: Array<IntArray>) {
     }
 
     fun setRandom(r: Int, c: Int){
-        if (r < 0 || r >= height || c < 0 || c >= width) return
         if (Random.nextBoolean()) setAlive(r, c) else setDead(r, c)
     }
 
