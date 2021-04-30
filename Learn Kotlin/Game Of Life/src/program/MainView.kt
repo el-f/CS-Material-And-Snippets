@@ -4,7 +4,6 @@ import javafx.scene.layout.VBox
 import javafx.scene.transform.Affine
 import javafx.application.Platform
 import javafx.scene.input.KeyCode
-import javafx.scene.transform.NonInvertibleTransformException
 import javafx.scene.control.Slider
 import javafx.event.EventHandler
 import javafx.geometry.Orientation
@@ -16,11 +15,12 @@ import javafx.scene.control.Separator
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
-import java.util.*
+import java.util.Timer
 import kotlin.concurrent.schedule
 import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sqrt
 
 class MainView : VBox() {
 
@@ -45,7 +45,7 @@ class MainView : VBox() {
         val SIM_BACKGROUND_COLOR: Color = Color.LIGHTGRAY
         val SIM_CELL_COLOR: Color = Color.BLACK
 
-        val BRUSH_SIZES = arrayOf(1, 4, 9, 16, 25)
+        val BRUSH_SIZES = arrayOf(1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 400)
     }
 
     private lateinit var simulation: Simulation
@@ -61,7 +61,7 @@ class MainView : VBox() {
     private val eraseIndicator = Label("E - Erase")
 
     private var currentBrush = 0
-    private val brushSizeLabel = Label("Brush Size: ${BRUSH_SIZES[currentBrush]}\t")
+    private val brushSizeLabel = Label("Brush Size: ${BRUSH_SIZES[currentBrush]}")
 
     init {
         timer = Timer()
@@ -126,9 +126,9 @@ class MainView : VBox() {
                 eraseIndicator,
                 toggleIndicator,
                 Separator(Orientation.VERTICAL),
-                brushSizeLabel,
                 brushDecrease,
-                brushIncrease
+                brushIncrease,
+                brushSizeLabel
         )
         keys.spacing = BOX_SPACING
 
@@ -192,7 +192,7 @@ class MainView : VBox() {
         } else {
             max(currentBrush - 1, 0)
         }
-        brushSizeLabel.text = "Brush Size: ${BRUSH_SIZES[currentBrush]}\t"
+        brushSizeLabel.text = "Brush Size: ${BRUSH_SIZES[currentBrush]}"
     }
 
     private fun updateModeIndicator() {
@@ -227,45 +227,21 @@ class MainView : VBox() {
     }
 
     private fun handleDraw(mouseEvent: MouseEvent) {
-        try {
-            val simCoord = affine.inverseTransform(mouseEvent.x, mouseEvent.y)
-            val simX = floor(simCoord.x).toInt()
-            val simY = floor(simCoord.y).toInt()
-            when (editMode) {
-                ERASE_MODE -> simOperate(simY, simX, simulation::setDead)
-                DRAW_MODE -> simOperate(simY, simX, simulation::setAlive)
-                TOGGLE_MODE -> simOperate(simY, simX, simulation::toggleState)
-            }
-            draw()
-        } catch (e: NonInvertibleTransformException) {
-            e.printStackTrace()
+        val simCoord = affine.inverseTransform(mouseEvent.x, mouseEvent.y)
+        val simX = floor(simCoord.x).toInt()
+        val simY = floor(simCoord.y).toInt()
+        when (editMode) {
+            DRAW_MODE -> operateBrush(simY, simX, simulation::setAlive)
+            ERASE_MODE -> operateBrush(simY, simX, simulation::setDead)
+            TOGGLE_MODE -> operateBrush(simY, simX, simulation::toggleState)
         }
-
+        draw()
     }
 
-    private fun simOperate(y: Int, x: Int, operation: (Int, Int) -> Unit) {
-        val lower: Int
-        val upper: Int
-        when (BRUSH_SIZES[currentBrush]) {
-            1 -> operation(y, x).also { return }
-            4 -> {
-                lower = 0
-                upper = 1
-            }
-            9 -> {
-                lower = 1
-                upper = 1
-            }
-            16 -> {
-                lower = 1
-                upper = 2
-            }
-            25 -> {
-                lower = 2
-                upper = 2
-            }
-            else -> return
-        }
+    private fun operateBrush(y: Int, x: Int, operation: (Int, Int) -> Unit) {
+        val brushSide = sqrt(BRUSH_SIZES[currentBrush].toDouble()).toInt()
+        val lower = (brushSide - 1) / 2
+        val upper = brushSide / 2
         for (i in y - lower..y + upper)
             for (j in x - lower..x + upper)
                 operation(i, j)
