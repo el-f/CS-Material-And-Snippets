@@ -192,7 +192,7 @@ class MainView : VBox() {
 
     private fun changeBrushSize(increase: Boolean) {
         currentBrush = if (increase) {
-            min((currentBrush + 1), BRUSH_SIZES.size - 1)
+            min(currentBrush + 1, BRUSH_SIZES.size - 1)
         } else {
             max(currentBrush - 1, 0)
         }

@@ -23,7 +23,7 @@ class Simulation(private var board: Array<IntArray>) {
         if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
     }
 
-    fun setRandom(r: Int, c: Int){
+    fun setRandom(r: Int, c: Int) {
         if (Random.nextBoolean()) setAlive(r, c) else setDead(r, c)
     }
 
@@ -87,26 +87,26 @@ class Simulation(private var board: Array<IntArray>) {
         }
 
         private fun gliderGun(rotate: Boolean = false, shift: Int = 0, mirror: Boolean = false) = arrayOf(
-            IntArray(size) { getLives(it, rotate, mirror, shift, 24) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 24) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
 
-            IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
 
-            IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
-            IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
+                IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
         private fun emptyBlock(amount: Int) = Array(amount) { IntArray(size) { 0 } }
 
         @JvmField
         val DEFAULT_STARTER = arrayOf(
-            *gliderGun(mirror = true),
-            *emptyBlock(144),
-            *gliderGun(mirror = true).reversedArray(),
+                *gliderGun(mirror = true),
+                *emptyBlock(144),
+                *gliderGun(mirror = true).reversedArray(),
         )
     }
 
