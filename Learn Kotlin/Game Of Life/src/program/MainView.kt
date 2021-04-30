@@ -57,71 +57,61 @@ class MainView : VBox() {
     private var currentSpeed = FAST_SPEED
     private var running = false
 
-    private val drawIndicator = Label("D - Draw")
-    private val toggleIndicator = Label("T - Toggle")
-    private val eraseIndicator = Label("E - Erase")
-    private val randomIndicator = Label("R - Random")
+    private val drawIndicator = Label("D - Draw").apply { handleMouseAsKey(this, KeyCode.D) }
+    private val toggleIndicator = Label("T - Toggle").apply { handleMouseAsKey(this, KeyCode.T) }
+    private val eraseIndicator = Label("E - Erase").apply { handleMouseAsKey(this, KeyCode.E) }
+    private val randomIndicator = Label("R - Random").apply { handleMouseAsKey(this, KeyCode.R) }
 
     private var currentBrush = 0
     private val brushSizeLabel = Label("Brush Size: ${BRUSH_SIZES[currentBrush]}")
 
     init {
         timer = Timer()
-        val stepButton = Button("Step")
-        stepButton.onAction = EventHandler {
-            simulation.step()
-            draw()
+        val stepButton = Button("Step").apply {
+            onAction = EventHandler {
+                simulation.step()
+                draw()
+            }
         }
 
-        val runButton = Button("Run")
-        runButton.onAction = EventHandler { resume() }
+        val runButton = Button("Run").apply { onAction = EventHandler { resume() } }
 
-        val slider = Slider()
-        slider.value = currentSpeed
-        slider.max = SLOW_SPEED
-        slider.min = SONIC
-        slider.isShowTickLabels = true
-        slider.isShowTickMarks = true
-        slider.valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
-        slider.minWidth = SLIDER_WIDTH
+        val slider = Slider().apply {
+            value = currentSpeed
+            max = SLOW_SPEED
+            min = SONIC
+            isShowTickLabels = true
+            isShowTickMarks = true
+            valueProperty().addListener { _, _, NEW: Number -> changeSpeed(NEW) }
+            minWidth = SLIDER_WIDTH
+        }
 
         val runBox = HBox(runButton, Label("Delay Between Steps (ms) : "), slider)
-        runBox.spacing = BOX_SPACING
-        spacing = BOX_SPACING
+                .apply {
+                    spacing = BOX_SPACING
+                }
 
-        val pauseButton = Button("Pause")
-        pauseButton.onAction = EventHandler { pause() }
-
-        val resetButton = Button("Reset")
-        resetButton.onAction = EventHandler {
-            reset()
-            draw()
-        }
-
-        val clearButton = Button("Clear")
-        clearButton.onAction = EventHandler {
-            simulation.clear()
-            draw()
-        }
-
-        val controlButtons = HBox(pauseButton, resetButton, clearButton)
-        controlButtons.spacing = 10.0
+        val controlButtons = HBox(
+                Button("Pause").apply { onAction = EventHandler { pause() } },
+                Button("Clear").apply {
+                    onAction = EventHandler {
+                        simulation.clear()
+                        draw()
+                    }
+                },
+                Button("Reset").apply {
+                    onAction = EventHandler {
+                        reset()
+                        draw()
+                    }
+                }
+        ).apply { spacing = BOX_SPACING }
 
         listOf(drawIndicator, eraseIndicator, toggleIndicator, randomIndicator).forEach {
             it.cursor = Cursor.HAND
             it.onMouseEntered = EventHandler { _ -> if (it.textFill != ACTIVE_COLOR) it.textFill = HOVER_COLOR }
             it.onMouseExited = EventHandler { updateModeIndicator() }
         }
-        handleMouseAsKey(drawIndicator, KeyCode.D)
-        handleMouseAsKey(eraseIndicator, KeyCode.E)
-        handleMouseAsKey(toggleIndicator, KeyCode.T)
-        handleMouseAsKey(randomIndicator, KeyCode.R)
-
-        val brushIncrease = Button("+")
-        val brushDecrease = Button("-")
-
-        brushIncrease.setOnAction { changeBrushSize(true) }
-        brushDecrease.setOnAction { changeBrushSize(false) }
 
         val keys = HBox(
                 Label("Draw Mode Keys: "),
@@ -130,16 +120,17 @@ class MainView : VBox() {
                 toggleIndicator,
                 randomIndicator,
                 Separator(Orientation.VERTICAL),
-                brushDecrease,
-                brushIncrease,
+                Button("-").apply { setOnAction { changeBrushSize(false) } },
+                Button("+").apply { setOnAction { changeBrushSize(true) } },
                 brushSizeLabel
-        )
-        keys.spacing = BOX_SPACING
+        ).apply { spacing = BOX_SPACING }
 
-        canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-        // Using runLater to avoid thread crashes.
-        canvas.onMousePressed = EventHandler { Platform.runLater { handleDraw(it) } }
-        canvas.onMouseDragged = EventHandler { Platform.runLater { handleDraw(it) } }
+        spacing = BOX_SPACING
+        canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT).apply {
+            onMousePressed = EventHandler { Platform.runLater { handleDraw(it) } }
+            onMouseDragged = onMousePressed
+        }
+
         onKeyPressed = EventHandler { keyEvent -> onKeyPressed(keyEvent.code) }
 
         children.addAll(
@@ -153,8 +144,7 @@ class MainView : VBox() {
         reset()
         println("Initialized simulation...")
         println("Height: " + simulation.height + ", Width: " + simulation.width)
-        affine = Affine()
-        affine.appendScale(canvas.width / simulation.width, canvas.height / simulation.height)
+        affine = Affine().apply { appendScale(canvas.width / simulation.width, canvas.height / simulation.height) }
         updateModeIndicator()
     }
 
@@ -166,12 +156,12 @@ class MainView : VBox() {
     private fun resume() {
         running = true
         timer.cancel()
-        timer = Timer()
-        timer.schedule(15, currentSpeed.toLong()) {
-            // Using runLater to avoid thread crashes.
-            Platform.runLater {
-                simulation.step()
-                draw()
+        timer = Timer().apply {
+            schedule(15, currentSpeed.toLong()) {
+                Platform.runLater {
+                    simulation.step()
+                    draw()
+                }
             }
         }
     }
@@ -182,8 +172,7 @@ class MainView : VBox() {
     }
 
     private fun reset() {
-        simulation = Simulation(Simulation.DEFAULT_STARTER)
-        simulation.step()
+        simulation = Simulation(Simulation.DEFAULT_STARTER).apply { step() }
     }
 
     private fun handleMouseAsKey(label: Label, kc: KeyCode) {
@@ -248,29 +237,30 @@ class MainView : VBox() {
     }
 
     fun draw() {
-        val g = canvas.graphicsContext2D
-        g.fill = SIM_BACKGROUND_COLOR
-        g.fillRect(0.0, 0.0, canvas.width, canvas.width)
-        g.transform = affine
-        g.fill = SIM_CELL_COLOR
-        for (r in 0 until simulation.height) {
-            for (c in 0 until simulation.width) {
-                if (simulation.getCellValue(r, c) == 1) {
-                    g.fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
+        canvas.graphicsContext2D.apply {
+            fill = SIM_BACKGROUND_COLOR
+            fillRect(0.0, 0.0, canvas.width, canvas.width)
+            transform = affine
+            fill = SIM_CELL_COLOR
+            for (r in 0 until simulation.height) {
+                for (c in 0 until simulation.width) {
+                    if (simulation.getCellValue(r, c) == 1) {
+                        fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
+                    }
                 }
             }
-        }
-        g.lineWidth = 0.05
-        g.stroke = SIM_BACKGROUND_COLOR
-        var x = 0.0
-        while (x <= canvas.width) {
-            g.strokeLine(x, 0.0, x, canvas.width)
-            x++
-        }
-        var y = 0.0
-        while (y <= canvas.height) {
-            g.strokeLine(0.0, y, canvas.height, y)
-            y++
+            lineWidth = 0.05
+            stroke = SIM_BACKGROUND_COLOR
+            var x = 0.0
+            while (x <= canvas.width) {
+                strokeLine(x, 0.0, x, canvas.width)
+                x++
+            }
+            var y = 0.0
+            while (y <= canvas.height) {
+                strokeLine(0.0, y, canvas.height, y)
+                y++
+            }
         }
     }
 
