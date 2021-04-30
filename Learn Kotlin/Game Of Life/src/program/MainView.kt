@@ -32,6 +32,7 @@ class MainView : VBox() {
         const val ERASE_MODE = 0
         const val DRAW_MODE = 1
         const val TOGGLE_MODE = 2
+        const val RANDOM_MODE = 3
 
         const val CANVAS_WIDTH = 950.0
         const val CANVAS_HEIGHT = 699.0
@@ -59,6 +60,7 @@ class MainView : VBox() {
     private val drawIndicator = Label("D - Draw")
     private val toggleIndicator = Label("T - Toggle")
     private val eraseIndicator = Label("E - Erase")
+    private val randomIndicator = Label("R - Random")
 
     private var currentBrush = 0
     private val brushSizeLabel = Label("Brush Size: ${BRUSH_SIZES[currentBrush]}")
@@ -105,7 +107,7 @@ class MainView : VBox() {
         val controlButtons = HBox(pauseButton, resetButton, clearButton)
         controlButtons.spacing = 10.0
 
-        listOf(drawIndicator, eraseIndicator, toggleIndicator).forEach {
+        listOf(drawIndicator, eraseIndicator, toggleIndicator, randomIndicator).forEach {
             it.cursor = Cursor.HAND
             it.onMouseEntered = EventHandler { _ -> if (it.textFill != ACTIVE_COLOR) it.textFill = HOVER_COLOR }
             it.onMouseExited = EventHandler { updateModeIndicator() }
@@ -113,6 +115,7 @@ class MainView : VBox() {
         handleMouseAsKey(drawIndicator, KeyCode.D)
         handleMouseAsKey(eraseIndicator, KeyCode.E)
         handleMouseAsKey(toggleIndicator, KeyCode.T)
+        handleMouseAsKey(randomIndicator, KeyCode.R)
 
         val brushIncrease = Button("+")
         val brushDecrease = Button("-")
@@ -125,6 +128,7 @@ class MainView : VBox() {
                 drawIndicator,
                 eraseIndicator,
                 toggleIndicator,
+                randomIndicator,
                 Separator(Orientation.VERTICAL),
                 brushDecrease,
                 brushIncrease,
@@ -196,22 +200,16 @@ class MainView : VBox() {
     }
 
     private fun updateModeIndicator() {
+        drawIndicator.textFill = INACTIVE_COLOR
+        eraseIndicator.textFill = INACTIVE_COLOR
+        toggleIndicator.textFill = INACTIVE_COLOR
+        randomIndicator.textFill = INACTIVE_COLOR
+
         when (editMode) {
-            DRAW_MODE -> {
-                drawIndicator.textFill = ACTIVE_COLOR
-                eraseIndicator.textFill = INACTIVE_COLOR
-                toggleIndicator.textFill = INACTIVE_COLOR
-            }
-            ERASE_MODE -> {
-                drawIndicator.textFill = INACTIVE_COLOR
-                eraseIndicator.textFill = ACTIVE_COLOR
-                toggleIndicator.textFill = INACTIVE_COLOR
-            }
-            TOGGLE_MODE -> {
-                drawIndicator.textFill = INACTIVE_COLOR
-                eraseIndicator.textFill = INACTIVE_COLOR
-                toggleIndicator.textFill = ACTIVE_COLOR
-            }
+            DRAW_MODE -> drawIndicator.textFill = ACTIVE_COLOR
+            ERASE_MODE -> eraseIndicator.textFill = ACTIVE_COLOR
+            TOGGLE_MODE -> toggleIndicator.textFill = ACTIVE_COLOR
+            RANDOM_MODE -> randomIndicator.textFill = ACTIVE_COLOR
         }
     }
 
@@ -220,6 +218,7 @@ class MainView : VBox() {
             KeyCode.D -> editMode = DRAW_MODE
             KeyCode.E -> editMode = ERASE_MODE
             KeyCode.T -> editMode = TOGGLE_MODE
+            KeyCode.R -> editMode = RANDOM_MODE
             else -> {
             }
         }
@@ -234,6 +233,7 @@ class MainView : VBox() {
             DRAW_MODE -> operateBrush(simY, simX, simulation::setAlive)
             ERASE_MODE -> operateBrush(simY, simX, simulation::setDead)
             TOGGLE_MODE -> operateBrush(simY, simX, simulation::toggleState)
+            RANDOM_MODE -> operateBrush(simY, simX, simulation::setRandom)
         }
         draw()
     }

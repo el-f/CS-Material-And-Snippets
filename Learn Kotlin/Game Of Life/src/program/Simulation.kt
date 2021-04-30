@@ -1,5 +1,7 @@
 package program
 
+import kotlin.random.Random
+
 class Simulation(private var board: Array<IntArray>) {
     @JvmField
     var width: Int = board[0].size
@@ -15,6 +17,15 @@ class Simulation(private var board: Array<IntArray>) {
     fun setDead(r: Int, c: Int) {
         if (r < 0 || r >= height || c < 0 || c >= width) return
         board[r][c] = 0
+    }
+
+    fun toggleState(r: Int, c: Int) {
+        if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
+    }
+
+    fun setRandom(r: Int, c: Int){
+        if (r < 0 || r >= height || c < 0 || c >= width) return
+        if (Random.nextBoolean()) setAlive(r, c) else setDead(r, c)
     }
 
     private fun countAliveNeighbours(r: Int, c: Int): Int {
@@ -65,11 +76,6 @@ class Simulation(private var board: Array<IntArray>) {
             for (c in board[r].indices)
                 setDead(r, c)
     }
-
-    fun toggleState(r: Int, c: Int) {
-        if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
-    }
-
 
     companion object {
         private const val size: Int = 234
