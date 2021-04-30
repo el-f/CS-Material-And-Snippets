@@ -100,6 +100,7 @@ class Simulation(private var board: Array<IntArray>) {
                 IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
+        @Suppress("SameParameterValue")
         private fun emptyBlock(amount: Int) = Array(amount) { IntArray(size) { 0 } }
 
         @JvmField
