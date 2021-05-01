@@ -64,18 +64,17 @@ def q6b(str1, str2):
             self.str1 = _str1
             self.str2 = _str2
             self.current_index = -1
-            self.arr = [self.str1[j] for j in range(len(self.str1)) if self.str1[j] == self.str2[j]]
 
         def __iter__(self):
             return self
 
         def __next__(self):
-            self.current_index += 1
+            while self.current_index < len(self.str1) - 1:
+                self.current_index += 1
+                if self.str1[self.current_index] == self.str2[self.current_index]:
+                    return self.str1[self.current_index]
 
-            if self.current_index >= len(self.arr):
-                raise StopIteration
-
-            return self.arr[self.current_index]
+            raise StopIteration
 
     instance = StringsCompare(str1, str2)  # add parameters
     return instance
