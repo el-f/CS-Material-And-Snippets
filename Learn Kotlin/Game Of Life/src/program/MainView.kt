@@ -107,7 +107,7 @@ class MainView : VBox() {
                 }
         ).apply { spacing = BOX_SPACING }
 
-        listOf(drawIndicator, eraseIndicator, toggleIndicator, randomIndicator).forEach {
+        arrayOf(drawIndicator, eraseIndicator, toggleIndicator, randomIndicator).forEach {
             it.cursor = Cursor.HAND
             it.onMouseEntered = EventHandler { _ -> if (it.textFill != ACTIVE_COLOR) it.textFill = HOVER_COLOR }
             it.onMouseExited = EventHandler { updateModeIndicator() }
