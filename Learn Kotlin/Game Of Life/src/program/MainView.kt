@@ -238,17 +238,19 @@ class MainView : VBox() {
 
     fun draw() {
         canvas.graphicsContext2D.apply {
+            //  fill a clear background
             fill = SIM_BACKGROUND_COLOR
             fillRect(0.0, 0.0, canvas.width, canvas.width)
             transform = affine
+
+            //  fill in the live cells
             fill = SIM_CELL_COLOR
-            for (r in 0 until simulation.height) {
-                for (c in 0 until simulation.width) {
-                    if (simulation.getCellValue(r, c) == 1) {
-                        fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
-                    }
-                }
+            for (r in 0 until simulation.height) for (c in 0 until simulation.width) {
+                if (simulation.isAlive(r, c))
+                    fillRect(c.toDouble(), r.toDouble(), 1.0, 1.0)
             }
+
+            //  stroke vertical + horizontal lines to emphasize different cells
             lineWidth = 0.05
             stroke = SIM_BACKGROUND_COLOR
             var x = 0.0
@@ -261,6 +263,7 @@ class MainView : VBox() {
                 strokeLine(0.0, y, canvas.height, y)
                 y++
             }
+
         }
     }
 

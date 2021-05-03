@@ -49,6 +49,10 @@ class Simulation(private var board: Array<IntArray>) {
         else board[r][c]
     }
 
+    fun isAlive(r: Int, c: Int): Boolean {
+        return getCellValue(r, c) == 1
+    }
+
     fun step() {
         val newBoard = Array(height) { IntArray(width) }
         for (r in 0 until height) {
