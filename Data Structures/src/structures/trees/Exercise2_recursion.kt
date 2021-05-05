@@ -10,8 +10,8 @@ fun main() {
     println(getDepth(Node.sampleTree)) //Q3
     println(getDepth(Node(1))) //Q3
     println(getMaxValue(Node.sampleTree).toChar()) //Q4
-    println(isRouteWeightEqualW(Node.sampleTree, ('T' + 'Q'.toInt() + 'R'.toInt()).toInt(), 0)) //Q5
-    println(isRouteWeightEqualW_V2(Node.sampleTree, ('T' + 'Q'.toInt() + 'R'.toInt()).toInt())) //Q5
+    println(isRouteWeightEqualW(Node.sampleTree, ('T' + 'Q'.code + 'R'.code).code, 0)) //Q5
+    println(isRouteWeightEqualW_V2(Node.sampleTree, ('T' + 'Q'.code + 'R'.code).code)) //Q5
 }
 
 fun countLeaves(root: Node?): Int {

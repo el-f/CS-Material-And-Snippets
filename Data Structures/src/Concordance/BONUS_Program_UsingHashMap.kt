@@ -45,7 +45,7 @@ private fun showMenu() {
             }
             1 -> {
                 println("Enter The Word To Search For:")
-                concordanceProcessor!!.search(scanner.next().toLowerCase())
+                concordanceProcessor!!.search(scanner.next().lowercase())
             }
             2 -> {
                 println("1) Save To Originally Chosen File")

@@ -3,21 +3,21 @@ package structures.trees
 
 fun main() {
     val node = Node.buildTree(
-        'a'.toInt(),
-        Node.buildTree(
-            'b'.toInt(),
-            Node('d'.toInt()),
-            Node('e'.toInt())
-        ),
-        Node.buildTree(
-            'c'.toInt(),
-            null,
+            'a'.code,
             Node.buildTree(
-                'f'.toInt(),
-                Node('g'.toInt()),
-                null
+                    'b'.code,
+                    Node('d'.code),
+                    Node('e'.code)
+            ),
+            Node.buildTree(
+                    'c'.code,
+                    null,
+                    Node.buildTree(
+                            'f'.code,
+                            Node('g'.code),
+                            null
+                    )
             )
-        )
     )
     BinaryTreeFunctions.chr = true
     BinaryTreeFunctions.traversePreOrder(node)

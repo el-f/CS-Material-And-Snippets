@@ -6,7 +6,7 @@ import java.util.*
 enum class EntityType2 {
     EASY, MEDIUM, HARD, HELP;
 
-    fun getFormattedName() = name.toLowerCase().capitalize()
+    fun getFormattedName() = name.lowercase().replaceFirstChar { it.titlecase() }
 }
 
 object EntityFactory2 {

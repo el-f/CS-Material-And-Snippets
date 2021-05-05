@@ -34,14 +34,14 @@ class WeightedAvgCalculator(
             .filter { it.isNotEmpty() }
             .map { it.split(Regex(",")) }
             .forEach { marks.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
-        allNaz = marks.map { it.third }.sum()
+        allNaz = marks.sumOf { it.third }
     }
 
-    private fun getAvg() = marks.map { it.second * it.third / allNaz }.sum()
+    private fun getAvg() = marks.sumOf { it.second * it.third / allNaz }
 
     fun printAverage() = println("\nAverage - ${"%.3f".format(getAvg())}\n")
 
-    fun printRange(low: Int, high: Int) {
+    private fun printRange(low: Int, high: Int) {
         println(
             "${marks.filter { it.second in low..high }.size}" +
                     " Marks at Range of ($low-$high) Out of ${marks.size} Marks"
