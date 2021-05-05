@@ -46,7 +46,7 @@ class MainView : VBox() {
         val SIM_BACKGROUND_COLOR: Color = Color.LIGHTGRAY
         val SIM_CELL_COLOR: Color = Color.BLACK
 
-        val BRUSH_SIZES = arrayOf(1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 400, 3600)
+        val BRUSH_SIZES = intArrayOf(1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 400, 3600)
     }
 
     private lateinit var simulation: Simulation
