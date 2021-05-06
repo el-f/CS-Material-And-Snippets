@@ -1,9 +1,23 @@
 package snippets
 
+import java.util.*
+
 fun main() {
-    fizzBuzzV2()
+    fizzBuzzV3(mapOf(3 to "fizz", 5 to "buzz"))
     /*---------*/
-    fizzBuzzV1()
+//    fizzBuzzV2()
+    /*---------*/
+//    fizzBuzzV1()
+
+}
+
+fun fizzBuzzV3(dict: Map<Int, String>) {
+    for (i in 1..100) {
+        var str = ""
+        for (key in dict.keys)
+            if (i % key == 0) str += dict[key]
+        println(str.ifEmpty { i })
+    }
 }
 
 fun fizzBuzzV2() {
