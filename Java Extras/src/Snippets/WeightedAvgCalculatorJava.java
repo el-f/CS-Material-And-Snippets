@@ -2,6 +2,7 @@ package Snippets;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,7 +76,7 @@ public class WeightedAvgCalculatorJava {
     public WeightedAvgCalculatorJava(String filePath) throws IOException {
         marks = new ArrayList<>();
 
-        Files.lines(Path.of(filePath))
+        Files.lines(new File(filePath).toPath())
                 .filter(l -> !l.isEmpty())
                 .map(l -> l.split(","))
                 .forEach(l -> marks.add(
