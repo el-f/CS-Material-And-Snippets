@@ -1,7 +1,6 @@
 package Concordance;
 
 import java.util.Arrays;
-import java.util.Map.Entry;
 
 // Faster than BST at building but slower at printing/outputing (because outputing sorted)
 
