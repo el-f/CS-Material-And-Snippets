@@ -4,9 +4,11 @@ import time
 import os
 from collections import deque
 from datetime import datetime
+from itertools import cycle
 
 is_windows = platform.system() == 'Windows'
 ts = "$ "
+prefixes = cycle([lambda x=ts: x, lambda x=ts: f"{os.getcwd()} {x}"])
 
 
 class TerminalEmulator:
@@ -19,16 +21,18 @@ class TerminalEmulator:
         self.history = []
         self.command_queue = deque()
         self.start_time = datetime.now()
+        self.prefix = next(prefixes)
 
         self.my_commands = {
             '!help': (lambda command: self.help(command), "show all commands or use !help [command]"),
-            'cd': (lambda command: os.chdir(''.join(command.split()[1:])), "change directory"),
+            'cd': (lambda command: os.chdir(command[2:].strip()), "change directory"),
             'history': (lambda command: self.process_history(command), "view and run history"),
             'exit': (lambda _: [print(f"Terminal ran for {datetime.now() - self.start_time}"
                                       f" and executed {len(self.history)} commands"), exit()],
                      "exit the terminal"),
             'mult': (lambda command: self.multiple_commands(command),
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
+            'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "Cycle between the prefixes"),
         }
 
     def process_history(self, command: str):
@@ -73,7 +77,7 @@ class TerminalEmulator:
         print("############################")
         while True:
             if len(self.command_queue) == 0:
-                cmd = input(ts)
+                cmd = input(self.prefix())
                 self.command_queue.append(cmd)
             self.process_cmd()
 
