@@ -11,16 +11,17 @@ is_windows = platform.system() == 'Windows'
 ts = "$ "
 prefixes = cycle([lambda x=ts: x, lambda x=ts: f"{os.getcwd()} {x}"])
 
-DEFAULT_CS = Style.BRIGHT + Fore.GREEN
+MAIN_CS = Style.BRIGHT + Fore.GREEN
 WARNING_CS = Style.BRIGHT + Fore.RED
+DEF_CS = Fore.LIGHTCYAN_EX
 CS_END = Fore.RESET + Style.RESET_ALL
 
 
-def t_input(msg, color_style=DEFAULT_CS):
+def t_input(msg, color_style=MAIN_CS):
     return input(f"{color_style}{msg}{CS_END}")
 
 
-def t_print(msg, color_style=DEFAULT_CS):
+def t_print(msg, color_style=DEF_CS):
     print(f"{color_style}{msg}{CS_END}")
 
 
@@ -45,7 +46,7 @@ class TerminalEmulator:
             'cd': (lambda command: os.chdir(command[2:].strip()), "change directory"),
             'history': (lambda command: self.process_history(command), "view and run history"),
             'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
-                                        f" and executed {len(self.history)} commands"), exit()],
+                                        f" and executed {len(self.history)} commands", MAIN_CS), exit()],
                      "exit the terminal"),
             'mult': (lambda command: self.multiple_commands(command),
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
@@ -87,10 +88,10 @@ class TerminalEmulator:
             time.sleep(0.1)
 
     def run(self):
-        t_print("############################")
-        t_print("### My Terminal Emulator ###")
-        t_print("### run '!help' for help ###")
-        t_print("############################")
+        t_print("############################", MAIN_CS)
+        t_print("### My Terminal Emulator ###", MAIN_CS)
+        t_print("### run '!help' for help ###", MAIN_CS)
+        t_print("############################", MAIN_CS)
         while True:
             if len(self.command_queue) == 0:
                 cmd = t_input(self.prefix())
@@ -119,12 +120,11 @@ class TerminalEmulator:
             c_title = "COMMAND"
             d_title = "DESCRIPTION"
             set_len = 14
-            help_cs = Fore.LIGHTCYAN_EX
-            t_print("For more information on a specific command, type !HELP command-name", help_cs)
-            t_print(f"{c_title}{(set_len - len(c_title)) * ' '} {d_title}", help_cs)
-            t_print("-" * (len(c_title + d_title) + set_len + 1), help_cs)
+            t_print("For more information on a specific command, type !HELP command-name")
+            t_print(f"{c_title}{(set_len - len(c_title)) * ' '} {d_title}")
+            t_print("-" * (len(c_title + d_title) + set_len + 1))
             for k in self.my_commands.keys():
-                t_print(f"{k}{' ' * (set_len - len(k))} {self.my_commands[k][1]}", help_cs)
+                t_print(f"{k}{' ' * (set_len - len(k))} {self.my_commands[k][1]}")
 
 
 if __name__ == '__main__':
