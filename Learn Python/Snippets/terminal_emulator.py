@@ -64,9 +64,8 @@ class TerminalEmulator:
         if len(command) == 0:
             return self.COMMAND_ERROR
 
-        command = command.lower()
         try:
-            self.my_commands[command.split()[0]][0](command)
+            self.my_commands[command.split()[0].lower()][0](command)
             return self.COMMAND_PROCESSED
 
         except KeyError:
@@ -96,7 +95,7 @@ class TerminalEmulator:
             if len(self.command_queue) == 0:
                 cmd = t_input(self.prefix())
                 self.command_queue.append(cmd)
-                self.process_cmd()
+            self.process_cmd()
 
     def multiple_commands(self, command: str):
         cmd = command.split()
