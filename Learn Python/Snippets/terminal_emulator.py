@@ -113,15 +113,12 @@ class TerminalEmulator:
             raise RuntimeError("Missing Arguments!")
 
         cmd = ' '.join(cmd[1:])
-        stack = []  # helps avoid unexpected behavior when processing forbidden commands.
-        for command in cmd.split(self.MULTIPLE_COMMAND_SPLITTER):
-            command = command.strip()
-            if command == 'history':
-                raise RuntimeError("it is forbidden to chain the history command!")
-            stack.append(command)
 
-        while len(stack) > 0:
-            self.command_queue.append(stack.pop())
+        if 'history' in cmd:
+            raise RuntimeError("it is forbidden to chain the history command!")
+
+        for command in reversed(cmd.split(self.MULTIPLE_COMMAND_SPLITTER)):
+            self.command_queue.append(command)
 
     def help(self, command: str):
         cmd = command.split()
