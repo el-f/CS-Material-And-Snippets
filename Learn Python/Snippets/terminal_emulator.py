@@ -2,6 +2,7 @@ import platform
 import subprocess
 import time
 import os
+from colorama import Fore, Style
 from collections import deque
 from datetime import datetime
 from itertools import cycle
@@ -9,6 +10,22 @@ from itertools import cycle
 is_windows = platform.system() == 'Windows'
 ts = "$ "
 prefixes = cycle([lambda x=ts: x, lambda x=ts: f"{os.getcwd()} {x}"])
+
+DEFAULT_CS = Style.BRIGHT + Fore.GREEN
+WARNING_CS = Style.BRIGHT + Fore.RED
+CS_END = Fore.RESET + Style.RESET_ALL
+
+
+def t_input(msg, color_style=DEFAULT_CS):
+    return input(f"{color_style}{msg}{CS_END}")
+
+
+def t_print(msg, color_style=DEFAULT_CS):
+    print(f"{color_style}{msg}{CS_END}")
+
+
+def warn(warning):
+    print(f"{WARNING_CS}{warning}{CS_END}")
 
 
 class TerminalEmulator:
@@ -27,8 +44,8 @@ class TerminalEmulator:
             '!help': (lambda command: self.help(command), "show all commands or use !help [command]"),
             'cd': (lambda command: os.chdir(command[2:].strip()), "change directory"),
             'history': (lambda command: self.process_history(command), "view and run history"),
-            'exit': (lambda _: [print(f"Terminal ran for {datetime.now() - self.start_time}"
-                                      f" and executed {len(self.history)} commands"), exit()],
+            'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
+                                        f" and executed {len(self.history)} commands"), exit()],
                      "exit the terminal"),
             'mult': (lambda command: self.multiple_commands(command),
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
@@ -40,8 +57,8 @@ class TerminalEmulator:
             self.history.pop(len(self.history) - 1)
             self.command_queue.append(self.history[int(command.split()[1])])
         else:
-            print("run 'history x' to run the command in index x")
-            [print(f"{i}) {x}") for i, x in enumerate(self.history)]
+            t_print("run 'history x' to run the command in index x")
+            [t_print(f"{i}) {x}") for i, x in enumerate(self.history)]
 
     def process_custom_cmd(self, command: str) -> int:
         if len(command) == 0:
@@ -56,7 +73,7 @@ class TerminalEmulator:
             return self.COMMAND_NOT_FOUND
 
         except Exception as e:
-            print(e)
+            warn(e)
             return self.COMMAND_ERROR
 
     def process_cmd(self):
@@ -71,15 +88,15 @@ class TerminalEmulator:
             time.sleep(0.1)
 
     def run(self):
-        print("############################")
-        print("### My Terminal Emulator ###")
-        print("### run '!help' for help ###")
-        print("############################")
+        t_print("############################")
+        t_print("### My Terminal Emulator ###")
+        t_print("### run '!help' for help ###")
+        t_print("############################")
         while True:
             if len(self.command_queue) == 0:
-                cmd = input(self.prefix())
+                cmd = t_input(self.prefix())
                 self.command_queue.append(cmd)
-            self.process_cmd()
+                self.process_cmd()
 
     def multiple_commands(self, command: str):
         cmd = command.split()
@@ -96,18 +113,19 @@ class TerminalEmulator:
         cmd = command.split()
         if len(cmd) == 2:
             try:
-                print(f"{cmd[1]} \t {self.my_commands[cmd[1]][1]}")
+                t_print(f"{cmd[1]} \t {self.my_commands[cmd[1]][1]}")
             except KeyError:
-                print("No such custom command!")
+                raise RuntimeError("No such custom command!")
         else:
             c_title = "COMMAND"
             d_title = "DESCRIPTION"
             set_len = 14
-            print("For more information on a specific command, type !HELP command-name")
-            print(f"{c_title}{(set_len - len(c_title)) * ' '} {d_title}")
-            print("-" * (len(c_title + d_title) + set_len + 1))
+            help_cs = Fore.LIGHTCYAN_EX
+            t_print("For more information on a specific command, type !HELP command-name", help_cs)
+            t_print(f"{c_title}{(set_len - len(c_title)) * ' '} {d_title}", help_cs)
+            t_print("-" * (len(c_title + d_title) + set_len + 1), help_cs)
             for k in self.my_commands.keys():
-                print(f"{k}{' ' * (set_len - len(k))} {self.my_commands[k][1]}")
+                t_print(f"{k}{' ' * (set_len - len(k))} {self.my_commands[k][1]}", help_cs)
 
 
 if __name__ == '__main__':
