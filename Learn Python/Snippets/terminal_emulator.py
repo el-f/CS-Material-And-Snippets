@@ -86,7 +86,7 @@ class TerminalEmulator:
             return self.COMMAND_ERROR
 
     def process_cmd(self):
-        command = self.command_queue.pop()
+        command = self.command_queue.pop().strip()
         self.history.append(command)
         process_match_result = self.process_custom_cmd(command)
 
@@ -111,11 +111,13 @@ class TerminalEmulator:
         cmd = command.split()
         if len(cmd) < 2:
             raise RuntimeError("Missing Arguments!")
-        cmd = ' '.join(cmd[1:])
-        for command in reversed(cmd.split(self.MULTIPLE_COMMAND_SPLITTER)):
-            if command == 'history':
-                raise RuntimeError("it is forbidden to chain the history command!")
 
+        cmd = ' '.join(cmd[1:])
+
+        if 'history' in cmd:
+            raise RuntimeError("it is forbidden to chain the history command!")
+
+        for command in reversed(cmd.split(self.MULTIPLE_COMMAND_SPLITTER)):
             self.command_queue.append(command)
 
     def help(self, command: str):
