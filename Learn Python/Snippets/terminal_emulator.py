@@ -29,6 +29,13 @@ def warn(warning):
     print(f"{WARNING_CS}{warning}{CS_END}")
 
 
+def cd(command: str):
+    if len(command.split()) == 1:
+        t_print(os.getcwd())
+    else:
+        os.chdir(command.removeprefix('cd '))
+
+
 class TerminalEmulator:
     COMMAND_NOT_FOUND = -1
     COMMAND_PROCESSED = 0
@@ -42,13 +49,15 @@ class TerminalEmulator:
         self.prefix = next(prefixes)
 
         self.my_commands = {
-            '!help': (lambda command: self.help(command), "show all commands or use !help [command]"),
-            'cd': (lambda command: os.chdir(command[2:].strip()), "change directory"),
-            'history': (lambda command: self.process_history(command), "view and run history"),
+            '!help': (self.help, "show all commands or use !help [command]"),
+            'cd': (cd, "change directory"),
+            'history': (self.process_history, "view and run history"),
             'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
-                                        f" and executed {len(self.history)} commands", MAIN_CS), exit()],
-                     "exit the terminal"),
-            'mult': (lambda command: self.multiple_commands(command),
+                                        f" and executed {len(self.history)} commands", MAIN_CS),
+                                exit()
+                                ], "exit the terminal"
+                     ),
+            'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
             'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "Cycle between the prefixes"),
         }
