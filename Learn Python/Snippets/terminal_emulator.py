@@ -118,7 +118,7 @@ class TerminalEmulator:
             raise RuntimeError("it is forbidden to chain the history command!")
 
         for command in reversed(cmd.split(self.MULTIPLE_COMMAND_SPLITTER)):
-            if len(command.strip()):
+            if command.strip():
                 self.command_queue.append(command)
 
     def help(self, command: str):
