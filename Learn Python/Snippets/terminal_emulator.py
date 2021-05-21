@@ -102,10 +102,13 @@ class TerminalEmulator:
         t_print("### run '!help' for help ###", MAIN_CS)
         t_print("############################", MAIN_CS)
         while True:
-            if len(self.command_queue) == 0:
-                cmd = t_input(self.prefix())
-                self.command_queue.append(cmd)
-            self.process_cmd()
+            try:
+                if len(self.command_queue) == 0:
+                    cmd = t_input(self.prefix())
+                    self.command_queue.append(cmd)
+                self.process_cmd()
+            except KeyboardInterrupt:
+                self.my_commands['exit'][0](0)
 
     def multiple_commands(self, command: str):
         cmd = command.split()
