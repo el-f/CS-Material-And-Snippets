@@ -2,6 +2,7 @@ import platform
 import subprocess
 import time
 import os
+import getpass
 from colorama import Fore, Style
 from collections import deque
 from datetime import datetime
@@ -9,7 +10,11 @@ from itertools import cycle
 
 is_windows = platform.system() == 'Windows'
 ts = "$ "
-prefixes = cycle([lambda x=ts: x, lambda x=ts: f"{os.getcwd()} {x}"])
+prefixes = cycle([
+    lambda: f"{getpass.getuser()} {ts}",
+    lambda: ts,
+    lambda: f"{os.getcwd()} {ts}",
+])
 
 MAIN_CS = Style.BRIGHT + Fore.GREEN
 WARNING_CS = Style.BRIGHT + Fore.RED
