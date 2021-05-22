@@ -13,7 +13,7 @@
     </facet>
   </component>
   <component name="Flask">
-    <option name="enabled" value="true" />
+    <option name="enabled" value="false" />
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
