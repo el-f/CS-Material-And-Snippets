@@ -58,19 +58,19 @@ class TerminalEmulator:
         self.shell = next(sh_c)
 
         self.my_commands = {
-            '!help': (self.help, "show all commands or use !help [command]"),
-            'history': (self.process_history, "view and run history"),
+            **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
             'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
                                         f" and executed {len(self.history)} commands", MAIN_CS),
                                 exit()
                                 ], "exit the terminal"
                      ),
+            '!help': (self.help, "show all commands or use !help [command]"),
+            'history': (self.process_history, "view and run history"),
             'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
-            'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "Cycle between the prefixes"),
+            'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "cycle between the prefixes"),
             'shell': (
-                lambda _: setattr(self, 'shell', next(sh_c)), f"Cycle between the available shells ({sh})"),
-            **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
+                lambda _: setattr(self, 'shell', next(sh_c)), f"cycle between the available shells {sh}"),
         }
 
     def process_history(self, command: str):
