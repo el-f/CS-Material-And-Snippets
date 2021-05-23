@@ -7,15 +7,15 @@ public class Lambda {
         efd.run();
         System.out.println(efd);
 
-        EmptyFunc emptyFuncTWO = () -> System.out.println("wow");
-        EmptyFuncDecorator efd2 = new EmptyFuncDecorator(emptyFuncTWO);
+        EmptyFunc emptyFunc_2 = () -> System.out.println("wow");
+        EmptyFuncDecorator efd2 = new EmptyFuncDecorator(emptyFunc_2);
         System.out.println(efd2);
 
-        FuncTakingParams myFuncTakingParams = (txt, n) -> {
+        FuncWithParams<String, String, Integer> funcWithParams = (txt, n) -> {
             System.out.println("doing calculations...");
             return txt + ", " + n;
         };
-        System.out.println(myFuncTakingParams.apply("func with params", 3));
+        System.out.println(funcWithParams.apply("func with params", 3));
     }
 }
 
@@ -23,13 +23,13 @@ interface EmptyFunc {
     void run();
 }
 
-interface FuncTakingParams {
-    String apply(String text, int num);
+interface FuncWithParams<R, X, Y> {
+    R apply(X paramX, Y paramY);
 }
 
 class EmptyFuncDecorator implements EmptyFunc {
-    int func_calls_num;
     static int decorator_calls_num = 0;
+    int func_calls_num;
     EmptyFunc func;
 
     EmptyFuncDecorator(EmptyFunc func) {
