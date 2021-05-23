@@ -76,10 +76,10 @@ class TerminalEmulator:
     def process_history(self, command: str):
         if len(command.split()) == 2:
             self.history.pop(len(self.history) - 1)
-            self.command_queue.append(self.history[int(command.split()[1])])
+            self.command_queue.append(self.history[int(command.split()[1]) - 1])
         else:
             t_print("run 'history x' to run the command in index x")
-            [t_print(f"{i}) {x}") for i, x in enumerate(self.history)]
+            [t_print(f"{i + 1}) {x}") for i, x in enumerate(self.history)]
 
     def process_custom_cmd(self, command: str) -> int:
         if len(command) == 0:
