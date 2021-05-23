@@ -38,7 +38,8 @@ def cd(command: str):
     if len(command.split()) == 1:
         t_print(os.getcwd())
     else:
-        os.chdir(command.removeprefix('cd '))
+        pf = 'cd ' if command.startswith('cd ') else 'chdir '
+        os.chdir(command.removeprefix(pf))
 
 
 class TerminalEmulator:
@@ -55,7 +56,6 @@ class TerminalEmulator:
 
         self.my_commands = {
             '!help': (self.help, "show all commands or use !help [command]"),
-            'cd': (cd, "change directory"),
             'history': (self.process_history, "view and run history"),
             'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
                                         f" and executed {len(self.history)} commands", MAIN_CS),
@@ -65,6 +65,7 @@ class TerminalEmulator:
             'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
             'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "Cycle between the prefixes"),
+            **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
         }
 
     def process_history(self, command: str):
