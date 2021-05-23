@@ -15,6 +15,8 @@ prefixes = cycle([
     lambda: ts,
     lambda: f"{os.getcwd()} {ts}",
 ])
+sh = ["powershell", "cmd"]
+sh_c = cycle(sh)
 
 MAIN_CS = Style.BRIGHT + Fore.GREEN
 WARNING_CS = Style.BRIGHT + Fore.RED
@@ -53,6 +55,7 @@ class TerminalEmulator:
         self.command_queue = deque()
         self.start_time = datetime.now()
         self.prefix = next(prefixes)
+        self.shell = next(sh_c)
 
         self.my_commands = {
             '!help': (self.help, "show all commands or use !help [command]"),
@@ -65,6 +68,8 @@ class TerminalEmulator:
             'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
             'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "Cycle between the prefixes"),
+            'shell': (
+                lambda _: setattr(self, 'shell', next(sh_c)), f"Cycle between the available shells ({sh})"),
             **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
         }
 
@@ -99,7 +104,7 @@ class TerminalEmulator:
         if process_match_result >= 0:
             return
 
-        if subprocess.call(["cmd", "/c", command] if is_windows else [command]) == 1:
+        if subprocess.call([self.shell, "/c", command] if is_windows else [command]) == 1:
             time.sleep(0.1)
 
     def run(self):
