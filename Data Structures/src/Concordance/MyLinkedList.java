@@ -50,7 +50,7 @@ public class MyLinkedList {
             //every set interval go down a line and indent - for nicer output
             if (breakOutputLine && ++counter % 30 == 0) {
                 sb.append('\n');
-                sb.append(" ".repeat(indent));
+                for (int i = 0; i < indent; i++) sb.append(" ");
             }
         }
         sb.append(cur.data).append("]");

@@ -81,7 +81,7 @@ public class SkipList<V> {
             while (currentTower != this.end) {
                 String rep = "(k=" + currentTower.key + " , v=" + currentTower.value + ")";
                 if (level >= currentTower.flinks.size()) {
-                    stb.append("-".repeat(rep.length()));
+                    for (int i = 0; i < rep.length(); i++) stb.append("-");
                 } else {
                     stb.append(rep);
                 }
