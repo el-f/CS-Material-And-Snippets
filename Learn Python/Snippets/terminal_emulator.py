@@ -69,8 +69,9 @@ class TerminalEmulator:
             'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
             'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "cycle between the prefixes"),
-            'shell': (
-                lambda _: setattr(self, 'shell', next(sh_c)), f"cycle between the available shells {sh}"),
+            'shell': (lambda _: [setattr(self, 'shell', next(sh_c)),
+                                 t_print(f"Switched shell to: {self.shell}", MAIN_CS)],
+                      f"cycle between the available shells {sh}"),
         }
 
     def process_history(self, command: str):
