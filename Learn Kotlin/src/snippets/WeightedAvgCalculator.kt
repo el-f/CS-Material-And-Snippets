@@ -1,7 +1,6 @@
 package snippets
 
-import java.nio.file.Files
-import java.nio.file.Path
+import java.io.File
 import kotlin.math.max
 
 fun main() {
@@ -20,9 +19,9 @@ fun main() {
 }
 
 class WeightedAvgCalculator(
-    filePath: String?,
-    private var marks: MutableList<Triple<String, Int, Double>> = ArrayList(),
-    private var allNaz: Double = 0.0,
+        filePath: String?,
+        private var marks: MutableList<Triple<String, Int, Double>> = ArrayList(),
+        private var allNaz: Double = 0.0,
 ) {
     init {
         if (filePath != null)
@@ -30,10 +29,11 @@ class WeightedAvgCalculator(
     }
 
     private fun initListFromFile(filePath: String) {
-        Files.lines(Path.of(filePath))
-            .filter { it.isNotEmpty() }
-            .map { it.split(Regex(",")) }
-            .forEach { marks.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
+        File(filePath)
+                .readLines()
+                .filter { it.isNotEmpty() }
+                .map { it.split(Regex(",")) }
+                .forEach { marks.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
         allNaz = marks.sumOf { it.third }
     }
 
@@ -43,8 +43,8 @@ class WeightedAvgCalculator(
 
     private fun printRange(low: Int, high: Int) {
         println(
-            "${marks.filter { it.second in low..high }.size}" +
-                    " Marks at Range of ($low-$high) Out of ${marks.size} Marks"
+                "${marks.filter { it.second in low..high }.size}" +
+                        " Marks at Range of ($low-$high) Out of ${marks.size} Marks"
         )
     }
 
