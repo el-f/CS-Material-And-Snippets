@@ -2,6 +2,7 @@ package assignments._IV
 
 import assignments._IV.InputOrder.*
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 enum class InputOrder { Randomized, Sorted, Reversed }
 
@@ -35,7 +36,7 @@ fun analyze(size: Int, order: InputOrder) {
         Randomized -> {
         }
     }
-    println(" ${measureTime { insertionSort(arr) }} milliseconds for $order array of size $size")
+    println(" ${measureTimeMillis { insertionSort(arr) }} milliseconds for $order array of size $size")
 }
 
 fun insertionSort(arr: IntArray) {
@@ -48,10 +49,4 @@ fun insertionSort(arr: IntArray) {
         arr[j + 1] = curr
         if (i % (arr.size / 20) == 0) print("■") //progress bar
     }
-}
-
-inline fun measureTime(executable: () -> Unit): Long {
-    val start = System.currentTimeMillis()
-    executable()
-    return System.currentTimeMillis() - start
 }
