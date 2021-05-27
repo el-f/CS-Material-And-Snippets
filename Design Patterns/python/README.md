@@ -1,3 +1,6 @@
+#### (Also check out this another great Design Patterns resource: [faif/python-patterns](https://github.com/faif/python-patterns))
+
+__________________________
 ## Python Design Patterns
 
 Software design patterns are general reusable solutions to problems which occur
