@@ -1,4 +1,4 @@
-package thread;
+package Threads;
 
 import javafx.application.Application;
 import javafx.application.Platform;

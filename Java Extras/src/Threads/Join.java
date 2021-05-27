@@ -1,4 +1,4 @@
-package thread;
+package Threads;
 
 // Like Q1, but this time we use join to print the sum.
 public class Join {

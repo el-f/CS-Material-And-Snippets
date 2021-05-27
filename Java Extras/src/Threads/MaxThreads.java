@@ -1,4 +1,4 @@
-package thread;
+package Threads;
 
 public class MaxThreads {
     private static final Object synchronizer = new Object();

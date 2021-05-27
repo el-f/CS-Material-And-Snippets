@@ -1,4 +1,4 @@
-package thread;
+package Threads;
 
 // synchronized example
 public class Synchronized {

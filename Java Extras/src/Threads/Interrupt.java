@@ -1,4 +1,4 @@
-package thread;
+package Threads;
 
 // interrupt example
 public class Interrupt {
