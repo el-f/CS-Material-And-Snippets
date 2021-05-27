@@ -15,7 +15,7 @@ prefixes = cycle([
     lambda: ts,
     lambda: f"{os.getcwd()} {ts}",
 ])
-sh = ["powershell", "cmd"]
+sh = ["cmd", "powershell", ]
 sh_c = cycle(sh)
 
 MAIN_CS = Style.BRIGHT + Fore.GREEN
