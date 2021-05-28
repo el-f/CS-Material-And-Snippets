@@ -227,7 +227,7 @@ class MainView : VBox() {
         draw()
     }
 
-    private fun operateBrush(y: Int, x: Int, operation: (Int, Int) -> Unit) {
+    private inline fun operateBrush(y: Int, x: Int, operation: (Int, Int) -> Unit) {
         val brushSide = sqrt(BRUSH_SIZES[currentBrush].toDouble()).toInt()
         val lower = (brushSide - 1) / 2
         val upper = brushSide / 2

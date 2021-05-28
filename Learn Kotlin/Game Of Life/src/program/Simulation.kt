@@ -43,7 +43,7 @@ class Simulation(private var board: Array<IntArray>) {
         return count
     }
 
-    fun getCellValue(r: Int, c: Int): Int {
+    private fun getCellValue(r: Int, c: Int): Int {
         return if (r < 0 || r >= height) 0
         else if (c < 0 || c >= width) 0
         else board[r][c]
