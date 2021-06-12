@@ -66,3 +66,23 @@
     $repeat(-,420)
     ```
     <br>
+    
+### Autoplaylist:
+
+- Long Files (over an hour):
+	```
+	%length% GREATER 59:59 SORT DESCENDING BY %length%
+	```
+- FLAC Files:
+	```
+	%codec% IS FLAC
+	```
+- Files With Hebrew:
+	```
+	%filename% HAS א OR %filename% HAS ב OR %filename% HAS ג OR %filename% HAS ד OR %filename% HAS ה OR %filename% HAS ו OR %filename% HAS ז OR %filename% HAS ח OR %filename% HAS ט OR %filename% HAS י OR %filename% HAS כ OR %filename% HAS ל OR %filename% HAS מ OR %filename% HAS נ OR %filename% HAS ס OR %filename% HAS ע OR %filename% HAS פ OR %filename% HAS צ OR %filename% HAS ק OR %filename% HAS ר OR %filename% HAS ש OR %filename% HAS ת OR %filename% HAS ף OR %filename% HAS ך OR %filename% HAS ץ OR %filename% HAS ן
+	```
+- Recent Files (last 52 weeks):
+	```
+	%last_played% DURING LAST 52 WEEKS SORT DESCENDING BY %last_played%
+	```
+	<br>
