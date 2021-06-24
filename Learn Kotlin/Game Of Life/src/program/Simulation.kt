@@ -28,19 +28,16 @@ class Simulation(private var board: Array<IntArray>) {
     }
 
     private fun countAliveNeighbours(r: Int, c: Int): Int {
-        var count = 0
-        count += getCellValue(r - 1, c - 1)
-        count += getCellValue(r, c - 1)
-        count += getCellValue(r + 1, c - 1)
+        return (getCellValue(r - 1, c - 1) +
+                getCellValue(r, c - 1) +
+                getCellValue(r + 1, c - 1) +
 
-        count += getCellValue(r + 1, c)
-        count += getCellValue(r - 1, c)
+                getCellValue(r + 1, c) +
+                getCellValue(r - 1, c) +
 
-        count += getCellValue(r - 1, c + 1)
-        count += getCellValue(r, c + 1)
-        count += getCellValue(r + 1, c + 1)
-
-        return count
+                getCellValue(r - 1, c + 1) +
+                getCellValue(r, c + 1) +
+                getCellValue(r + 1, c + 1))
     }
 
     private fun getCellValue(r: Int, c: Int): Int {
