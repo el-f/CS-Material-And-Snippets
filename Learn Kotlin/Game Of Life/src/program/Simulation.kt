@@ -2,7 +2,7 @@ package program
 
 import kotlin.random.Random
 
-class Simulation(private var board: Array<IntArray>) {
+class Simulation(private var board: Array<BooleanArray>) {
     @JvmField
     var width: Int = board[0].size
 
@@ -11,16 +11,16 @@ class Simulation(private var board: Array<IntArray>) {
 
     fun setAlive(r: Int, c: Int) {
         if (r < 0 || r >= height || c < 0 || c >= width) return
-        board[r][c] = 1
+        board[r][c] = true
     }
 
     fun setDead(r: Int, c: Int) {
         if (r < 0 || r >= height || c < 0 || c >= width) return
-        board[r][c] = 0
+        board[r][c] = false
     }
 
     fun toggleState(r: Int, c: Int) {
-        if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
+        if (getCellValue(r, c) == 1) setAlive(r, c) else setDead(r, c)
     }
 
     fun setRandom(r: Int, c: Int) {
@@ -38,12 +38,13 @@ class Simulation(private var board: Array<IntArray>) {
                 getCellValue(r - 1, c + 1) +
                 getCellValue(r, c + 1) +
                 getCellValue(r + 1, c + 1))
+
     }
 
     private fun getCellValue(r: Int, c: Int): Int {
         return if (r < 0 || r >= height) 0
         else if (c < 0 || c >= width) 0
-        else board[r][c]
+        else if (board[r][c]) 1 else 0
     }
 
     fun isAlive(r: Int, c: Int): Boolean {
@@ -51,20 +52,16 @@ class Simulation(private var board: Array<IntArray>) {
     }
 
     fun step() {
-        val newBoard = Array(height) { IntArray(width) }
+        val newBoard = Array(height) { BooleanArray(width) }
         for (r in 0 until height) {
             for (c in 0 until width) {
                 val aliveNeighbours = countAliveNeighbours(r, c)
-                if (getCellValue(r, c) == 1) {
+                if (isAlive(r, c)) {
                     if (aliveNeighbours < 2) {
-                        newBoard[r][c] = 0
-                    } else if (aliveNeighbours == 2 || aliveNeighbours == 3) {
-                        newBoard[r][c] = 1
-                    } else {
-                        newBoard[r][c] = 0
-                    }
+                        newBoard[r][c] = false
+                    } else newBoard[r][c] = aliveNeighbours == 2 || aliveNeighbours == 3
                 } else if (aliveNeighbours == 3) {
-                    newBoard[r][c] = 1
+                    newBoard[r][c] = true
                 }
             }
         }
@@ -80,29 +77,29 @@ class Simulation(private var board: Array<IntArray>) {
     companion object {
         private const val size: Int = 234
 
-        private fun getLives(x: Int, rotate: Boolean, mirror: Boolean, shift: Int, vararg indices: Int): Int {
+        private fun getLives(x: Int, rotate: Boolean, mirror: Boolean, shift: Int, vararg indices: Int): Boolean {
             val y = x - shift
             var indexes = indices
             if (mirror) indexes += indices.map { size - it - 1 + shift }
-            return if (indexes.contains(if (rotate) size - y else y)) 1 else 0
+            return indexes.contains(if (rotate) size - y else y)
         }
 
         private fun gliderGun(rotate: Boolean = false, shift: Int = 0, mirror: Boolean = false) = arrayOf(
-                IntArray(size) { getLives(it, rotate, mirror, shift, 24) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 24) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
 
-                IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
 
-                IntArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
-                IntArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
+                BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
         @Suppress("SameParameterValue")
-        private fun emptyBlock(amount: Int) = Array(amount) { IntArray(size) { 0 } }
+        private fun emptyBlock(amount: Int) = Array(amount) { BooleanArray(size) }
 
         @JvmField
         val DEFAULT_STARTER = arrayOf(
