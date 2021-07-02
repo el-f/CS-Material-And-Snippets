@@ -65,9 +65,9 @@ class WeightedAvgCalculator(
         println("-----------------------------------------")
         marks.forEach {
             print(it.first + " ")
-            for (i in 0 until max(firstPrintLineLen, it.first.length + 1) - it.first.length) print("-")
+            print("-".repeat(max(firstPrintLineLen, it.first.length + 1) - it.first.length))
             print(" " + it.second + " ")
-            for (i in 0 until secondPrintLineLen - it.second.toString().length) print("-")
+            print("-".repeat(secondPrintLineLen - it.second.toString().length))
             println(" " + it.third)
         }
     }
