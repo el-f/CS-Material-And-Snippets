@@ -2,19 +2,22 @@ package snippets
 
 import java.io.File
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 fun main() {
     println("------------ All Marks ------------------")
     var wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
-    wac.printAll()
+    wac.printAll().also { println() }
     wac.printAverage()
-    wac.printAllRanges()
+    wac.printRoundedAverage().also { println() }
+    wac.printAllRanges().also { println() }
 
 
     println("\n-------- technology Marks ---------------")
     wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myTechnologyMarks")
-    wac.printAll()
+    wac.printAll().also { println() }
     wac.printAverage()
+    wac.printRoundedAverage().also { println() }
     wac.printAllRanges()
 }
 
@@ -42,7 +45,9 @@ class WeightedAvgCalculator(
 
     private fun getAvg() = marks.sumOf { it.second * it.third / allNaz }
 
-    fun printAverage() = println("\nAverage - ${"%.3f".format(getAvg())}\n")
+    fun printAverage() = println("Average - ${"%.3f".format(getAvg())}")
+
+    fun printRoundedAverage() = println("Rounded Average - ${getAvg().roundToInt()}")
 
     private fun printRange(low: Int, high: Int) {
         println(
