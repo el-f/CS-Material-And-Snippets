@@ -253,18 +253,24 @@ class MainView : VBox() {
             //  stroke vertical + horizontal lines to emphasize different cells
             lineWidth = 0.05
             stroke = SIM_BACKGROUND_COLOR
-            var x = 0.0
-            while (x <= canvas.width) {
-                strokeLine(x, 0.0, x, canvas.width)
-                x++
-            }
-            var y = 0.0
-            while (y <= canvas.height) {
-                strokeLine(0.0, y, canvas.height, y)
-                y++
-            }
 
+            for (x in 0.0..canvas.width step 1.0) {
+                strokeLine(x, 0.0, x, canvas.width)
+            }
+            for (y in 0.0..canvas.height step 1.0) {
+                strokeLine(0.0, y, canvas.height, y)
+            }
         }
     }
 
+    // Add for-loops functionality to Double Range (unsafe version for speed optimization)
+    private infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
+        return generateSequence(start) {
+            if (it == Double.POSITIVE_INFINITY) return@generateSequence null
+            else {
+                val next = it + step
+                if (next > endInclusive) null else next
+            }
+        }.asIterable()
+    }
 }
