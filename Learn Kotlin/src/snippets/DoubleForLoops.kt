@@ -19,12 +19,11 @@ private infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
         "Step must be signed according to range start and end! (start=$start, end=$endInclusive, step=$step)"
     }
 
-    return generateSequence(start) {
-        if (it == if (isGoingUp) Double.POSITIVE_INFINITY else Double.NEGATIVE_INFINITY) {
-            null
-        } else {
-            val next = it + step
-            if (it == endInclusive) null else next
+    return generateSequence(start) { current ->
+        when (current) {
+            if (isGoingUp) Double.POSITIVE_INFINITY else Double.NEGATIVE_INFINITY -> null
+            endInclusive -> null
+            else -> current + step
         }
     }.asIterable()
 }
