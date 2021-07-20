@@ -72,10 +72,10 @@ if __name__ == '__main__':
     }
 
     # test functionality first:
-    test_inp = [[1, 2], [3], [4, 5, 6], [7, 8, 9, 10]]
-    excepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    test_inp = [[1, 2], [3], [4, 5, 6], [], [7, 8, 9, 10]]
+    expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     for func in fs:
-        assert func(test_inp) == excepted
+        assert func(test_inp) == expected
 
     # compare times:
     for func in fs:
