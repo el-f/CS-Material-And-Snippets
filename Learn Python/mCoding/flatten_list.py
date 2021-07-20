@@ -37,7 +37,7 @@ def flatten_with_chain(lst: list[list]) -> list:
 
 def flatten_with_reduce(lst: list[list]) -> list:
     return functools.reduce(operator.iconcat, lst, [])
-    # +=
+    # iconcat is +=
 
 
 def flatten_with_sum(lst: list[list]) -> list:
@@ -46,25 +46,37 @@ def flatten_with_sum(lst: list[list]) -> list:
 
 def time_f(f):
     elapsed = 0.0
-    n = 100
-    M = 1000
-    N = 100
-    for _ in range(n):
-        lst = [[random.randint(0, 1000000) for _ in range(N)] for __ in range(M)]
+    test_iters = 100
+    outer_size = 1000
+    inner_size = 100
+    for _ in range(test_iters):
+        lst = [[random.randint(0, 1000000) for _ in range(inner_size)] for __ in range(outer_size)]
         start = time.perf_counter()
         f(lst)
         elapsed += time.perf_counter() - start
 
     # bit of extra fluff for nice & indented output
     fn = f.__name__
-    print(fn, ' ' * (6 - len(fn.partition('h_')[2])), '\t\t', "%.6f ms" % (elapsed / n * 1000))
+    print(fn, ' ' * (6 - len(fn.partition('h_')[2])), '\t\t', "%.6f ms" % (elapsed / test_iters * 1000))
 
 
 if __name__ == '__main__':
-    time_f(flatten_with_append)
-    time_f(flatten_with_extend)
-    time_f(flatten_with_plus)
-    time_f(flatten_with_l_comp)
-    time_f(flatten_with_chain)
-    time_f(flatten_with_reduce)
-    time_f(flatten_with_sum)
+    fs = {
+        flatten_with_append,
+        flatten_with_extend,
+        flatten_with_plus,
+        flatten_with_l_comp,
+        flatten_with_chain,
+        flatten_with_reduce,
+        flatten_with_sum
+    }
+
+    # test functionality first:
+    test_inp = [[1, 2], [3], [4, 5, 6], [7, 8, 9, 10]]
+    excepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    for func in fs:
+        assert func(test_inp) == excepted
+
+    # compare times:
+    for func in fs:
+        time_f(func)
