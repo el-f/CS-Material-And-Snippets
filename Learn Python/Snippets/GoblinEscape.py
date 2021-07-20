@@ -129,21 +129,26 @@ def detectWin():
                 break
 
 
-clock = pygame.time.Clock()
-clear()
-while True:
-    x = None
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit(0)
-        clicking = pygame.mouse.get_pressed(3)[0]
-        if pygame.mouse.get_pressed(3)[2]:
-            restart()
+def run():
+    global clicking
+    clock = pygame.time.Clock()
+    clear()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit(0)
+            clicking = pygame.mouse.get_pressed(3)[0]
+            if pygame.mouse.get_pressed(3)[2]:
+                restart()
 
-    if clicking:
-        x, y = pygame.mouse.get_pos()
-        moveBoat(x - width / 2, y - height / 2)
-    updateGoblin()
-    detectWin()
-    redraw()
-    clock.tick(60)
+        if clicking:
+            x, y = pygame.mouse.get_pos()
+            moveBoat(x - width / 2, y - height / 2)
+        updateGoblin()
+        detectWin()
+        redraw()
+        clock.tick(60)
+
+
+if __name__ == '__main__':
+    run()
