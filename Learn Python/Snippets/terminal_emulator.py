@@ -59,11 +59,13 @@ class TerminalEmulator:
 
         self.my_commands = {
             **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
-            'exit': (lambda _: [t_print(f"Terminal ran for {datetime.now() - self.start_time}"
-                                        f" and executed {len(self.history)} commands", MAIN_CS),
-                                exit()
-                                ], "exit the terminal"
-                     ),
+            'exit':
+                (lambda _: [t_print(f"\nTerminal ran for {datetime.now() - self.start_time}"
+                                    f" and executed {len(self.history)} command{'s' if len(self.history) > 1 else ''}",
+                                    MAIN_CS),
+                            exit()],
+                 "exit the terminal"
+                 ),
             '!help': (self.help, "show all commands or use !help [command]"),
             'history': (self.process_history, "view and run history"),
             'mult': (self.multiple_commands,
