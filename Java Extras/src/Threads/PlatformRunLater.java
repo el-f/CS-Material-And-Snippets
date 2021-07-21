@@ -26,6 +26,7 @@ public class PlatformRunLater extends Application {
             Thread t = new Thread(() -> {
                 try {
 
+                    Platform.runLater(() -> label.setText("working..."));
                     Thread.sleep(5000);
                     Platform.runLater(() -> label.setText("finished!"));
 
