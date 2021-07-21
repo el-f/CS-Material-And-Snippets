@@ -35,6 +35,7 @@ public class PlatformRunLater extends Application {
                     Platform.runLater(() -> label.setText("finished!"));
 
                     addExitButton(vbox);
+                    vbox.getChildren().get(0).setDisable(true);
                 } catch (InterruptedException e1) {
                     // ignore
                 }
