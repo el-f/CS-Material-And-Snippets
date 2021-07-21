@@ -2,7 +2,6 @@ package Threads;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ import javafx.stage.Stage;
 
 // Platform.runLater
 public class PlatformRunLater extends Application {
-    private final Label label = new Label("    Ready...");
+    private final Label label = new Label("Ready...");
 
     public static void main(String[] args) {
         launch();
