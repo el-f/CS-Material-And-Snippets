@@ -45,10 +45,6 @@ public class PlatformRunLater extends Application {
         Scene scene = new Scene(vbox, 300, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        byte b = 0x7f;
-        b++;
-        System.out.println(b);
     }
 
     @SuppressWarnings("all")
