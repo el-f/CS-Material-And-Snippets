@@ -25,6 +25,7 @@ public class PlatformRunLater extends Application {
         VBox vbox = new VBox(50, button, label);
         vbox.setAlignment(Pos.CENTER);
         button.setOnAction(event -> {
+            vbox.getChildren().get(0).setDisable(true);
             Thread t = new Thread(() -> {
                 try {
                     int countDown = 5;
@@ -34,7 +35,6 @@ public class PlatformRunLater extends Application {
                     Platform.runLater(() -> label.setText("finished!"));
 
                     addExitButton(vbox);
-                    vbox.getChildren().get(0).setDisable(true);
                 } catch (InterruptedException e1) {
                     // ignore
                 }
@@ -46,6 +46,9 @@ public class PlatformRunLater extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        byte b = 0x7f;
+        b++;
+        System.out.println(b);
     }
 
     @SuppressWarnings("all")
