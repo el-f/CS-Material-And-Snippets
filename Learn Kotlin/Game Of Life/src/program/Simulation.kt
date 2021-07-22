@@ -20,7 +20,7 @@ class Simulation(private var board: Array<BooleanArray>) {
     }
 
     fun toggleState(r: Int, c: Int) {
-        if (getCellValue(r, c) == 1) setAlive(r, c) else setDead(r, c)
+        if (getCellValue(r, c) == 0) setAlive(r, c) else setDead(r, c)
     }
 
     fun setRandom(r: Int, c: Int) {
