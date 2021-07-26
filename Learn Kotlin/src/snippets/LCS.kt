@@ -6,7 +6,9 @@ val cache: MutableMap<Pair<String, String>, String> = HashMap()
 
 fun lcs(a: String, b: String): String {
     if (a.isEmpty() || b.isEmpty()) return ""
-    if (cache.containsKey(Pair(a, b))) return cache[Pair(a, b)].orEmpty()
+
+    val current = Pair(a, b)
+    if (cache.containsKey(current)) return cache[current].orEmpty()
 
     val result = if (a.last() == b.last()) {
         lcs(a.dropLast(1), b.dropLast(1)) + a.last()
@@ -16,7 +18,7 @@ fun lcs(a: String, b: String): String {
         if (s1.length > s2.length) s1 else s2
     }
 
-    cache[Pair(a, b)] = result
+    cache[current] = result
     return result
 }
 
