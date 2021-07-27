@@ -1,6 +1,7 @@
 package snippets
 
 import kotlin.collections.HashMap
+import kotlin.test.assertTrue
 
 val cache: MutableMap<Pair<String, String>, String> = HashMap()
 
@@ -36,21 +37,19 @@ fun lcs2(a: String, b: String): String {
 }
 // ************************************************************************************
 
-fun main() {
-    //test cases
+fun doTests(lcsFunction: (String, String) -> String) {
     arrayOf(
-        (""           == lcs("", "")),
-        ("final"      == lcs("nothardlythefinaltest", "zzzfinallyzzz")),
-        ("abc"        == lcs("abcdef", "abc")),
-        ("acf"        == lcs("abcdef", "acf")),
-        ("nottest"    == lcs("anothertest", "notatest")),
-        ("12356"      == lcs("132535365", "123456789")),
+            (""           == lcsFunction("", "")),
+            ("final"      == lcsFunction("nothardlythefinaltest", "zzzfinallyzzz")),
+            ("abc"        == lcsFunction("abcdef", "abc")),
+            ("acf"        == lcsFunction("abcdef", "acf")),
+            ("nottest"    == lcsFunction("anothertest", "notatest")),
+            ("12356"      == lcsFunction("132535365", "123456789")),
+    ).forEach(::assertTrue)
+    cache.clear()
+}
 
-        (""           == lcs2("", "")),
-        ("final"      == lcs2("nothardlythefinaltest", "zzzfinallyzzz")),
-        ("abc"        == lcs2("abcdef", "abc")),
-        ("acf"        == lcs2("abcdef", "acf")),
-        ("nottest"    == lcs2("anothertest", "notatest")),
-        ("12356"      == lcs2("132535365", "123456789")),
-    ).forEach(::assert)
+fun main() {
+    doTests(::lcs)
+    doTests(::lcs2)
 }

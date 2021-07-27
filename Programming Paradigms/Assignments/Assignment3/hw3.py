@@ -1,5 +1,5 @@
+import functools
 import random
-from functools import reduce
 
 
 #
@@ -76,7 +76,7 @@ def q4():
 
     # solution a:
     def sort(arr: list) -> list:
-        return reduce(
+        return functools.reduce(
             lambda a, b: [x for x in a if x <= b] + [b] + [x for x in a if x > b],
             arr,
             []

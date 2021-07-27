@@ -1,9 +1,13 @@
 package Snippets;
 
 import lombok.Data;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /*
     Longest Common Sequence Solution
@@ -57,10 +61,36 @@ public class LCS {
         return result;
     }
 
+    @Test
+    static void doTestsLCS1() {
+        assertTrue(Stream.of(
+                (""         .equals(lcs("", ""))),
+                ("final"    .equals(lcs("nothardlythefinaltest", "zzzfinallyzzz"))),
+                ("abc"      .equals(lcs("abcdef", "abc"))),
+                ("acf"      .equals(lcs("abcdef", "acf"))),
+                ("nottest"  .equals(lcs("anothertest", "notatest"))),
+                ("12356"    .equals(lcs("132535365", "123456789")))
+        ).allMatch(it -> it));
+
+        cache.clear();
+    }
+
+    @Test
+    static void doTestsLCS2() {
+        assertTrue(Stream.of(
+                (""         .equals(lcs2("", ""))),
+                ("final"    .equals(lcs2("nothardlythefinaltest", "zzzfinallyzzz"))),
+                ("abc"      .equals(lcs2("abcdef", "abc"))),
+                ("acf"      .equals(lcs2("abcdef", "acf"))),
+                ("nottest"  .equals(lcs2("anothertest", "notatest"))),
+                ("12356"    .equals(lcs2("132535365", "123456789")))
+        ).allMatch(it -> it));
+
+        cache.clear();
+    }
+
     public static void main(String[] args) {
-        System.out.println(lcs("nothardlythefinaltest", "zzzfinallyzzz").equals("final"));
-        System.out.println(lcs("", "").equals(""));
-        System.out.println(lcs2("nothardlythefinaltest", "zzzfinallyzzz").equals("final"));
-        System.out.println(lcs2("", "").equals(""));
+        doTestsLCS1();
+        doTestsLCS2();
     }
 }
