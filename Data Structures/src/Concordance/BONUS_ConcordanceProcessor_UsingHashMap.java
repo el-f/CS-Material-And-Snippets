@@ -16,8 +16,6 @@ public class BONUS_ConcordanceProcessor_UsingHashMap {
         //O(n) when n is the number of lines
         String[] lines = Files.lines(file.toPath()).toArray(String[]::new);
 
-
-
         String[][] words = new String[lines.length][];
 
         /*
@@ -85,11 +83,12 @@ public class BONUS_ConcordanceProcessor_UsingHashMap {
      */
     public void search(String word) {
         long start = System.currentTimeMillis();
-        System.out.print(myHashMap.search(word));
+        String searchResult = myHashMap.search(word);
+        System.out.print(searchResult != null ? searchResult : "Word Not Found!\n");
         System.out.println("Search Finished In " + (System.currentTimeMillis() - start) + "ms");
     }
 
-    public void printMostCommonWord(){
+    public void printMostCommonWord() {
         System.out.println(myHashMap.getMostCommonWord());
     }
 
