@@ -14,7 +14,7 @@ public class SecretString {
     private String buildString(Map<Character, Set<Character>> map) {
         StringBuilder res = new StringBuilder();
         Character last;
-        while (map.values().size() > 0) {
+        while (!map.isEmpty()) {
             for (Map.Entry<Character, Set<Character>> entry : map.entrySet()) {
                 if (entry.getValue().isEmpty()) {
                     last = entry.getKey();
