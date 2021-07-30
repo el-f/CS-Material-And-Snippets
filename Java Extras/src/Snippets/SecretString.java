@@ -12,23 +12,20 @@ public class SecretString {
     }
 
     private String buildString(Map<Character, Set<Character>> map) {
-        Stack<Character> stack = new Stack<>();
-        StringBuilder result = new StringBuilder();
+        StringBuilder res = new StringBuilder();
         Character last;
         while (map.values().size() > 0) {
             for (Map.Entry<Character, Set<Character>> entry : map.entrySet()) {
                 if (entry.getValue().isEmpty()) {
                     last = entry.getKey();
-                    stack.push(last);
+                    res.insert(0, last);
                     map.remove(last);
                     for (Set<Character> chars : map.values()) chars.remove(last);
                     break;
                 }
             }
         }
-
-        while (!stack.empty()) result.append(stack.pop());
-        return result.toString();
+        return res.toString();
     }
 
     private Map<Character, Set<Character>> getOrderMap(char[][] triplets) {
