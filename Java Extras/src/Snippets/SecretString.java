@@ -11,6 +11,7 @@ public class SecretString {
         return buildString(getOrderMap(triplets));
     }
 
+    // find last character one at a time and build string from end to start
     private String buildString(Map<Character, Set<Character>> map) {
         StringBuilder res = new StringBuilder();
         Character last;
@@ -28,15 +29,14 @@ public class SecretString {
         return res.toString();
     }
 
+    // map each char to all chars that come after it
     private Map<Character, Set<Character>> getOrderMap(char[][] triplets) {
         Map<Character, Set<Character>> map = new HashMap<>();
         for (char[] triplet : triplets) {
             for (int i = 0; i < 3; i++) {
-                if (!map.containsKey(triplet[i])) {
-                    map.put(triplet[i], new HashSet<>());
-                }
-                if (i < 1) map.get(triplet[i]).add(triplet[2]);
-                if (i < 2) map.get(triplet[i]).add(triplet[i + 1]);
+                map.putIfAbsent(triplet[i], new HashSet<>());
+                for (int j = 1; j + i <= 2; j++)
+                    map.get(triplet[i]).add(triplet[i + j]);
             }
         }
         return map;
