@@ -63,19 +63,17 @@ public class ThreadedCounting {
 
         @Override
         public synchronized void run() {
-            synchronized (this) {
-                int threadId = Integer.parseInt(Thread.currentThread().getName());
-                for (int i = 1; i <= 100; i++) {
-                    if (i % 3 == threadId % 3) {
-                        while (working != threadId) {
-                            try {
-                                wait();
-                            } catch (InterruptedException e) { /*ignore*/ }
-                        }
-                        counter.count(i);
-                        working = (working == 3) ? 1 : working + 1;
-                        notifyAll();
+            int threadId = Integer.parseInt(Thread.currentThread().getName());
+            for (int i = 1; i <= 100; i++) {
+                if (i % 3 == threadId % 3) {
+                    while (working != threadId) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) { /*ignore*/ }
                     }
+                    counter.count(i);
+                    working = (working == 3) ? 1 : working + 1;
+                    notifyAll();
                 }
             }
         }
