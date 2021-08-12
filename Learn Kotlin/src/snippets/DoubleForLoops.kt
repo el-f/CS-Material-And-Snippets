@@ -11,7 +11,7 @@ fun main() {
 }
 
 // Add for-loops functionality to Double ~Bidirectional~ Range
-private infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
+infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
     require(start.isFinite())
     require(endInclusive.isFinite())
     val isGoingUp = endInclusive > start
