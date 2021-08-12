@@ -29,15 +29,23 @@ def egg_drop(eggs, floors):
     return cache[(eggs, floors)]
 
 
+print()
+
+
+# h = c(eggs, 1) + c(eggs, 2) + ... + c(eggs, tries).
+# c(n, k) = c(n, k - 1) * (n - k + 1) / k = c(n, k - 2) * (n - (k - 1) + 1) / (k - 1) * (n - k - 1) / k ... etc
 def max_determinable_height(eggs, tries):
+    if eggs >= tries:
+        return (2 ** tries) - 1  # just do binary search
+
     h, t = 0, 1
-    for i in range(1, eggs + 1):
-        t = t * (tries - i + 1) // i
+    for k in range(1, eggs + 1):
+        t = t * (tries - k + 1) // k
         h += t
     return h
 
 
-if __name__ == "__main__":
+def main():
     assert egg_drop(0, 10) == 0
     assert egg_drop(10, 0) == 0
     assert egg_drop(2, 10) == 4
@@ -46,3 +54,6 @@ if __name__ == "__main__":
     assert max_determinable_height(2, 14) == 105
     assert max_determinable_height(7, 20) == 137979
 
+
+if __name__ == "__main__":
+    main()
