@@ -1,12 +1,12 @@
 package snippets
 
 fun main() {
-    for (i in 10.0..0.0 step -1.0) {
-        println(i)
+    for (i in 10.0..0.0 step -0.5) {
+        print("$i ")
     }
-    println("~~~~~~~")
-    for (i in 0.0..10.0 step 1.0) {
-        println(i)
+    println("\n~~~~~~~")
+    for (i in 0.0..10.0 step 1.00003) {
+        print("$i ")
     }
 }
 
@@ -20,10 +20,11 @@ infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
     }
 
     return generateSequence(start) { current ->
-        when (current) {
-            if (isGoingUp) Double.POSITIVE_INFINITY else Double.NEGATIVE_INFINITY -> null
-            endInclusive -> null
-            else -> current + step
+        when {
+            current == if (isGoingUp) Double.POSITIVE_INFINITY else Double.NEGATIVE_INFINITY -> null
+            if (isGoingUp) current >= endInclusive else current <= endInclusive -> null
+            if (isGoingUp) current + step > endInclusive else current + step < endInclusive -> null
+            else -> String.format("%.10f", current + step).toDouble()
         }
     }.asIterable()
 }
