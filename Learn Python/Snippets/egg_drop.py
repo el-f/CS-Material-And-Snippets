@@ -25,8 +25,16 @@ def egg_drop(eggs, floors):
         if res < minimum:
             minimum = res
 
-    cache[(eggs, floors)] = minimum + 1 # plus one - we drop at this floor
+    cache[(eggs, floors)] = minimum + 1  # plus one - we drop at this floor
     return cache[(eggs, floors)]
+
+
+def max_determinable_height(eggs, tries):
+    h, t = 0, 1
+    for i in range(1, eggs + 1):
+        t = t * (tries - i + 1) // i
+        h += t
+    return h
 
 
 if __name__ == "__main__":
@@ -34,3 +42,7 @@ if __name__ == "__main__":
     assert egg_drop(10, 0) == 0
     assert egg_drop(2, 10) == 4
     assert egg_drop(2, 100) == 14
+
+    assert max_determinable_height(2, 14) == 105
+    assert max_determinable_height(7, 20) == 137979
+
