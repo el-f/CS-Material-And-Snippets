@@ -15,8 +15,7 @@ infix fun ClosedRange<Double>.step(step: Double): Iterable<Double> {
     require(start.isFinite())
     require(endInclusive.isFinite())
     val isGoingUp = endInclusive > start
-    val dist = if (isGoingUp) endInclusive - start else start - endInclusive
-    require(dist != 0.0) { "Invalid Range! (start=$start, end=$endInclusive, step=$step)" }
+    require(start != endInclusive) { "start can't be also the end! (start=$start, end=$endInclusive, step=$step)" }
     require(if (isGoingUp) step > 0 else step < 0) {
         "Step must be signed according to range start and end! (start=$start, end=$endInclusive, step=$step)"
     }
