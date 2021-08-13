@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="org.projectlombok:lombok:1.18.20" level="application" />
+    <orderEntry type="library" name="junit.jupiter.engine" level="application" />
   </component>
 </module>
