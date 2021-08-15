@@ -9,7 +9,7 @@ public class InfiniteFibonacci {
 
     public static LongStream generateFibonacciSequence() {
         AtomicLong lastHolder = new AtomicLong(1);
-        return LongStream.iterate(1, it -> lastHolder.getAndIncrement());
+        return LongStream.iterate(1, lastHolder::getAndAdd);
     }
 
 }
