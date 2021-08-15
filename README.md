@@ -1,2 +1,2 @@
 # CS-Material-And-Snippets
-Collection of computer science related tutorials/courses and general code examples/snippets.
+Collection of computer science related tutorials/courses, general code examples / snippets / solutions.
