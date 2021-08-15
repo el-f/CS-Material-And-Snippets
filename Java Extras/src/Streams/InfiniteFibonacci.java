@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class InfiniteFibonacci {
 
-    // my solution for this kata: 55695bc4f75bbaea5100016b (a bit enhanced for accuray)
+    // my solution for this kata: 55695bc4f75bbaea5100016b (a bit enhanced for accuracy)
 
     public static Stream<BigInteger> generateFibonacciSequence() {
         AtomicReference<BigInteger> lastHolder = new AtomicReference<>(BigInteger.valueOf(1));
@@ -15,7 +15,7 @@ public class InfiniteFibonacci {
 
     public static void main(String[] args) {
         generateFibonacciSequence()
-                .limit(1000)
+                .limit(100000)
                 .forEach(System.out::println);
     }
 
