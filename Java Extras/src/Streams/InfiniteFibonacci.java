@@ -1,4 +1,4 @@
-package Snippets;
+package Streams;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;

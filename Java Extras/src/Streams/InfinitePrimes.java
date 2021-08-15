@@ -1,4 +1,4 @@
-package Snippets;
+package Streams;
 
 import java.util.Iterator;
 import java.util.stream.IntStream;
