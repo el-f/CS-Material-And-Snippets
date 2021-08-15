@@ -8,16 +8,18 @@ from collections import deque
 from datetime import datetime
 from itertools import cycle
 
+# ###### SETUP ###### #
 is_windows = platform.system() == 'Windows'
-ts = "$ "
+term_sign = "$ "
 prefixes = cycle([
-    lambda: f"{getpass.getuser()} {ts}",
-    lambda: ts,
-    lambda: f"{os.getcwd()} {ts}",
+    lambda: f"{getpass.getuser()} {term_sign}",
+    lambda: term_sign,
+    lambda: f"{os.getcwd()} {term_sign}",
 ])
-sh = ["cmd", "powershell", ]
-sh_c = cycle(sh)
+available_shells = ["cmd", "powershell", ] if is_windows else ["bash", "fish", ]
+selected_shells = cycle(available_shells)
 
+# ### TEXT COLOR ### #
 MAIN_CS = Style.BRIGHT + Fore.GREEN
 WARNING_CS = Style.BRIGHT + Fore.RED
 DEF_CS = Fore.LIGHTCYAN_EX
@@ -55,7 +57,7 @@ class TerminalEmulator:
         self.command_queue = deque()
         self.start_time = datetime.now()
         self.prefix = next(prefixes)
-        self.shell = next(sh_c)
+        self.shell = next(selected_shells)
 
         self.my_commands = {
             **dict.fromkeys(['cd', 'chdir'], (cd, "change directory")),
@@ -71,9 +73,9 @@ class TerminalEmulator:
             'mult': (self.multiple_commands,
                      f"run multiple commands separated by '{self.MULTIPLE_COMMAND_SPLITTER}'"),
             'prefix': (lambda _: setattr(self, 'prefix', next(prefixes)), "cycle between the prefixes"),
-            'shell': (lambda _: [setattr(self, 'shell', next(sh_c)),
+            'shell': (lambda _: [setattr(self, 'shell', next(selected_shells)),
                                  t_print(f"Switched shell to: {self.shell}", MAIN_CS)],
-                      f"cycle between the available shells {sh}"),
+                      f"cycle between the available shells {available_shells}"),
         }
 
     def process_history(self, command: str):
