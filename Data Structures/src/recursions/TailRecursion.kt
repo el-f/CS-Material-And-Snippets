@@ -1,16 +1,21 @@
-package snippets
+package recursions
+
+import java.math.BigInteger
+
+val ONE: BigInteger = BigInteger.ONE
+val FIFTY = 50.toBigInteger()
 
 fun main() {
-    println(fact(4))
-    println(tail_fact(4))
+    println(tailFact(FIFTY * FIFTY))
+    println(fact(FIFTY * FIFTY))
 }
 
 //regular recursion - inefficient
-fun fact(n: Int): Int {
-    return if (n == 1) 1 else n * fact(n - 1)
+fun fact(n: BigInteger): BigInteger {
+    return if (n == ONE) ONE else n * fact(n - ONE)
 }
 
 //tail recursion - more efficient
-fun tail_fact(n: Int, m: Int = 1): Int {
-    return if (n == 1) m else tail_fact(n - 1, n * m)
+fun tailFact(n: BigInteger, m: BigInteger = ONE): BigInteger {
+    return if (n == ONE) m else tailFact(n - ONE, n * m)
 }
