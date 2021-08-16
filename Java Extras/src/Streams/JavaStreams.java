@@ -19,6 +19,7 @@ public class JavaStreams {
         IntStream
                 .range(1, 10)
                 .forEach(out::print);
+        out.println();
 
         out.println("\n2. Integer Stream with skip");
         IntStream
