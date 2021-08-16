@@ -23,8 +23,8 @@ class ConcordanceSimplified(file: File, structure: Structure) {
         return map[word.lowercase()]
     }
 
-    val words: Set<String>
-        get() = if (map is TreeMap) map.keys else HashSet(map.keys)
+    val words: Collection<String>
+        get() = if (map is TreeMap) map.keys else map.keys.sorted()
 
     private fun checkForOneLetterWords(word: String): Boolean {
         return word.length != 1 || "ai".contains(word)
@@ -60,7 +60,7 @@ class ConcordanceSimplified(file: File, structure: Structure) {
 
 fun main() {
     var start = System.currentTimeMillis()
-    val concordance = ConcordanceSimplified(File(BIBLE_KING_JAMES_EDITION), Structure.HASH_MAP)
+    val concordance = ConcordanceSimplified(File(BIBLE_KING_JAMES_EDITION), Structure.TREE_MAP)
     println("Output File Created In: " + (System.currentTimeMillis() - start) + "ms")
     start = System.currentTimeMillis()
 
