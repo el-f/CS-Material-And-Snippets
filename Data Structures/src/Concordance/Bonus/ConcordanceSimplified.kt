@@ -61,7 +61,7 @@ class ConcordanceSimplified(file: File, structure: Structure) {
 fun main() {
     var start = System.currentTimeMillis()
     val concordance = ConcordanceSimplified(File(BIBLE_KING_JAMES_EDITION), Structure.TREE_MAP)
-    println("Output File Created In: " + (System.currentTimeMillis() - start) + "ms")
+    println("Concordance Created In: " + (System.currentTimeMillis() - start) + "ms")
     start = System.currentTimeMillis()
 
     println(concordance.search("moses"))
