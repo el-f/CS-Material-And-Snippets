@@ -1,4 +1,6 @@
-package Concordance;
+package Concordance.Bonus;
+
+import Concordance.MyLinkedList;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package Concordance;
+package Concordance.Bonus;
 
 import java.awt.*;
 import java.io.*;

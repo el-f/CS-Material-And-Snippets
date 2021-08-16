@@ -1,5 +1,6 @@
 package Concordance
 
+import Concordance.Bonus.BONUS_ConcordanceProcessor_UsingHashMap
 import java.io.File
 import java.nio.file.Paths
 import java.util.*
@@ -109,7 +110,10 @@ private fun init(scanner: Scanner) {
         }
         if (workingFilePath != null) {
             concordanceProcessor =
-                BONUS_ConcordanceProcessor_UsingHashMap(File(workingFilePath), chooseOutputPath(scanner))
+                BONUS_ConcordanceProcessor_UsingHashMap(
+                    File(workingFilePath),
+                    chooseOutputPath(scanner)
+                )
             fileProcessed = true
             concordanceProcessor!!.printToFile()
         }
