@@ -118,8 +118,7 @@ public class JavaStreams {
                 .summaryStatistics();
         out.println(summary);
 
-        List<String> words = Arrays.stream("The quick brown fox jumped over the lazy dog".split("\\s+"))
-                .collect(Collectors.toList());
+        List<String> words = Arrays.asList("The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
         out.println("\n15. toMap(..)");
         Map<String, Integer> lengths = words.stream()
