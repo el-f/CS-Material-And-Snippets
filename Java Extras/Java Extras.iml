@@ -11,5 +11,8 @@
     <orderEntry type="library" name="org.projectlombok:lombok:1.18.20" level="application" />
     <orderEntry type="library" name="junit.jupiter.engine" level="application" />
     <orderEntry type="library" name="net.bytebuddy.byte.buddy" level="application" />
+    <orderEntry type="library" name="apache.commons.lang3" level="application" />
+    <orderEntry type="library" name="apache.commons.text" level="application" />
+    <orderEntry type="library" name="apache.commons.collections4" level="application" />
   </component>
 </module>
