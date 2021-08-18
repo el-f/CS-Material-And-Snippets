@@ -8,6 +8,11 @@ val FIFTY = 50.toBigInteger()
 fun main() {
     println(tailFact(FIFTY * FIFTY))
     println(fact(FIFTY * FIFTY))
+
+    // now regular recursion will fail
+    println(tailFact(FIFTY * FIFTY * FIFTY))
+    println("~".repeat(100))
+    println(fact(FIFTY * FIFTY * FIFTY))
 }
 
 //regular recursion - inefficient
@@ -16,6 +21,6 @@ fun fact(n: BigInteger): BigInteger {
 }
 
 //tail recursion - more efficient
-fun tailFact(n: BigInteger, m: BigInteger = ONE): BigInteger {
+tailrec fun tailFact(n: BigInteger, m: BigInteger = ONE): BigInteger {
     return if (n == ONE) m else tailFact(n - ONE, n * m)
 }
