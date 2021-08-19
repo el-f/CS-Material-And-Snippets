@@ -8,7 +8,7 @@ private fun checkBrackets(input: String): Boolean {
     val stack = Stack<Char>()
 
     input.toCharArray().forEach {
-        if (it in brackets.keys)                // is opening bracket
+        if (it in brackets)                     // is opening bracket
             stack.push(it)
         else if (it in brackets.values)         // closing bracket
             if (stack.isEmpty() ||              // more closing than opening
