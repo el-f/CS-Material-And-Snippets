@@ -12,29 +12,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * my solution for this kata: 5819f1c3c6ab1b2b28000624
  * <p>
- * https://en.wikipedia.org/wiki/Padovan_sequence
+ * <a href="https://en.wikipedia.org/wiki/Padovan_sequence">Padovan_sequence</a>
  * <p>
  * P(n) = P(n-2) + P(n-1)
  * P(0) = P(1) = P(2) = 1
  * <p>
  * Here I implemented the fast algorithm ( O(lgn) to find P(n) )
  * <p>
- * A = ( 0 1 0 )
- * ( 0 0 1 )
- * ( 1 1 0 )
+ * A = &#9( 0 1 0 )<p>
+ * &#9( 0 0 1 )<p>
+ * &#9( 1 1 0 )<p>
  * <p>
- * A**(n+1) = ( Pn-4 Pn-2 Pn-3 )
- * ( Pn-3 Pn-1 Pn-2 )
- * ( Pn-2 Pn   Pn-1 )
+ * A<sup>(n+1)</sup> = &#9( Pn-4 &#9 Pn-2 &#9 Pn-3 )<p>
+ * &#9( Pn-3 &#9 Pn-1 &#9 Pn-2 )<p>
+ * &#9( Pn-2 &#9 Pn &#9 Pn-1 )<p>
  */
 public class FastPadovan {
 
     public static BigInteger Get(long n) {
         if (n <= 2) return ONE;
         BigInteger[] initial = {
-                ZERO, ONE, ZERO,
-                ZERO, ZERO, ONE,
-                ONE, ONE, ZERO
+                ZERO, ONE , ZERO,
+                ZERO, ZERO, ONE ,
+                ONE , ONE , ZERO
         };
         return matrixPow(initial, n)[7]; // 7 is the position of Pn
     }
