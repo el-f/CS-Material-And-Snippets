@@ -68,9 +68,8 @@ public class FastPadovan {
     }
 
 
-    /*
-        Testing
-     */
+    // ~~~~~ Testing ~~~~~~
+
     @Test
     public void ValueTest1() {
         assertEquals(new BigInteger("1"), Get(1));
@@ -84,22 +83,9 @@ public class FastPadovan {
         assertEquals(new BigInteger("1177482265857"), Get(100));
     }
 
-    @Test
-    public void RandomTest() {
-        int n = (int) (Math.random() * 50) + 5;
-
-        BigInteger actual = Get(n);
-        BigInteger expected = Get(n);
-
-        assertEquals(expected, actual);
-    }
-
-    @Timeout(5)
+    @Timeout(3)
     @Test
     public void performanceTest() {
-        BigInteger actual = Get(1000000);
-        BigInteger expected = Get(1000000);
-
-        assertEquals(expected, actual);
+         Get(1000000);
     }
 }
