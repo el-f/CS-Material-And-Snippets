@@ -15,5 +15,6 @@
     <orderEntry type="library" name="apache.commons.text" level="application" />
     <orderEntry type="library" name="apache.commons.collections4" level="application" />
     <orderEntry type="library" name="google.guava" level="application" />
+    <orderEntry type="library" name="apache.commons.math3" level="application" />
   </component>
 </module>
