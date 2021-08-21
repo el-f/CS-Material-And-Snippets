@@ -3,12 +3,12 @@ package snippets
 import kotlin.collections.ArrayList
 import kotlin.test.assertEquals
 
-// solution for https://www.codewars.com/kata/55e7280b40e1c4a06d0000aa
+// solution for this kata: 55e7280b40e1c4a06d0000aa
 // (best possible sum of <k> elements under constraint <t>)
 
-var sum = 0
-var T = 0
-var K = 0
+private var sum = 0
+private var T = 0
+private var K = 0
 
 private fun calculateSum(superSet: List<Int>, idx: Int, current: MutableList<Int>) {
     if (current.size == K) {
