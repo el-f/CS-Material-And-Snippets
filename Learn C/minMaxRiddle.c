@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /*
- *      return min or max depending on input symbol ( '>' or '<' )
+ *      return min or max depending on input ( '>' or '<' )
  *      without using 'if' statements
  */
 
@@ -16,16 +16,16 @@
  *            1  |     0     |   a
  *            1  |     1     |   b
  */
-int getMinMax(int a, int b, char symbol) {
-    int operation = (symbol & 2) >> 1;      // 1: get max, 0: get min
+int getMinMax(int a, int b, char c) {
+    int operation = (c & 2) >> 1;      // 1: get max, 0: get min
     int sign = !(1 + ((a - b) >> 31));      // 1: a < b, 0: a > b
     int xor = sign ^ operation;
     return xor * a | !xor * b;
 }
 
 // Another Solution - Denis Karabitski - github.com/denisaka1
-int minMax(int a, int b, char symbol) {
-    int choice = '=' - symbol;
+int minMax(int a, int b, char c) {
+    int choice = '=' - c;
     int sign = (a - b) >> (sizeof(int) * 8 - 1);
     int abs = ((a - b) + sign) ^ sign;
     return ((a + b) - choice * abs) / 2;
@@ -41,8 +41,8 @@ int minMax(int a, int b, char symbol) {
  *            1  |     0     |   b
  *            1  |     1     |   a
  */
-int trivialMM(int a, int b, char symbol) {
-    int choice = symbol == '>';
+int trivialMM(int a, int b, char c) {
+    int choice = c == '>';
     int result = a > b;
     int xor = choice ^ result;
     return xor * b + !xor * a;
