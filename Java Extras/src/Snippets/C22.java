@@ -31,7 +31,7 @@ class C22 extends Boris {
             new AgentBuilder.Default().installOnByteBuddyAgent();
             new ByteBuddy()
                     .redefine(Boris.class)
-                    .method(ElementMatchers.nameContains("isCrazy"))
+                    .method(ElementMatchers.nameContains("isInsane"))
                     .intercept(FixedValue.value(true))
                     .make()
                     .load(
