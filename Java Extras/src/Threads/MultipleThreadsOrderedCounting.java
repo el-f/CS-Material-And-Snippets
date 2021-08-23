@@ -2,10 +2,10 @@ package Threads;
 
 import java.util.concurrent.*;
 
-// 2 solutions for this kata: https://www.codewars.com/kata/549e70e994e517ed8b00043e
+// 2 solutions for this kata: 549e70e994e517ed8b00043e
 
 @SuppressWarnings("all")
-public class ThreadedCounting {
+public class MultipleThreadsOrderedCounting {
 
     // The new and better way to do it
     public static void countInThreads_BETTERWAY(Counter counter) {
