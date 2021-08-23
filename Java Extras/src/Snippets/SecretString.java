@@ -5,7 +5,6 @@ import java.util.*;
 public class SecretString {
 
     // my solution for this kata: https://www.codewars.com/kata/53f40dff5f9d31b813000774
-    // (Recover a secret string from random triplets)
 
     public String recoverSecret(char[][] triplets) {
         return buildString(getOrderMap(triplets));
