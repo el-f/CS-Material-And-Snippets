@@ -1,9 +1,7 @@
 package Snippets;
 
 import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static java.math.BigInteger.*;
 
@@ -49,7 +47,7 @@ public class FastFibonacci {
     // ------------------------------------------------------------ //
 
     public static void tests() {
-        Set<Long> tests = new HashSet<>();
+        List<Long> tests = new LinkedList<>();
         tests.add((long) 0);
         tests.add((long) 1);
         tests.add((long) 2);
