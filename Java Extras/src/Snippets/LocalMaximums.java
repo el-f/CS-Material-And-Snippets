@@ -20,29 +20,22 @@ public class LocalMaximums {
         return index >= arr.length ? Integer.MAX_VALUE : arr[index];
     }
 
-    static int getPrev(int[] arr, int index) {
-        int it = arr[index--];
-        while (index >= 0 && arr[index] == it) index--;
-        return index < 0 ? Integer.MAX_VALUE : arr[index];
-    }
-
     public static Map<String, List<Integer>> localMaximums(int[] arr) {
         Map<String, List<Integer>> result = new LinkedHashMap<>();
         int[] skipIndex = new int[1];
         int si;
         result.put(POS, new ArrayList<>());
         result.put(PEAKS, new ArrayList<>());
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 1; i < arr.length - 1; i++) {
             if (i <= (si = skipIndex[0])) {
                 if (i < si) i = si;
                 continue;
             }
-            if (arr[i] > getPrev(arr, i) && arr[i] > getNext(arr, i, skipIndex)) {
+            if (arr[i - 1] < arr[i] && arr[i] > getNext(arr, i, skipIndex)) {
                 result.get(POS).add(i);
                 result.get(PEAKS).add(arr[i]);
             }
         }
-
         return result;
     }
 }
