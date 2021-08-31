@@ -15,18 +15,14 @@ public class LocalMaximums {
     static int getNext(int[] arr, int index, int[] skipIndex) {
         int it = arr[index++];
         while (index < arr.length && arr[index] == it) {
-            skipIndex[0] = index;
-            index++;
+            skipIndex[0] = index++;
         }
         return index >= arr.length ? Integer.MAX_VALUE : arr[index];
     }
 
-    static int getPrev(int[] arr, int index, int[] skipIndex) {
+    static int getPrev(int[] arr, int index) {
         int it = arr[index--];
-        while (index >= 0 && arr[index] == it) {
-            skipIndex[0] = index;
-            index--;
-        }
+        while (index >= 0 && arr[index] == it) index--;
         return index < 0 ? Integer.MAX_VALUE : arr[index];
     }
 
@@ -41,7 +37,7 @@ public class LocalMaximums {
                 if (i < si) i = si;
                 continue;
             }
-            if (arr[i] > getPrev(arr, i, skipIndex) && arr[i] > getNext(arr, i, skipIndex)) {
+            if (arr[i] > getPrev(arr, i) && arr[i] > getNext(arr, i, skipIndex)) {
                 result.get(POS).add(i);
                 result.get(PEAKS).add(arr[i]);
             }
