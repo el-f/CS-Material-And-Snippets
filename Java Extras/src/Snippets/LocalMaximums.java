@@ -12,27 +12,23 @@ public class LocalMaximums {
 
     static final String POS = "pos", PEAKS = "peaks";
 
-    static int getNext(int[] arr, int index, int[] skipIndex) {
-        int it = arr[index++];
+    static int[] getNext(int[] arr, int index) {
+        int it = arr[index++], skipIndex = index;
         while (index < arr.length && arr[index] == it) {
-            skipIndex[0] = index++;
+            skipIndex = index++;
         }
-        return index >= arr.length ? Integer.MAX_VALUE : arr[index];
+        return new int[]{ index >= arr.length ? Integer.MAX_VALUE : arr[index], skipIndex };
     }
 
     public static Map<String, List<Integer>> localMaximums(int[] arr) {
         Map<String, List<Integer>> result = new LinkedHashMap<>();
-        int[] skipIndex = new int[1];
-        int si;
-        result.put(POS, new ArrayList<>());
-        result.put(PEAKS, new ArrayList<>());
-        for (int i = 1; i < arr.length - 1; i++) {
-            if (i <= (si = skipIndex[0])) {
-                if (i < si) i = si;
-                continue;
-            }
-            if (arr[i - 1] < arr[i] && arr[i] > getNext(arr, i, skipIndex)) {
-                result.get(POS).add(i);
+        result.put(POS,     new ArrayList<>());
+        result.put(PEAKS,   new ArrayList<>());
+        int[] next;
+        for (int i = 1; i < arr.length - 1; i = next[1]) {
+            next = getNext(arr, i);
+            if (arr[i - 1] < arr[i] && arr[i] > next[0]) {
+                result.get(POS  ).add(i);
                 result.get(PEAKS).add(arr[i]);
             }
         }
@@ -100,8 +96,8 @@ class LM_TESTS {
         for (int n = 0; n < TEST_CASES.length; n++) {
             final int[] p1 = EXPECTED_POS[n], p2 = EXPECTED_PEAKS[n];
             Map<String, List<Integer>> expected = new HashMap<String, List<Integer>>() {{
-                put("pos", Arrays.stream(p1).boxed().collect(Collectors.toList()));
-                put("peaks", Arrays.stream(p2).boxed().collect(Collectors.toList()));
+                put("pos",      Arrays.stream(p1).boxed().collect(Collectors.toList()));
+                put("peaks",    Arrays.stream(p2).boxed().collect(Collectors.toList()));
             }};
             Map<String, List<Integer>> actual = LocalMaximums.localMaximums(TEST_CASES[n]);
             assertEquals(expected, actual, MSGS[n]);
