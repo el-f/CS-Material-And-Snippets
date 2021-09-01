@@ -1,5 +1,7 @@
 package Streams;
 
+import org.apache.commons.math3.primes.Primes;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -136,6 +138,12 @@ public class JavaStreams {
                 .collect(Collectors.toList());
         out.println(chars);
 
+        out.println("\n17.b flatMap(..) + toCollection(..)");
+        Set<Integer> primeFactors = Arrays.stream(new int[]{10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20})
+                .mapToObj(Primes::primeFactors)
+                .flatMap(List::stream)
+                .collect(Collectors.toCollection(TreeSet::new));
+        out.println(primeFactors);
 
         out.println("\n18. groupingBy(..)");
         Map<Integer, List<String>> wordsByLength = words.stream()
