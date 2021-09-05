@@ -22,14 +22,15 @@ public class InfinitePrimes {
     }
 
     public static IntStream streamPrimes() {
-        return IntStream.iterate(2, i -> sieve.nextSetBit(i + 1));
+        return IntStream.iterate(2, i -> sieve.nextSetBit(i + 1))
+                .limit(sieve.cardinality());
     }
 
     public static void main(String[] args) {
         AtomicInteger printIndex = new AtomicInteger(0);
         System.out.println(sieve.cardinality() + " primes in range of 0 - 1E9");
         System.out.println("10 samples of primes in that range:");
-        streamPrimes().limit(sieve.cardinality())
+        streamPrimes()
                 .forEach(x -> {
                     if (printIndex.getAndIncrement() % 5E6 == 0){
                         System.out.println(x);
