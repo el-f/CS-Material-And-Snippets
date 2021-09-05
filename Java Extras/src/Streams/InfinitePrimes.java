@@ -15,7 +15,7 @@ public class InfinitePrimes {
         sieve.flip(2, window - 1);
 
         for (int i = sieve.nextSetBit(2); 0 < i && i < 31622; i = sieve.nextSetBit(i + 1)) {
-            for (int j = 2 * i; j < window; j += i) {
+            for (int j = i * i; j < window; j += i) {
                 sieve.clear(j);
             }
         }
@@ -23,7 +23,7 @@ public class InfinitePrimes {
 
     public static IntStream streamPrimes() {
         return IntStream.iterate(2, i -> sieve.nextSetBit(i + 1))
-                .limit(sieve.cardinality());
+                .limit(sieve.cardinality()); // slows down the setup but necessary.
     }
 
     public static void main(String[] args) {
