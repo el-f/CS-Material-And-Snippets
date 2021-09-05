@@ -1,15 +1,14 @@
 package Snippets;
 
+//  my solution for this kata: 58c5577d61aefcf3ff000081
 public class RailFenceCipher {
-
-    /*
-        my solution for this kata: https://www.codewars.com/kata/58c5577d61aefcf3ff000081
-        (encode and decode a string using a specific cipher algorithm)
-     */
 
     public static void main(String[] args) {
         System.out.println(encode("WEAREDISCOVEREDFLEEATONCE", 3));
         System.out.println(decode("WECRLTEERDSOEEFEAOCAIVDEN", 3));
+        String s = "123456789ABCDEF";
+        System.out.println(decode(encode(s, 4), 4).equals(s));
+        System.out.println(encode(decode(s, 4), 4).equals(s));
     }
 
     // just build the matrix and traverse it the way shown.
