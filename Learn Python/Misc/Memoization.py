@@ -27,6 +27,13 @@ def fibonacci(n: int):
     return value
 
 
+# to avoid stack overflow it's even better to use dynamic programming:
+def fib_dp(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
 if __name__ == '__main__':
     # for i in range(401):
     #     print(i, fibonacci(i))
