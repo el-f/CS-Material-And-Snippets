@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+from typing import Callable
 
 
 class LazyDict(Mapping):
@@ -6,7 +7,7 @@ class LazyDict(Mapping):
         self._raw_dict = dict(*args, **kw)
 
     def __getitem__(self, key):
-        func, arg = self._raw_dict.__getitem__(key)
+        func, arg = self._raw_dict[key]
         return func(arg)
 
     def __iter__(self):
@@ -20,7 +21,7 @@ class LazyDict(Mapping):
 class CachedLazyDict(dict):
     def __getitem__(self, item):
         value = dict.__getitem__(self, item)
-        if not isinstance(value, int):
+        if isinstance(value, tuple) and isinstance(value[0], Callable):
             function, arg = value
             value = function(arg)
             dict.__setitem__(self, item, value)
@@ -28,25 +29,27 @@ class CachedLazyDict(dict):
 
 
 def expensive_to_compute(arg):
-    return arg ** 0.00000333
+    pow(1234567, 1234567)
+    return 2 * arg
 
 
 if __name__ == '__main__':
 
-    calculations = LazyDict(
-        {
+    calculations = LazyDict({
             'expensive1': (expensive_to_compute, 0.5),
             'expensive2': (expensive_to_compute, 2),
-        }
-    )
+    })
     print(calculations['expensive1'])
     print(calculations['expensive2'])
 
-    calculations2 = CachedLazyDict(
-        {
+    print("\n~~ cached dict testing:")
+    calculations2 = CachedLazyDict({
             'expensive1': (expensive_to_compute, 0.5),
             'expensive2': (expensive_to_compute, 2),
-        }
-    )
+    })
+    print("first time calc results:")
+    print(calculations2['expensive1'])
+    print(calculations2['expensive2'])
+    print("\ncached results:")
     print(calculations2['expensive1'])
     print(calculations2['expensive2'])
