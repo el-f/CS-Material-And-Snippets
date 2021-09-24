@@ -20,11 +20,12 @@ class LazyDict(Mapping):
 # a version caching the results to avoid recomputing
 class CachedLazyDict(dict):
     def __getitem__(self, item):
+        # call explicitly to avoid using the overloaded function and recurse endlessly
         value = dict.__getitem__(self, item)
         if isinstance(value, tuple) and isinstance(value[0], Callable):
             function, arg = value
             value = function(arg)
-            dict.__setitem__(self, item, value)
+            self[item] = value
         return value
 
 
