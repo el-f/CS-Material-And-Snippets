@@ -19,8 +19,11 @@ public class ClassSpy {
             Package p = c.getPackage();
             out.format("Package:%n  %s%n%n", p != null ? p.getName() : "-- No Package --");
 
-            printMembers(c.getConstructors(), "Constuctors");
+            printMembers(c.getDeclaredConstructors(),"Declared Constructors");
+            printMembers(c.getConstructors(), "Constructors");
+            printMembers(c.getDeclaredFields(),"Declared fields");
             printMembers(c.getFields(), "Fields");
+            printMembers(c.getDeclaredMethods(),"Declared methods");
             printMembers(c.getMethods(), "Methods");
             printClasses(c);
         } catch (ClassNotFoundException e) {
@@ -46,10 +49,10 @@ public class ClassSpy {
 
     private static void printClasses(Class<?> c) {
         out.format("Classes:%n");
-        Class<?>[] clss = c.getClasses();
-        for (Class<?> cls : clss)
+        Class<?>[] classes = c.getClasses();
+        for (Class<?> cls : classes)
             out.format("  %s%n", cls.getCanonicalName());
-        if (clss.length == 0)
+        if (classes.length == 0)
             out.format("  -- No member interfaces, classes, or enums --%n");
         out.format("%n");
     }
