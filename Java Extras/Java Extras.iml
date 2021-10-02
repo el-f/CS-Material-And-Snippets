@@ -17,5 +17,6 @@
     <orderEntry type="library" name="google.guava" level="application" />
     <orderEntry type="library" name="apache.commons.math3" level="application" />
     <orderEntry type="library" name="javassist" level="application" />
+    <orderEntry type="library" name="net.bytebuddy.byte.buddy.agent" level="application" />
   </component>
 </module>
