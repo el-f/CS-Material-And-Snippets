@@ -14,10 +14,10 @@ class B {
 public class ModifyInstrumentation {
 
     public static void main(String[] args) {
-        System.out.println(getBagel().getValue());
+        System.out.println(getB().getValue());
     }
 
-    public static B getBagel() {
+    public static B getB() {
         try {
             Instrumentation instrumentation = ByteBuddyAgent.install();
             ClassPool pool = ClassPool.getDefault();
