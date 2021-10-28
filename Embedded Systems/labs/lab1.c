@@ -29,7 +29,6 @@ void main() {
     TRISA &= 0xff00; // SET lower bits (LEDs) as output (0)
     PORTA = 0; // turn off LEDs
 
-
     /* CONFIGURE SWITCHES TO ACCEPT INPUT*/
     TRISFbits.TRISF3 = 1; // RF3 (SW0) configured as input
     TRISFbits.TRISF3 = 1; // RF3 (SW0) configured as input
@@ -84,7 +83,7 @@ void main() {
 
         if (run) {
             /* CHOOSE AND DO CHOSEN OPERATION */
-            if (PORTFbits.RF4) { // SW2 - `MENIFA`
+            if (PORTFbits.RF4) {        // SW2 - `MENIFA`
                 PORTA = menifa_nums[m_idx % 4];
                 reverse ? m_idx-- : m_idx++;
             } else if (PORTFbits.RF5) { // SW1 - SHIFT
