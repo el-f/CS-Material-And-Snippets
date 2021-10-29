@@ -49,7 +49,7 @@ void main() {
     uint8_t x = 1;
     DELAY cycle_delay = LONG_DELAY, sound_delay = SND_LONG_DELAY;
     bool run = true, reverse = false;
-    uint32_t snd_duration = 400, snd_interval = 50;
+    uint16_t snd_duration = 400, snd_interval = 50;
     uint8_t menifa_nums[] = {0x18, 0x24, 0x42, 0x81}, m_idx = 0;
     uint8_t shift_nums[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, 0x80}, s_idx = 0;
 
