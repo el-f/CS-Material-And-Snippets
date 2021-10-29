@@ -26,25 +26,25 @@ void $wait(DELAY delay) {
 }
 
 void main() {
-    TRISA &= 0xff00; // SET lower bits (LEDs) as output (0)
-    PORTA = 0; // turn off LEDs
+    TRISA &= 0xff00;        // SET lower bits (LEDs) as output (0)
+    PORTA = 0;              // turn off LEDs
 
     /* CONFIGURE SWITCHES TO ACCEPT INPUT*/
-    TRISFbits.TRISF3 = 1; // RF3 (SW0) configured as input
-    TRISFbits.TRISF3 = 1; // RF3 (SW0) configured as input
-    TRISFbits.TRISF5 = 1; // RF5 (SW1) configured as input
-    TRISFbits.TRISF4 = 1; // RF4 (SW2) configured as input
-    TRISDbits.TRISD15 = 1; // RD15 (SW3) configured as input
-    TRISDbits.TRISD14 = 1; // RD14 (SW4) configured as input
-    TRISBbits.TRISB11 = 1; // RB11 (SW5) configured as input
-    ANSELBbits.ANSB11 = 0; // RB11 (SW5) disabled analog
-    TRISBbits.TRISB10 = 1; // RB10 (SW6) configured as input
-    ANSELBbits.ANSB10 = 0; // RB10 (SW6) disabled analog
-    TRISBbits.TRISB9 = 1; // RB9 (SW7) configured as input
-    ANSELBbits.ANSB9 = 0; // RB9 (SW7) disabled analog
+    TRISFbits.TRISF3 = 1;   // RF3  (SW0) configured as input
+    TRISFbits.TRISF3 = 1;   // RF3  (SW0) configured as input
+    TRISFbits.TRISF5 = 1;   // RF5  (SW1) configured as input
+    TRISFbits.TRISF4 = 1;   // RF4  (SW2) configured as input
+    TRISDbits.TRISD15 = 1;  // RD15 (SW3) configured as input
+    TRISDbits.TRISD14 = 1;  // RD14 (SW4) configured as input
+    TRISBbits.TRISB11 = 1;  // RB11 (SW5) configured as input
+    ANSELBbits.ANSB11 = 0;  // RB11 (SW5) disabled analog
+    TRISBbits.TRISB10 = 1;  // RB10 (SW6) configured as input
+    ANSELBbits.ANSB10 = 0;  // RB10 (SW6) disabled analog
+    TRISBbits.TRISB9 = 1;   // RB9  (SW7) configured as input
+    ANSELBbits.ANSB9 = 0;   // RB9  (SW7) disabled analog
 
-    TRISBbits.TRISB14 = 0; // set speaker as output
-    ANSELBbits.ANSB14 = 0; // speaker - disabled analog
+    TRISBbits.TRISB14 = 0;  // set speaker as output
+    ANSELBbits.ANSB14 = 0;  // speaker - disabled analog
 
     uint8_t x = 1;
     DELAY cycle_delay = LONG_DELAY, sound_delay = SND_LONG_DELAY;
