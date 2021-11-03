@@ -25,6 +25,8 @@ void $wait(DELAY delay) {
     for (j = 0; j < delay; j++);
 }
 
+uint16_t SND_DUR_CEIL = 400, SND_DUR_FLOOR = 100, SND_DUR_JUMP = 50;
+
 void main() {
     TRISA &= 0xff00;        // SET lower bits (LEDs) as output (0)
     PORTA = 0;              // turn off LEDs
@@ -46,13 +48,13 @@ void main() {
     TRISBbits.TRISB14 = 0;  // set speaker as output
     ANSELBbits.ANSB14 = 0;  // speaker - disabled analog
 
-    uint8_t x = 1;
     DELAY cycle_delay = LONG_DELAY, sound_delay = SND_LONG_DELAY;
     bool run = true, reverse = false;
-    uint32_t snd_duration = 400, snd_interval = 50;
+    uint16_t snd_duration = SND_DUR_CEIL, snd_interval = SND_DUR_JUMP;
     uint8_t menifa_nums[] = {0x18, 0x24, 0x42, 0x81}, m_idx = 0;
     uint8_t shift_nums[] = {1, 2, 4, 8, 0x10, 0x20, 0x40, 0x80}, s_idx = 0;
-
+    uint8_t x = 1;
+    
     while (1) {
         /* SW7 - EXIT PROGRAM */
         if (PORTBbits.RB9) {
@@ -64,10 +66,11 @@ void main() {
         if (PORTBbits.RB10) {
             uint16_t s;
             for (s = 0; s < snd_duration; s++) {
-                PORTBbits.RB14 ^= 1;
+                PORTBbits.RB14 ^= 1;    // bit flip
                 $wait(sound_delay);
             }
-            if (snd_duration >= 400 || snd_duration <= 100) snd_interval *= -1;
+            if      (snd_duration >= SND_DUR_CEIL)   snd_interval = -SND_DUR_JUMP;
+            else if (snd_duration <= SND_DUR_FLOOR)  snd_interval =  SND_DUR_JUMP;
             snd_duration += snd_interval;
         }
 
