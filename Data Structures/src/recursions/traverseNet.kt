@@ -27,48 +27,53 @@ fun main() {
         intArrayOf(1, 2, 4),
         intArrayOf(2, 4, 8)
     )
-    println("num of tracks for grid1: " + get_number_legit_tracks(grid1, 0, 0))
+    println("num of tracks for grid1: " + numOfValidRoutes(grid1, 0, 0))
 
     val grid2 = arrayOf(
         intArrayOf(0, 0, 2),
         intArrayOf(1, 0, 4),
         intArrayOf(2, 3, 20)
     )
-    println("num of tracks for grid2: " + get_number_legit_tracks(grid2, 1, 0))
+    println("num of tracks for grid2: " + numOfValidRoutes(grid2, 1, 0))
 }
 
-fun is_legit_track(grid: Array<IntArray>, i1: Int, j1: Int, i2: Int, j2: Int, current_weight: Int): Boolean {
-    return if (i2 < 0 || j2 < 0 || i2 >= grid.size || j2 >= grid[0].size) false
-    else if (abs(i1 - i2) != 1 && abs(j1 - j2) != 0 && abs(j1 - j2) != 1 && abs(i1 - i2) != 0) false
-    else current_weight + grid[i2][j2] >= 0 && current_weight < grid[i2][j2]
+fun isValidStep(
+    grid: Array<IntArray>,
+    r: Int, c: Int,
+    new_r: Int, new_c: Int,
+    current_weight: Int
+): Boolean {
+    return if (new_r < 0 || new_c < 0 || new_r >= grid.size || new_c >= grid[0].size) false
+    else if (abs(r - new_r) != 1 && abs(c - new_c) != 0 && abs(c - new_c) != 1 && abs(r - new_r) != 0) false
+    else current_weight + grid[new_r][new_c] >= 0 && current_weight < grid[new_r][new_c]
 
 }
 
-fun get_number_legit_tracks(grid: Array<IntArray>, i1: Int, j1: Int): Int {
-    if (i1 == grid.size - 1 && j1 == grid[0].size - 1) return 1
+fun numOfValidRoutes(grid: Array<IntArray>, r: Int, c: Int): Int {
+    if (r == grid.size - 1 && c == grid[0].size - 1) return 1
     var tracks = 0
-    val current_weight = grid[i1][j1]
-    grid[i1][j1] = 0
-    if (is_legit_track(grid, i1, j1, i1 + 1, j1, current_weight)) { //  DOWN
-        grid[i1 + 1][j1] += current_weight
-        tracks += get_number_legit_tracks(grid, i1 + 1, j1)
-        grid[i1 + 1][j1] -= current_weight
+    val currentWeight = grid[r][c]
+    grid[r][c] = 0
+    if (isValidStep(grid, r, c, r + 1, c, currentWeight)) { //  DOWN
+        grid[r + 1][c] += currentWeight
+        tracks += numOfValidRoutes(grid, r + 1, c)
+        grid[r + 1][c] -= currentWeight
     }
-    if (is_legit_track(grid, i1, j1, i1 - 1, j1, current_weight)) { //  UP
-        grid[i1 - 1][j1] += current_weight
-        tracks += get_number_legit_tracks(grid, i1 - 1, j1)
-        grid[i1 - 1][j1] -= current_weight
+    if (isValidStep(grid, r, c, r - 1, c, currentWeight)) { //  UP
+        grid[r - 1][c] += currentWeight
+        tracks += numOfValidRoutes(grid, r - 1, c)
+        grid[r - 1][c] -= currentWeight
     }
-    if (is_legit_track(grid, i1, j1, i1, j1 + 1, current_weight)) { // RIGHT
-        grid[i1][j1 + 1] += current_weight
-        tracks += get_number_legit_tracks(grid, i1, j1 + 1)
-        grid[i1][j1 + 1] -= current_weight
+    if (isValidStep(grid, r, c, r, c + 1, currentWeight)) { // RIGHT
+        grid[r][c + 1] += currentWeight
+        tracks += numOfValidRoutes(grid, r, c + 1)
+        grid[r][c + 1] -= currentWeight
     }
-    if (is_legit_track(grid, i1, j1, i1, j1 - 1, current_weight)) { // LEFT
-        grid[i1][j1 - 1] += current_weight
-        tracks += get_number_legit_tracks(grid, i1, j1 - 1)
-        grid[i1][j1 - 1] -= current_weight
+    if (isValidStep(grid, r, c, r, c - 1, currentWeight)) { // LEFT
+        grid[r][c - 1] += currentWeight
+        tracks += numOfValidRoutes(grid, r, c - 1)
+        grid[r][c - 1] -= currentWeight
     }
-    grid[i1][j1] = current_weight
+    grid[r][c] = currentWeight
     return tracks
 }
