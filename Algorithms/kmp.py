@@ -16,7 +16,7 @@ class KMP:
             return 0
         return self.delta(self.states[state_i], c)
 
-    def search(self, text):
+    def search_in(self, text):
         positions_found = []
         state = 0
         for i in range(0, len(text)):
@@ -29,9 +29,9 @@ class KMP:
 
 if __name__ == '__main__':
     search_abc = KMP("abc")
-    print(search_abc.search("abcdabcde"))
-    print(search_abc.search("abcabcabcabc"))
+    print(search_abc.search_in("abcdabcde"))
+    print(search_abc.search_in("abcabcabcabc"))
 
     search_ababc = KMP("abab")
-    print(search_ababc.search("abababab"))
-    print(search_ababc.search("aaababaabab"))
+    print(search_ababc.search_in("abababab"))
+    print(search_ababc.search_in("aaababaabab"))
