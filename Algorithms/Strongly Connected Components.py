@@ -5,6 +5,51 @@ from scipy.sparse.csgraph import connected_components
 from itertools import groupby
 
 
+# version as a function: input - adj list | output - SCC sets
+def find_scc(graph):
+    if len(graph) == 1:
+        return [{0}]
+    visited = [False] * len(graph)
+    stack = []
+    sccs = []
+
+    def dfs(curr_node, first_run):
+        if visited[curr_node]:
+            return
+
+        visited[curr_node] = True
+
+        for adj in graph[curr_node]:
+            if not visited[adj]:
+                dfs(adj, first_run)
+
+        if first_run:
+            stack.append(curr_node)
+        else:
+            sccs[-1].add(curr_node)
+
+    def transpose():
+        t = [set() for _ in range(len(graph))]
+        for nd in range(len(graph)):
+            for adj in graph[nd]:
+                t[adj].add(nd)
+        return t
+
+    for node in range(len(graph)):
+        dfs(node, True)
+
+    graph = transpose()
+    visited = [False] * len(graph)
+
+    while stack:
+        node = stack.pop()
+        if not visited[node]:
+            sccs.append(set())
+            dfs(node, False)
+
+    return sccs
+
+
 # version using scipy
 def strongly_connected_components(graph):
     if not graph:
@@ -26,83 +71,6 @@ def strongly_connected_components(graph):
             groupby(sorted(enumerate(b), key=lambda x: x[1]), key=lambda x: x[1])]
 
 
-# version as a function: input - adj list | output - SCC sets
-def find_scc(graph):
-    if len(graph) == 1:
-        return [{0}]
-    visited = [False] * len(graph)
-    stack = []
-    sccs = []
-
-    def dfs(curr_node, add_to_stack, add_to_scc):
-        if visited[curr_node]:
-            return
-        visited[curr_node] = True
-        for adj in graph[curr_node]:
-            if not visited[adj]:
-                dfs(adj, add_to_stack, add_to_scc)
-        if add_to_stack:
-            stack.append(curr_node)
-        if add_to_scc:
-            sccs[-1].add(curr_node)
-
-    def transpose():
-        t = [set() for _ in range(len(graph))]
-        for n in range(len(graph)):
-            for adj in graph[n]:
-                t[adj].add(n)
-        return t
-
-    for node in range(len(graph)):
-        dfs(node, True, False)
-
-    graph = transpose()
-    visited = [False] * len(graph)
-
-    while stack:
-        node = stack.pop()
-        if not visited[node]:
-            sccs.append(set())
-            dfs(node, False, True)
-
-    return sccs
-
-
-# Tests
-def fixed_tests(scc_func):
-    message = "Calculated components do not match: {} should equal {}"
-
-    def fixed_test(_graph, expected):
-        actual = scc_func(_graph)
-        if len(expected) != len(actual):
-            print(message.format(actual, expected))
-            return
-        for scc in actual:
-            if scc not in expected:
-                print(message.format(actual, expected))
-                return
-
-    graph = [[1], [2, 3, 4], [0, 3], [5], [5, 6], [3], [4, 7], [5, 6]]
-    expect = [{3, 5}, {4, 6, 7}, {0, 1, 2}]
-    fixed_test(graph, expect)
-
-    graph = [[1], [2], [3, 4], [0], [5], [6], [4, 7], []]
-    expect = [{7}, {4, 5, 6}, {0, 1, 2, 3}]
-    fixed_test(graph, expect)
-
-    graph = [[5, 1], [6, 0, 2], [3, 7], [5, 1], [1], [3], [9], [], [6], [3]]
-    expect = [{7}, {0, 1, 2, 3, 5, 6, 9}, {4}, {8}]
-    fixed_test(graph, expect)
-
-    fixed_test([], [])
-
-    fixed_test([[]], [{0}])
-
-    graph = [[1], [2], [3], [4], [5], [0]]
-    expect = [{0, 1, 2, 3, 4, 5}]
-    fixed_test(graph, expect)
-
-
 # Version allowing building the graph then applying the algorithm and *printing* the results
 class Graph:
 
@@ -117,7 +85,7 @@ class Graph:
     # dfs
     def dfs(self, d, visited_vertex):
         visited_vertex[d] = True
-        print(d, end='')
+        print(d, end=' ')
         for i in self.graph[d]:
             if not visited_vertex[i]:
                 self.dfs(i, visited_vertex)
@@ -155,7 +123,42 @@ class Graph:
             i = stack.pop()
             if not visited_vertex[i]:
                 gr.dfs(i, visited_vertex)
-                print("")
+                print()
+
+
+# Tests
+def fixed_tests(scc_func):
+    message = "Calculated components do not match: {} should equal {}"
+
+    def fixed_test(_graph, expected):
+        actual = scc_func(_graph)
+        if len(expected) != len(actual):
+            print(message.format(actual, expected))
+            return
+        for scc in actual:
+            if scc not in expected:
+                print(message.format(actual, expected))
+                return
+
+    graph = [[1], [2, 3, 4], [0, 3], [5], [5, 6], [3], [4, 7], [5, 6]]
+    expect = [{3, 5}, {4, 6, 7}, {0, 1, 2}]
+    fixed_test(graph, expect)
+
+    graph = [[1], [2], [3, 4], [0], [5], [6], [4, 7], []]
+    expect = [{7}, {4, 5, 6}, {0, 1, 2, 3}]
+    fixed_test(graph, expect)
+
+    graph = [[5, 1], [6, 0, 2], [3, 7], [5, 1], [1], [3], [9], [], [6], [3]]
+    expect = [{7}, {0, 1, 2, 3, 5, 6, 9}, {4}, {8}]
+    fixed_test(graph, expect)
+
+    fixed_test([], [])
+
+    fixed_test([[]], [{0}])
+
+    graph = [[1], [2], [3], [4], [5], [0]]
+    expect = [{0, 1, 2, 3, 4, 5}]
+    fixed_test(graph, expect)
 
 
 def manual_version_test():
@@ -170,7 +173,7 @@ def manual_version_test():
     g.add_edge(6, 4)
     g.add_edge(6, 7)
 
-    print("\nStrongly Connected Components:")
+    print("Strongly Connected Components:")
     g.print_scc()
 
 
