@@ -22,8 +22,6 @@ def strongly_connected_components(graph):
         return_labels=True
     )
 
-    print(a, b)
-
     return [set(map(lambda x: x[0], j)) for i, j in
             groupby(sorted(enumerate(b), key=lambda x: x[1]), key=lambda x: x[1])]
 
