@@ -10,10 +10,15 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Finite State Machine Implementation/bin" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Finite State Machine Implementation/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Finite State Machine Implementation/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Finite State Machine Implementation" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="Python 3.9 interpreter library" level="application" />
+    <orderEntry type="library" name="junit.jupiter.engine" level="application" />
   </component>
 </module>
