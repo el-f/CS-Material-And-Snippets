@@ -35,7 +35,7 @@ open class DFSM : NDFSM {
         transitionFunction().verifyNoEpsilonTransitions()
     }
 
-    protected constructor() : super() {}
+    protected constructor() : super()
 
     override fun create(): NDFSM {
         return DFSM()
@@ -87,15 +87,15 @@ open class DFSM : NDFSM {
             and use a dictionary to map each state to this representative.
 
             First we create two equivalence classes, put all the accepting states in the first
-            and all the non accepting states in the second.
+            and all the non-accepting states in the second.
         */
-        if (!acceptingStates.isEmpty()) {
+        if (acceptingStates.isNotEmpty()) {
             val rep = acceptingStates.iterator().next()
             for (state in acceptingStates) ecc[state] = rep
         }
         val nonAcceptingStates: MutableSet<State> = HashSet(states)
         nonAcceptingStates.removeAll(acceptingStates)
-        if (!nonAcceptingStates.isEmpty()) {
+        if (nonAcceptingStates.isNotEmpty()) {
             val rep = nonAcceptingStates.iterator().next()
             for (state in nonAcceptingStates) ecc[state] = rep
         }
@@ -103,7 +103,8 @@ open class DFSM : NDFSM {
         /*
             The invariant for the following loop is:
 		    1. for any s -> r association in ecc, s is equivalent to r in prevEcc,
-		    2. for any input symbol c, the destination of the transition from s on c is equivalent (in prevEcc) to the destiation of the transition from r to c,
+		    2. for any input symbol c, the destination of the transition from s on c is equivalent (in prevEcc) to
+		        the destination of the transition from r to c,
 		    3. for any two values r1, r2 in ecc, they are not equivalent to each other in prevEcc,
 		    4. all the equivalence classes in prevEcc have a representative in ecc.
         */
@@ -112,13 +113,13 @@ open class DFSM : NDFSM {
             ecc = HashMap()
 
             /*
-            		To establish the invariant we will set ecc with the associations of the form
+                To establish the invariant we will set ecc with the associations of the form
 
-                    r -> r where r is a representative from prevEcc.
+                r -> r where r is a representative from prevEcc.
 
-                    This will initially satisfy the invariant because our action establishes
-                    condition (4) and conditions (1) and (2) and (3) are correct by induction
-                    from the validity of prevEcc."
+                This will initially satisfy the invariant because our action establishes
+                condition (4) and conditions (1) and (2) and (3) are correct by induction
+                from the validity of prevEcc."
             */
             for (state in prevEcc.values) {
                 ecc[state] = state
