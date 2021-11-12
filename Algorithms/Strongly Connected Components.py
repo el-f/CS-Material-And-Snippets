@@ -7,6 +7,12 @@ from itertools import groupby
 
 # version as a function: input - adj list | output - SCC sets
 def find_scc(graph):
+    """
+    Find all Strongly Connected Components in a directed graph.
+
+    :param graph: graph represented as adjacency list.
+    :return:      list of all SCC (Strongly Connected Components) sets.
+    """
     visited = [False] * len(graph)
     stack = []
     sccs = []

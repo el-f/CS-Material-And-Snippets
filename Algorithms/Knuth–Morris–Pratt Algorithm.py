@@ -6,10 +6,20 @@ class KMP:
         self.set_states()
 
     def set_states(self):
+        """
+        Set the states of the FSM.
+        """
         for i in range(1, self.m):
             self.states[i + 1] = self.delta(self.states[i], self.pattern[i])
 
     def delta(self, state_i, c):
+        """
+        The transition function `δ` from state to state.
+
+        :param state_i: The current state of the FSM.
+        :param c:       The char inputted to the FSM.
+        :return:        The new state after the transition.
+        """
         if c == self.pattern[state_i]:
             return state_i + 1
         if state_i == 0:
@@ -17,6 +27,12 @@ class KMP:
         return self.delta(self.states[state_i], c)
 
     def search_in(self, text):
+        """
+        Search an input text for the pattern the KMP initialized to search for.
+
+        :param text: input search text.
+        :return:     list of positions the pattern was found at.
+        """
         positions_found = []
         state = 0
         for i in range(0, len(text)):
