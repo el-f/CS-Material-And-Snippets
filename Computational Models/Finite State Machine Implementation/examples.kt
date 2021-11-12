@@ -1,4 +1,9 @@
 fun main() {
+
+    /*
+        Machine Encoding Format:
+        <states> / <alphabet> / <transitions> / <initial state> / <accepting states>
+     */
     val testCases = listOf(
         // 'bookExample'
         arrayOf(
