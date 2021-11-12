@@ -7,8 +7,6 @@ from itertools import groupby
 
 # version as a function: input - adj list | output - SCC sets
 def find_scc(graph):
-    if len(graph) == 1:
-        return [{0}]
     visited = [False] * len(graph)
     stack = []
     sccs = []
