@@ -1,5 +1,3 @@
-package program
-
 import javafx.scene.layout.VBox
 import javafx.scene.transform.Affine
 import javafx.application.Platform

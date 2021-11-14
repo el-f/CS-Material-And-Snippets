@@ -1,5 +1,3 @@
-package program
-
 import kotlin.random.Random
 
 class Simulation(private var board: Array<BooleanArray>) {

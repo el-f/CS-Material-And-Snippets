@@ -1,5 +1,3 @@
-package program
-
 import javafx.stage.Stage
 import javafx.scene.Scene
 import com.sun.javafx.application.LauncherImpl
