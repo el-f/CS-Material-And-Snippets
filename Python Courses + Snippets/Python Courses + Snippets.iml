@@ -17,7 +17,7 @@
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/FlaskIntroduction/templates" />
+        <option value="$MODULE_DIR$/../Learn Python/FlaskIntroduction/templates" />
       </list>
     </option>
   </component>
