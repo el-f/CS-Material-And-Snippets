@@ -1,11 +1,8 @@
 import kotlin.random.Random
 
 class Simulation(private var board: Array<BooleanArray>) {
-    @JvmField
-    var width: Int = board[0].size
-
-    @JvmField
-    var height: Int = board.size
+    val height: Int = board.size
+    val width: Int = board[0].size
 
     fun setAlive(r: Int, c: Int) {
         if (r < 0 || r >= height || c < 0 || c >= width) return
@@ -83,17 +80,17 @@ class Simulation(private var board: Array<BooleanArray>) {
         }
 
         private fun gliderGun(rotate: Boolean = false, shift: Int = 0, mirror: Boolean = false) = arrayOf(
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 24) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 24) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 22, 24) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13, 20, 21, 34, 35) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15, 20, 21, 34, 35) },
 
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 16, 20, 21) },
 
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
-                BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 0, 1, 10, 14, 16, 17, 22, 24) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 10, 16, 24) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 11, 15) },
+            BooleanArray(size) { getLives(it, rotate, mirror, shift, 12, 13) },
         )
 
         @Suppress("SameParameterValue")
@@ -101,9 +98,9 @@ class Simulation(private var board: Array<BooleanArray>) {
 
         @JvmField
         val DEFAULT_STARTER = arrayOf(
-                *gliderGun(mirror = true),
-                *emptyBlock(144),
-                *gliderGun(mirror = true).reversedArray(),
+            *gliderGun(mirror = true),
+            *emptyBlock(144),
+            *gliderGun(mirror = true).reversedArray(),
         )
     }
 
