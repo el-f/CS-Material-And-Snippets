@@ -197,9 +197,9 @@ void print_to_lcd(const bool second_line, const char *str) {
             PORTDbits.RD4 = 0; // give pulse to apply PORTE change (enable)
             busy();
         }
-        if (spaces_amount >= 16 - str_len) { // text reached right end of line
+        if (spaces_amount >= 16 - str_len) {    // text reached right end of line
             spaces_add = -1;
-        } else if (spaces_amount <= 0){ // text reached left end of line
+        } else if (spaces_amount <= 0) {        // text reached left end of line
             spaces_add = 1;
         }
         spaces_amount += spaces_add;
