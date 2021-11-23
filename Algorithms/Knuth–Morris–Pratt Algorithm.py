@@ -1,4 +1,9 @@
 class KMP:
+    """
+    Recursive implementation of KMP - better than than the dynamic programming version
+    for real world use cases where character frequency is normally distributed!
+    """
+
     def __init__(self, pattern):
         self.pattern = pattern
         self.m = len(pattern)
