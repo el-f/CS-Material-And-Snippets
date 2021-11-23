@@ -1,7 +1,5 @@
 package recursions
 
-import kotlin.math.abs
-
 /*
     Ahead of the new season of Ninja Israel, the producers of the show have created a new facility.
     The new device is a kind of climbing wall, built in the shape of a lattice the size of n * m,
@@ -39,12 +37,10 @@ fun main() {
 
 fun isValidStep(
     grid: Array<IntArray>,
-    r: Int, c: Int,
     new_r: Int, new_c: Int,
     current_weight: Int
 ): Boolean {
     return if (new_r < 0 || new_c < 0 || new_r >= grid.size || new_c >= grid[0].size) false
-    else if (abs(r - new_r) != 1 && abs(c - new_c) != 0 && abs(c - new_c) != 1 && abs(r - new_r) != 0) false
     else current_weight + grid[new_r][new_c] >= 0 && current_weight < grid[new_r][new_c]
 
 }
@@ -54,22 +50,22 @@ fun numOfValidRoutes(grid: Array<IntArray>, r: Int, c: Int): Int {
     var tracks = 0
     val currentWeight = grid[r][c]
     grid[r][c] = 0
-    if (isValidStep(grid, r, c, r + 1, c, currentWeight)) { //  DOWN
+    if (isValidStep(grid, r + 1, c, currentWeight)) { //  DOWN
         grid[r + 1][c] += currentWeight
         tracks += numOfValidRoutes(grid, r + 1, c)
         grid[r + 1][c] -= currentWeight
     }
-    if (isValidStep(grid, r, c, r - 1, c, currentWeight)) { //  UP
+    if (isValidStep(grid, r - 1, c, currentWeight)) { //  UP
         grid[r - 1][c] += currentWeight
         tracks += numOfValidRoutes(grid, r - 1, c)
         grid[r - 1][c] -= currentWeight
     }
-    if (isValidStep(grid, r, c, r, c + 1, currentWeight)) { // RIGHT
+    if (isValidStep(grid, r, c + 1, currentWeight)) { // RIGHT
         grid[r][c + 1] += currentWeight
         tracks += numOfValidRoutes(grid, r, c + 1)
         grid[r][c + 1] -= currentWeight
     }
-    if (isValidStep(grid, r, c, r, c - 1, currentWeight)) { // LEFT
+    if (isValidStep(grid, r, c - 1, currentWeight)) { // LEFT
         grid[r][c - 1] += currentWeight
         tracks += numOfValidRoutes(grid, r, c - 1)
         grid[r][c - 1] -= currentWeight
