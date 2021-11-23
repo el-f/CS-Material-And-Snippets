@@ -1,6 +1,6 @@
 class KMP:
     """
-    Recursive implementation of KMP - better than than the dynamic programming version
+    Recursive implementation of KMP - better than the dynamic programming version
     for real world use cases where character frequency is normally distributed!
     """
 
