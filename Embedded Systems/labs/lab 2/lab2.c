@@ -165,8 +165,8 @@ char *get_second_line_by_switches() {
     if (PORTBbits.RB10) return "Beep Mode";
     if (PORTBbits.RB11) return "Halt";
 
-    uint8_t fast = PORTDbits.RD14;
-    uint8_t reversed = PORTDbits.RD15;
+    bool fast = PORTDbits.RD14;
+    bool reversed = PORTDbits.RD15;
 
     if (PORTFbits.RF4) { // menifa
         if (!fast && !reversed) return "SwingUpSlow";
