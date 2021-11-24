@@ -19,6 +19,14 @@
     Authors: Elazar Fine & Michael Sieradzki
  */
 
+/*
+    LCD VARS:
+    
+        DISP_RS 	AN15/RPB15/OCFB/CTED6/PMA0/RB15 	Register Select: High for Data Transfer, Low for Instruction Transfer. 	
+        DISP_RW 	RPD5/PMRD/RD5 	Read/Write signal: High for Read mode, Low for Write mode. 	
+        DISP_EN 	RPD4/PMWR/RD4 	Read/Write Enable: High for Read, falling edge writes data 
+*/
+
 void busy(void);
 void init_lcd();
 void print_to_lcd(const bool, const char *);
