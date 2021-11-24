@@ -1,7 +1,8 @@
 def maximum_clique(adjacency_matrix):
     """
     Maximum clique algorithm by Carraghan and Pardalos
-    :param adjacency_matrix: 
+    https://www.sciencedirect.com/science/article/abs/pii/016763779090057C
+    :param adjacency_matrix: the graph represented by an adjacency matrix
     :return: set of largest clique vertices
     """
     if not adjacency_matrix:
@@ -36,7 +37,7 @@ def maximum_clique_size_ostergard(adjacency_matrix):
     Patric R.J. Östergård
     A fast algorithm for the maximum clique size problem
     https://www.sciencedirect.com/science/article/pii/S0166218X01002906
-    :param adjacency_matrix: 
+    :param adjacency_matrix: the graph represented by an adjacency matrix
     :return: size of set of largest clique vertices
     """
     n = len(adjacency_matrix)
@@ -75,8 +76,8 @@ def maximum_clique_ostergard(adjacency_matrix):
     Patric R.J. Östergård
     A fast algorithm for the maximum clique problem
     https://www.sciencedirect.com/science/article/pii/S0166218X01002906
-    :param adjacency_matrix:
-    :return:set of largest clique vertices
+    :param adjacency_matrix: the graph represented by an adjacency matrix
+    :return: set of largest clique vertices
     """
     graph = [set(j for j, x in enumerate(r) if x and j != i) for i, r in enumerate(adjacency_matrix)]
     max_clique, size, c = set(), 0, [0] * len(adjacency_matrix)
