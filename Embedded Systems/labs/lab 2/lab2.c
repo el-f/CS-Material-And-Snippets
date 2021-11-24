@@ -189,7 +189,7 @@ char *get_second_line_by_switches() {
     return "";
 }
 
-void print_to_lcd(const bool second_line, const char *str) {
+void print_to_lcd(const bool move_str, const char *str) {
     PORTBbits.RB15 = 1; // rs -> 1
     PORTDbits.RD5 = 0; // write = 0, read = 1
 
@@ -198,7 +198,7 @@ void print_to_lcd(const bool second_line, const char *str) {
     uint8_t str_len = strlen(str), i;
     
     // move second line left and right by adding spaces before the string
-    if (second_line && str_len > 0) { 
+    if (move_str && str_len > 0) { 
         for (i = 0; i < spaces_amount; i++) {
             PORTE = ' ';
             PORTDbits.RD4 = 1; // give pulse to apply PORTE change (enable)
