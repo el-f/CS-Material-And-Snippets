@@ -12,7 +12,8 @@ def maximum_clique(adjacency_matrix):
         for b, connected in enumerate(row):
             if connected:
                 graph.setdefault(a, set()).add(b)
-    if not graph: return {0}
+    if not graph:
+        return {0}
 
     def clique_search(subset, clique):
         nonlocal max_clique
@@ -29,17 +30,17 @@ def maximum_clique(adjacency_matrix):
     clique_search(set(graph), set())
     return max_clique
 
-  
-  def maximum_clique_size_ostergard(matrix):
+
+def maximum_clique_size_ostergard(adjacency_matrix):
     """
     Patric R.J. Östergård
-    A fast algorithm for the maximum clique problem
+    A fast algorithm for the maximum clique size problem
     https://www.sciencedirect.com/science/article/pii/S0166218X01002906
     :param adjacency_matrix: 
     :return: size of set of largest clique vertices
     """
-    n = len(matrix)
-    graph = {1 << i: sum(1 << j for j, x in enumerate(r) if x and j != i) for i, r in enumerate(matrix)}
+    n = len(adjacency_matrix)
+    graph = {1 << i: sum(1 << j for j, x in enumerate(r) if x and j != i) for i, r in enumerate(adjacency_matrix)}
     max_size, c = 0, {1 << i: 0 for i in range(n)}
 
     def find(vs, size):
@@ -67,3 +68,35 @@ def maximum_clique(adjacency_matrix):
         c[v] = max_size
         s |= v
     return max_size
+
+
+def maximum_clique_ostergard(adjacency_matrix):
+    """
+    Patric R.J. Östergård
+    A fast algorithm for the maximum clique problem
+    https://www.sciencedirect.com/science/article/pii/S0166218X01002906
+    :param adjacency_matrix:
+    :return:set of largest clique vertices
+    """
+    graph = [set(j for j, x in enumerate(r) if x and j != i) for i, r in enumerate(adjacency_matrix)]
+    max_clique, size, c = set(), 0, [0] * len(adjacency_matrix)
+
+    def find(clique, vs, n):
+        nonlocal max_clique, size
+        if not vs:
+            if n > size:
+                max_clique, size = clique, n
+                return True
+        else:
+            while vs and n + len(vs) > size:
+                v = min(vs)
+                vs.remove(v)
+                if n + c[v] <= size:
+                    return
+                if find(clique | {v}, vs & graph[v], n + 1):
+                    return True
+
+    for i in range(len(adjacency_matrix) - 1, -1, -1):
+        find({i}, graph[i] & set(range(i, len(adjacency_matrix))), 1)
+        c[i] = size
+    return max_clique
