@@ -52,12 +52,12 @@ def maximum_clique_size_ostergard(adjacency_matrix):
         else:
             m = bin(vs).count('1')
             while vs and size + m > max_size:
-                v = vs & -vs
-                if size + c[v] <= max_size:
+                _v = vs & -vs
+                if size + c[_v] <= max_size:
                     return False
-                if find(vs & graph[v], size + 1):
+                if find(vs & graph[_v], size + 1):
                     return True
-                vs ^= v
+                vs ^= _v
                 m -= 1
         return False
 
