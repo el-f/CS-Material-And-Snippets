@@ -193,7 +193,7 @@ void print_to_lcd(const bool second_line, const char *str) {
     PORTBbits.RB15 = 1; // rs -> 1
     PORTDbits.RD5 = 0; // write = 0, read = 1
 
-    puts(str); // this fixes a writing bug for some reason... 0.o
+    busy(); // delay lcd
 
     uint8_t str_len = strlen(str), i;
     
@@ -244,6 +244,7 @@ void move_cursor_to_pos(uint32_t pos) {
     PORTDbits.RD4 = 0; //enable=0
 }
 
+// the smart way to delay on lcd
 void busy(void) {
     char RD, RS;
     int STATUS_TRISE;
