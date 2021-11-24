@@ -37,7 +37,7 @@ char *get_second_line_by_switches(); // get text for second line
 typedef uint32_t DELAY;
 
 // cycle delay constants
-DELAY SHORT_DELAY = 64000 * 2, LONG_DELAY = 64000 * 8,
+DELAY SHORT_DELAY = 64000 * 3, LONG_DELAY = 64000 * 8,
         SND_SHORT_DELAY = 256, SND_LONG_DELAY = 512;
 
 void $wait(DELAY delay) {
