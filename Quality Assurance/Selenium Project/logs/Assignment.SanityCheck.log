@@ -1,0 +1,24 @@
+[INFO ] 2021-01-07 10:30:10.040 [Tests_Login] PASSED - Test_ValidUserWrongPassword
+[INFO ] 2021-01-07 10:30:21.132 [Tests_Login] PASSED - Test_NonExistingUser
+[INFO ] 2021-01-07 10:30:32.907 [Tests_Login] PASSED - Test_ValidLoginFirstTry
+[DEBUG] 2021-01-07 10:30:59.121 [Tests_Login] FAILED - Test_ValidLoginAfterThreeTries | Reason: No Alert for / Logged in while: supposed blocked after three tries (Expected Alert Not Present)
+[INFO ] 2021-01-07 10:31:15.192 [Tests_Login] PASSED - Test_ValidLoginSecondTry
+[INFO ] 2021-01-07 10:31:28.439 [Tests_Login] PASSED - Test_EmptyFields
+[INFO ] 2021-01-07 10:31:39.978 [Tests_Login] PASSED - Test_ValidLoginThirdTry
+[DEBUG] 2021-01-07 10:31:49.793 [Tests_AddProduct] FAILED - Test_AddProductThatDoesntExist | Reason: Received Product Added Message!
+[DEBUG] 2021-01-07 10:32:01.842 [Tests_AddProduct] FAILED - Test_AddProduct | Reason: Did not add product / no indication (Expected Alert Not Present)
+[INFO ] 2021-01-07 10:32:25.041 [Tests_CartPage] PASSED - Test_DeleteProductFromCart
+[INFO ] 2021-01-07 10:32:38.356 [Tests_CartPage] PASSED - Test_AddProductToCart
+[INFO ] 2021-01-07 10:32:59.894 [Tests_CartPage] PASSED - Test_ShowProducts
+[DEBUG] 2021-01-07 10:33:10.168 [Tests_CartPage] FAILED - Test_PlaceEmptyOrder | Reason: No alert for / Placed: Empty Order (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:33:32.237 [Tests_PurchaseForm] FAILED - Test_InvalidCreditCard | Reason: No alert for invalid credit card number (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:33:47.461 [Tests_PurchaseForm] FAILED - Test_OnlyNameAndCardFilled | Reason: No alert for missing fields (Expected Alert Not Present)
+[INFO ] 2021-01-07 10:34:04.987 [Tests_PurchaseForm] PASSED - Test_ValidPurchase
+[DEBUG] 2021-01-07 10:34:23.937 [Tests_PurchaseForm] FAILED - Test_NonEnglishCharacters | Reason: No alert for non-english characters (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:34:39.930 [Tests_PurchaseForm] FAILED - Test_CreditCardWrongLength | Reason: No alert for wrong credit card length (Expected Alert Not Present)
+[INFO ] 2021-01-07 10:34:55.273 [Tests_PurchaseForm] PASSED - Test_AllEmptyFields
+[DEBUG] 2021-01-07 10:35:10.386 [Tests_PurchaseForm] FAILED - Test_InvalidLocation | Reason: No alert for invalid location (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:35:21.912 [Tests_PurchaseForm] FAILED - Test_RandomEmptyFields | Reason: Did not add product (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:35:39.946 [Tests_PurchaseForm] FAILED - Test_NonIntegers | Reason: No alert for non integers in integers fields (Expected Alert Not Present)
+[DEBUG] 2021-01-07 10:35:56.706 [Tests_PurchaseForm] FAILED - Test_ExpiredCard | Reason: No alert for expired credit card (Expected Alert Not Present)
+[INFO ] 2021-01-07 10:41:07.281 [Tests_Login] PASSED - Test_ValidLoginThirdTry

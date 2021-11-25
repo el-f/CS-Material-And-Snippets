@@ -1,0 +1,8 @@
+[DEBUG] 2021-01-07 10:36:17.605 [Tests_Registration] FAILED - Test_RegisterUsernameWithoutLetters | Reason: Missing invalid username message
+[DEBUG] 2021-01-07 10:36:34.147 [Tests_Registration] FAILED - Test_PasswordOutOfBounds | Reason: Missing password out of bounds message
+[INFO ] 2021-01-07 10:36:49.521 [Tests_Registration] PASSED - Test_EmptyField
+[INFO ] 2021-01-07 10:37:02.991 [Tests_Registration] PASSED - Test_EnterTakenUserName
+[INFO ] 2021-01-07 10:37:19.401 [Tests_Registration] PASSED - Test_EnterValidInfo
+[INFO ] 2021-01-07 10:37:32.794 [Tests_Logout] PASSED - Test_LogoutMember
+[INFO ] 2021-01-07 10:37:44.800 [Tests_UserSpecificElements] PASSED - Test_LoginMemberInterface
+[INFO ] 2021-01-07 10:37:56.906 [Tests_UserSpecificElements] PASSED - Test_LogoutMemberInterface

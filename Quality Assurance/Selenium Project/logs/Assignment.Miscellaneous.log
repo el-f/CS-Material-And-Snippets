@@ -1,0 +1,5 @@
+[DEBUG] 2021-01-07 10:38:08.277 [Tests_ContactForm] FAILED - Test_InvalidEmail | Reason: Missing 'invalid email' message
+[DEBUG] 2021-01-07 10:38:22.932 [Tests_ContactForm] FAILED - Test_OutOfBoundsMessage | Reason: Missing 'out of bounds message' message
+[DEBUG] 2021-01-07 10:38:33.975 [Tests_ContactForm] FAILED - Test_InvalidName | Reason: Missing 'invalid name' message
+[INFO ] 2021-01-07 10:38:45.346 [Tests_ContactForm] PASSED - Test_ValidContactForm
+[DEBUG] 2021-01-07 10:38:56.857 [Tests_ContactForm] FAILED - Test_EmptyFields | Reason: Sent message with empty fields
