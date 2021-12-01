@@ -31,7 +31,7 @@ void set_CGRAM();
 void set_DDRAM(const bool);
 void busy(void);
 void init_lcd();
-void print_cg_char_to_lcd(const char *, const bool);
+void print_cg_symbols_to_lcd(const char *, const bool);
 void move_cursor_to_pos(uint32_t);
 char *get_first_line_by_switch(); // get text for first line
 char *get_second_line_by_switches(); // get text for second line
@@ -106,7 +106,7 @@ void main() {
         init_lcd(); // reset LCD
 
         /* SW1 - CHOOSE LINE */
-        print_cg_char_to_lcd(CG_symbols, !PORTFbits.RF5);
+        print_cg_symbols_to_lcd(CG_symbols, !PORTFbits.RF5);
 
         /* SW7 - MAKE BEEP SOUND */
         if (PORTBbits.RB9) {
@@ -144,7 +144,7 @@ void set_DDRAM(const bool is_second_line) {
     PORTBbits.RB15 = 1; //rs 
 }
 
-void print_cg_char_to_lcd(const char *chr, const bool is_second_line) {
+void print_cg_symbols_to_lcd(const char *chr, const bool is_second_line) {
     set_CGRAM(); // set to CGRAM mode to load symbols
     uint8_t i;
 
