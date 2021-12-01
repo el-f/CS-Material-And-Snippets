@@ -48,9 +48,6 @@ void $wait(DELAY delay) {
 // beep duration constants
 uint16_t SND_DUR_CEIL = 400, SND_DUR_FLOOR = 100, SND_DUR_JUMP = 50;
 
-// instructions for the LCD controller
-char _control[] = {0x38, 0x38, 0x38, 0xe, 0x6, 0x1, 0x1};
-
 // used for moving second line left and right by adding spaces before
 uint8_t spaces_amount = 0, spaces_add = 1; 
 
@@ -225,6 +222,8 @@ void print_to_lcd(const bool move_str, const char *str) {
 void init_lcd() {
     PORTBbits.RB15 = 0; // rs -> 0
     PORTDbits.RD5 = 0; //w=0
+    
+    // instructions for the LCD controller
     char control[] = {0x38, 0x38, 0x38, 0xe, 0x6, 0x1, 0x01};
     uint8_t i;
     for (i = 0; i < (sizeof (control) / sizeof (control[0])); i++) {
