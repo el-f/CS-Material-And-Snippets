@@ -27,6 +27,7 @@
         DISP_EN 	RPD4/PMWR/RD4 	Read/Write Enable: High for Read, falling edge writes data 
 */
 
+
 void busy(void);
 void init_lcd();
 void print_to_lcd(const bool, const char *);
@@ -48,11 +49,8 @@ void $wait(DELAY delay) {
 // beep duration constants
 uint16_t SND_DUR_CEIL = 400, SND_DUR_FLOOR = 100, SND_DUR_JUMP = 50;
 
-// instructions for the LCD controller
-char _control[] = {0x38, 0x38, 0x38, 0xe, 0x6, 0x1, 0x1};
-
 // used for moving second line left and right by adding spaces before
-uint8_t spaces_amount = 0, spaces_add = 1; 
+uint8_t spaces_amount = 0, spaces_add = 1;
 
 void main() {
     TRISA &= 0xff00; // SET lower bits (LEDs) as output (0)
@@ -87,8 +85,8 @@ void main() {
     ANSELEbits.ANSE4 = 0;
     ANSELEbits.ANSE5 = 0;
     ANSELEbits.ANSE6 = 0;
-    PORTBbits.RB15 = 0; //rs=0
-    PORTDbits.RD5 = 0; //w=0
+    PORTBbits.RB15 = 0; // rs: Register Select: 1: Data, 0: Instructions.
+    PORTDbits.RD5 = 0; // RW: write = 0, read = 1
     ANSELEbits.ANSE7 = 0;
     /**************************************/
 
@@ -189,16 +187,16 @@ char *get_second_line_by_switches() {
     return "";
 }
 
-void print_to_lcd(const bool move_str, const char *str) {
-    PORTBbits.RB15 = 1; // rs -> 1
-    PORTDbits.RD5 = 0; // write = 0, read = 1
+void print_to_lcd(const bool second_line, const char *str) {
+    PORTBbits.RB15 = 1; // rs: Register Select: 1: Data, 0: Instructions.
+    PORTDbits.RD5 = 0; // RW: write = 0, read = 1
 
-    busy(); // delay lcd
+    busy(); // delay
 
     uint8_t str_len = strlen(str), i;
-    
+
     // move second line left and right by adding spaces before the string
-    if (move_str && str_len > 0) { 
+    if (second_line && str_len > 0) {
         for (i = 0; i < spaces_amount; i++) {
             PORTE = ' ';
             PORTDbits.RD4 = 1; // give pulse to apply PORTE change (enable)
@@ -212,7 +210,7 @@ void print_to_lcd(const bool move_str, const char *str) {
         }
         spaces_amount += spaces_add;
     }
-    
+
     // print the string
     for (i = 0; i < str_len; i++) {
         PORTE = str[i];
@@ -223,28 +221,31 @@ void print_to_lcd(const bool move_str, const char *str) {
 }
 
 void init_lcd() {
-    PORTBbits.RB15 = 0; // rs -> 0
-    PORTDbits.RD5 = 0; //w=0
-    char control[] = {0x38, 0x38, 0x38, 0xe, 0x6, 0x1, 0x01};
+    PORTBbits.RB15 = 0; // rs: Register Select: 1: Data, 0: Instructions.
+    PORTDbits.RD5 = 0;  // RW: write = 0, read = 1
+
+    // instructions for the LCD controller
+    char _control[] = {0x38, 0x38, 0x38, 0xe, 0x6, 0x1, 0x1};
+
     uint8_t i;
-    for (i = 0; i < (sizeof (control) / sizeof (control[0])); i++) {
-        PORTE = control[i];
+    for (i = 0; i < (sizeof (_control) / sizeof (_control[0])); i++) {
+        PORTE = _control[i];
         PORTDbits.RD4 = 1; // give pulse to apply PORTE change (enable)
         PORTDbits.RD4 = 0; // give pulse to apply PORTE change (enable)
         busy();
     }
-    PORTBbits.RB15 = 1; // rs -> 1
-    PORTDbits.RD5 = 0; // write = 0, read = 1
+    PORTBbits.RB15 = 1; // rs: Register Select: 1: Data, 0: Instructions.
+    PORTDbits.RD5 = 0;  // RW: write = 0, read = 1
 }
 
 void move_cursor_to_pos(uint32_t pos) {
-    PORTBbits.RB15 = 0; //rs=1
+    PORTBbits.RB15 = 0; // rs: Register Select: 1: Data, 0: Instructions.
     PORTE = pos; //DDRAM
-    PORTDbits.RD4 = 1; //enable=1
-    PORTDbits.RD4 = 0; //enable=0
+    PORTDbits.RD4 = 1;  // give pulse to apply PORTE change (enable)
+    PORTDbits.RD4 = 0;  // give pulse to apply PORTE change (enable)
 }
 
-// the smart way to delay on lcd
+// the smart way to delay lcd
 void busy(void) {
     char RD, RS;
     int STATUS_TRISE;
@@ -252,15 +253,15 @@ void busy(void) {
     RD = PORTDbits.RD5;
     RS = PORTBbits.RB15;
     STATUS_TRISE = TRISE;
-    PORTDbits.RD5 = 1; //w/r
-    PORTBbits.RB15 = 0; //rs 
+    PORTDbits.RD5 = 1;  // RW: write = 0, read = 1
+    PORTBbits.RB15 = 0; // rs: Register Select: 1: Data, 0: Instructions.
     portMap = TRISE;
     portMap |= 0x80;
     TRISE = portMap;
     do {
-        PORTDbits.RD4 = 1; //enable=1
-        PORTDbits.RD4 = 0; //enable=0
-    } while (PORTEbits.RE7); // BF ?????
+        PORTDbits.RD4 = 1;   // pulse to enable
+        PORTDbits.RD4 = 0;   // pulse to enable
+    } while (PORTEbits.RE7); // BF - busy flag
     PORTDbits.RD5 = RD;
     PORTBbits.RB15 = RS;
     TRISE = STATUS_TRISE;
