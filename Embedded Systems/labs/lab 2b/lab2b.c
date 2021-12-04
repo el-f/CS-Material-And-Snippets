@@ -144,13 +144,13 @@ void set_DDRAM(const bool is_second_line) {
     PORTBbits.RB15 = 1; //rs 
 }
 
-void print_cg_symbols_to_lcd(const char *chr, const bool is_second_line) {
+void print_cg_symbols_to_lcd(const char *symbols, const bool is_second_line) {
     set_CGRAM(); // set to CGRAM mode to load symbols
     uint8_t i;
 
     // load the symbols into CGRAM
     for (i = 0; i < CG_symbols_len; i++) {
-        PORTE = chr[i];
+        PORTE = symbols[i];
         PORTDbits.RD4 = 1; // give pulse to apply PORTE change (enable)
         PORTDbits.RD4 = 0; // give pulse to apply PORTE change (enable)
         busy();
