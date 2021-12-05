@@ -152,7 +152,7 @@ CREATE TRIGGER update_phase_for_citizen_after_vac
     SET phases_complete = phases_complete + 1
     WHERE citizen_id = new.citizen_id;
 
-
+DROP TRIGGER IF EXISTS make_appointment_for_next_phase;
 -- make appointment for next phase in 21 days
 DELIMITER $$
 CREATE TRIGGER make_appointment_for_next_phase
@@ -181,6 +181,15 @@ BEGIN
                    WHERE citizen.citizen_id = new.citizen_id)
             LIMIT 1
         );
+
+        # choose random worker from that clinic instead of the current clinic worker,
+        # otherwise the worker-clinic-integrity will break
+        CALL get_random_worker_from_clinic_id(
+                citizen_chosen_clinic,
+                @rand_worker_id
+            );
+        SET new.worker_id = (SELECT @rand_worker_id);
+
     END IF;
 
     INSERT INTO appointment
