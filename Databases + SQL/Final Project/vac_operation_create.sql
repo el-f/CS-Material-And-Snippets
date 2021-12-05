@@ -159,6 +159,7 @@ CREATE TRIGGER make_appointment_for_next_phase
     BEFORE INSERT
     ON vaccination
     FOR EACH ROW
+mafnp_trigger:
 BEGIN
     DECLARE citizen_chosen_clinic INT;
 
@@ -188,7 +189,12 @@ BEGIN
                 citizen_chosen_clinic,
                 @rand_worker_id
             );
-        SET new.worker_id = (SELECT @rand_worker_id);
+
+        INSERT INTO appointment
+            VALUE (DEFAULT, citizen_chosen_clinic, new.citizen_id, (SELECT @rand_worker_id),
+                   DATE_ADD(new.date, INTERVAL 21 DAY));
+
+        LEAVE mafnp_trigger;
 
     END IF;
 
