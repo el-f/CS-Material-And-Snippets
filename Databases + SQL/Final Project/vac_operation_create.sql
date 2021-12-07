@@ -126,8 +126,6 @@ CREATE TABLE vaccination
     date         DATETIME NOT NULL,
     phase        INT      NOT NULL,
 
-    CONSTRAINT admin_phase_constraint CHECK (phase = 1 OR phase = 2),
-
     PRIMARY KEY (worker_id, citizen_id, phase),
     FOREIGN KEY (worker_id) REFERENCES worker (worker_id)
         ON DELETE NO ACTION
