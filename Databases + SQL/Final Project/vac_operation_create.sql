@@ -122,7 +122,7 @@ CREATE TABLE vaccination
 (
     worker_id    INT      NOT NULL,
     citizen_id   INT      NOT NULL,
-    dose_barcode INT      NOT NULL,
+    dose_barcode INT      NOT NULL UNIQUE,
     date         DATETIME NOT NULL,
     phase        INT      NOT NULL,
 
