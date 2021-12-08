@@ -112,8 +112,6 @@ void main(void) {
     uint8_t m_idx = 0, s_idx = 0, x = 1;
     bool reverse = false;
 
-    //    execution();
-
     while (1) {
         uint32_t get_input_counter = 0;
         for (get_input_counter = 0; get_input_counter < 2500; get_input_counter++) {
