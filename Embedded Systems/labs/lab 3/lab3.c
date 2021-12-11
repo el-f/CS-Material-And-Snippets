@@ -38,8 +38,7 @@ void lab2_main(
         uint16_t* snd_interval,
         uint8_t* m_idx,
         uint8_t* s_idx,
-        uint8_t* x,
-        bool* reverse
+        uint8_t* x
         );
 void busy(void);
 void init_lcd();
@@ -106,13 +105,10 @@ void main(void) {
     TRISBbits.TRISB14 = 0; // configured as output 
     ANSELBbits.ANSB14 = 0; // disabled analog
 
-    uint8_t xy;
+    uint8_t pressed;
     DELAY cycle_delay = LONG_DELAY, sound_delay = SND_LONG_DELAY;
     uint16_t snd_duration = SND_DUR_CEIL, snd_interval = SND_DUR_JUMP;
     uint8_t m_idx = 0, s_idx = 0, x = 1;
-    bool reverse = false;
-
-    //    execution();
 
     while (1) {
         uint32_t get_input_counter = 0;
@@ -124,35 +120,35 @@ void main(void) {
 
             // check first row (x1) - turn off row and check all columns
             PORTCbits.RC2 = 0;
-            xy = get_pressed();
-            if (xy != 0xff)
+            pressed = get_pressed();
+            if (pressed != 0xff)
                 break;
             PORTCbits.RC2 = 1;
 
             // check second row (x2) - turn off row and check all columns
             PORTCbits.RC1 = 0;
-            xy = get_pressed();
-            if (xy != 0xff)
+            pressed = get_pressed();
+            if (pressed != 0xff)
                 break;
             PORTCbits.RC1 = 1;
 
             // check third row (x3) - turn off row and check all columns
             PORTCbits.RC4 = 0;
-            xy = get_pressed();
-            if (xy != 0xff)
+            pressed = get_pressed();
+            if (pressed != 0xff)
                 break;
             PORTCbits.RC4 = 1;
 
             // check fourth row (x4) - turn off row and check all columns
             PORTGbits.RG6 = 0;
-            xy = get_pressed();
-            if (xy != 0xff)
+            pressed = get_pressed();
+            if (pressed != 0xff)
                 break;
             PORTGbits.RG6 = 1;
 
         }
 
-        update_switches_by_keyboard(xy);
+        update_switches_by_keyboard(pressed);
         lab2_main(
                 &cycle_delay,
                 &sound_delay,
@@ -160,44 +156,30 @@ void main(void) {
                 &snd_interval,
                 &m_idx,
                 &s_idx,
-                &x,
-                &reverse
+                &x
                 );
         busy();
     }
 }
 
-void update_switches_by_keyboard(uint8_t xy) {
-    switch (xy) {
+void update_switches_by_keyboard(uint8_t pressed) {
+    switch (pressed) {
         case 0:
-            switches[0] = true;
-            switches[1] = false;
-            switches[2] = false;
-            break;
         case 1:
-            switches[0] = false;
-            switches[1] = true;
-            switches[2] = false;
-            break;
         case 2:
             switches[0] = false;
             switches[1] = false;
-            switches[2] = true;
+            switches[2] = false;
+            switches[pressed] = true;
             break;
         case 3:
-            switches[xy] ^= true;
-            break;
         case 4:
-            switches[xy] ^= true;
-            break;
         case 5:
-            switches[xy] ^= true;
-            break;
         case 6:
-            switches[xy] ^= true;
+            switches[pressed] ^= true;
             break;
         case 7:
-            switches[xy] = true;
+            switches[pressed] = true;
             break;
         default:
             break;
@@ -214,14 +196,14 @@ uint8_t get_pressed() {
     else if (!PORTGbits.RG8 && !PORTCbits.RC4) pressed = 5; //5
     else if (!PORTGbits.RG8 && !PORTCbits.RC1) pressed = 6; //6
     else if (!PORTGbits.RG7 && !PORTGbits.RG6) pressed = 7; //7
-    //    else if (!PORTGbits.RG7 && !PORTCbits.RC1) pressed = 8; //8 
-    //    else if (!PORTGbits.RG7 && !PORTCbits.RC4) pressed = 9; //9 
-    //    else if (!PORTCbits.RC2 && !PORTGbits.RG9) pressed = 10; //a 
-    //    else if (!PORTCbits.RC2 && !PORTGbits.RG8) pressed = 11; //b 
-    //    else if (!PORTGbits.RG7 && !PORTCbits.RC2) pressed = 12; //c 
-    //    else if (!PORTCbits.RC2 && !PORTCbits.RC3) pressed = 13; //d 
-    //    else if (!PORTCbits.RC3 && !PORTCbits.RC4) pressed = 14; //e     
-    //    else if (!PORTCbits.RC3 && !PORTCbits.RC1) pressed = 15; //f
+    else if (!PORTGbits.RG7 && !PORTCbits.RC1) pressed = 8; //8 
+    else if (!PORTGbits.RG7 && !PORTCbits.RC4) pressed = 9; //9 
+    else if (!PORTCbits.RC2 && !PORTGbits.RG9) pressed = 10; //a 
+    else if (!PORTCbits.RC2 && !PORTGbits.RG8) pressed = 11; //b 
+    else if (!PORTGbits.RG7 && !PORTCbits.RC2) pressed = 12; //c 
+    else if (!PORTCbits.RC2 && !PORTCbits.RC3) pressed = 13; //d 
+    else if (!PORTCbits.RC3 && !PORTCbits.RC4) pressed = 14; //e     
+    else if (!PORTCbits.RC3 && !PORTCbits.RC1) pressed = 15; //f
 
     return pressed;
 }
@@ -266,8 +248,7 @@ void lab2_main(
         uint16_t* snd_interval,
         uint8_t* m_idx,
         uint8_t* s_idx,
-        uint8_t* x,
-        bool* reverse
+        uint8_t* x
         ) {
     init_lcd(); // reset LCD
     print_to_lcd(false, get_first_line_by_switch()); // print to first line
@@ -291,27 +272,30 @@ void lab2_main(
         else if (*snd_duration <= SND_DUR_FLOOR) *snd_interval = SND_DUR_JUMP;
         *snd_duration += *snd_interval;
     }
-
+    
+    /* SW5 - STOP LED MOVEMENT */
+    bool run = !switches[5];
+    
     /* SW4 - CHANGE SPEED */
     *cycle_delay = switches[4] ? SHORT_DELAY : LONG_DELAY;
     *sound_delay = switches[4] ? SND_SHORT_DELAY : SND_LONG_DELAY;
 
     /* SW3 - CHANGE DIRECTION */
-    *reverse = switches[3];
+    bool reverse = switches[3];
 
-    if (!switches[5]) { /* SW5 - STOP LED MOVEMENT */
+    if (run) { 
         /* CHOOSE AND DO CHOSEN OPERATION */
         if (switches[2]) { // SW2 - `MENIFA`
             PORTA = menifa_nums[*m_idx % 4];
-            if (*reverse) *m_idx -= 1;
+            if (reverse) *m_idx -= 1;
             else *m_idx += 1;
         } else if (switches[1]) { // SW1 - SHIFT
             PORTA = shift_nums[*s_idx % 8];
-            if (*reverse) *s_idx -= 1;
+            if (reverse) *s_idx -= 1;
             else *s_idx += 1;
         } else if (switches[0]) { // SW0 - BINARY COUNTER
             PORTA = *x;
-            if (*reverse) *x -= 1;
+            if (reverse) *x -= 1;
             else *x += 1;
         }
     }
