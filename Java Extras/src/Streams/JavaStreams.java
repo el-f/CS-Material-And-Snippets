@@ -1,7 +1,5 @@
 package Streams;
 
-import org.apache.commons.math3.primes.Primes;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,14 +40,14 @@ public class JavaStreams {
                 .ifPresent(out::println);
 
         out.println("\n5. Stream from Array, sort, filter and print");
-        String[] names = {"Al", "Ankit", "Kushal", "Brent", "Sarika", "amanda", "Hans", "Shivika", "Sarah"};
+        String[] names = { "Al", "Ankit", "Kushal", "Brent", "Sarika", "amanda", "Hans", "Shivika", "Sarah" };
         Arrays.stream(names)    // same as Stream.of(names)
                 .filter(x -> x.startsWith("S"))
                 .sorted()
                 .forEach(out::println);
 
         out.println("\n6. average of squares of an int array");
-        Arrays.stream(new int[]{2, 4, 6, 8, 10})
+        Arrays.stream(new int[]{ 2, 4, 6, 8, 10 })
                 .map(x -> x * x)
                 .average()
                 .ifPresent(out::println);
@@ -139,9 +137,9 @@ public class JavaStreams {
         out.println(chars);
 
         out.println("\n17.b flatMap(..) + toCollection(..)");
-        Set<Integer> primeFactors = Arrays.stream(new int[]{10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20})
-                .mapToObj(Primes::primeFactors)
-                .flatMap(List::stream)
+        Set<Integer> primeFactors = Arrays.stream(new int[]{ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 })
+                .mapToObj(JavaStreams::primeFactors)
+                .flatMap(Set::stream)
                 .collect(Collectors.toCollection(TreeSet::new));
         out.println(primeFactors);
 
@@ -149,5 +147,28 @@ public class JavaStreams {
         Map<Integer, List<String>> wordsByLength = words.stream()
                 .collect(Collectors.groupingBy(String::length));
         System.out.println(wordsByLength);
+    }
+
+    public static Set<Integer> primeFactors(int n) {
+        Set<Integer> result = new HashSet<>();
+        while (n % 2 == 0) {
+            result.add(2);
+            n /= 2;
+        }
+
+        // n must be odd at this point.  So we can
+        // skip one element (Note i = i +2)
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+            // While i divides n, get i and divide n
+            while (n % i == 0) {
+                result.add(i);
+                n /= i;
+            }
+        }
+
+        // This condition is to handle the case when
+        // n is a prime number greater than 2
+        if (n > 2) result.add(n);
+        return result;
     }
 }
