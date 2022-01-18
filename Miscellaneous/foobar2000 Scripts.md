@@ -35,7 +35,7 @@
 
 - Status bar:
     ```
-    %codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural%
+    %codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural% | $div($mul(100,%playback_time_seconds%), %length_seconds%)'%'
     ```
 
 - Notification area icon tooltip:
