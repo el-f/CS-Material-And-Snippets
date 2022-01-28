@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 
 fun main() {
     println("------------ All Marks ------------------")
-    var wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myMarks")
+    var wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myMarks")
     wac.printAll().also { println() }
     wac.printAverage()
     wac.printRoundedAverage().also { println() }
@@ -14,7 +14,7 @@ fun main() {
 
 
     println("\n-------- technology Marks ---------------")
-    wac = WeightedAvgCalculator("Learn Kotlin/src/snippets/myTechnologyMarks")
+    wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myTechnologyMarks")
     wac.printAll().also { println() }
     wac.printAverage()
     wac.printRoundedAverage().also { println() }
