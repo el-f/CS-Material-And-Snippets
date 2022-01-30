@@ -2,12 +2,20 @@ package Snippets;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Counter<T> {
 
-    private final ConcurrentMap<T, Integer> counts = new ConcurrentHashMap<>();
+    private final Map<T, Integer> counts;
+
+    public Counter() {
+        counts = new ConcurrentHashMap<>();
+    }
+
+    public Counter(Iterable<T> iterable) {
+        this();
+        for (T item : iterable) { add(item); }
+    }
 
     public void add(T it) {
         counts.merge(it, 1, Integer::sum);
@@ -38,13 +46,30 @@ public class Counter<T> {
     }
 
     private <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
+        @SuppressWarnings("all")
         SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>(
                 Map.Entry.<K, V> comparingByValue()
                         .reversed()
+                        .thenComparing((e1, e2) -> {
+                            K key1 = e1.getKey(), key2 = e2.getKey();
+                            if (key1 instanceof Comparable && key2 instanceof Comparable) {
+                                return ((Comparable) key1).compareTo((Comparable) key2);
+                            }
+                            return 0;
+                        })
                         .thenComparing(entry -> entry.getKey().getClass().hashCode())
         );
         sortedEntries.addAll(map.entrySet());
         return sortedEntries;
+    }
+
+    public Map<T, Integer> getUnderlyingMap() {
+        return counts;
+    }
+
+    @Override
+    public String toString() {
+        return getOrderedEntries().toString();
     }
 }
 
@@ -65,5 +90,10 @@ class CounterExample {
         System.out.println(counter.mostCommon(2));
         System.out.println(counter.count(1));
         System.out.println(counter.getOrderedEntries());
+        System.out.println(counter.getUnderlyingMap());
+
+        List<String> list = Arrays.asList("1", "abc", "a", "b", "c", "c", "1", "2", "3", "1", "2");
+        System.out.println(new Counter<>(list));
+
     }
 }
