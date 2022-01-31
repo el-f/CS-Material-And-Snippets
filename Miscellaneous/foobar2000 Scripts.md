@@ -35,7 +35,7 @@
 
 - Status bar:
     ```
-    %codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural% | $div($mul(100,%playback_time_seconds%), %length_seconds%)'%'
+    %codec%[ - %codec_profile%] | %bitrate% kbps | %samplerate% Hz | %filesize_natural% $if($or($greater($div($mul(100, %playback_time_seconds%), %length_seconds%), 50), $greater(%playback_time_seconds%, 240)), | scrobbled ✔, )
     ```
 
 - Notification area icon tooltip:
