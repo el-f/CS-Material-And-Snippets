@@ -52,7 +52,8 @@ public class Counter<T> {
                         .reversed()
                         .thenComparing((e1, e2) -> {
                             K key1 = e1.getKey(), key2 = e2.getKey();
-                            if (key1 instanceof Comparable && key2 instanceof Comparable) {
+                            if (key1 instanceof Comparable && key2 instanceof Comparable
+                                    && key1.getClass().equals(key2.getClass())) {
                                 return ((Comparable) key1).compareTo((Comparable) key2);
                             }
                             return 0;
@@ -84,6 +85,11 @@ class CounterExample {
         counter.add(Collections.emptyList());
         counter.add(Collections.emptyList());
         counter.add(Collections.emptyMap());
+        counter.add(Collections.emptyMap());
+        counter.add(1.0);
+        counter.add(1.0);
+        counter.add(1.0);
+        counter.add("hello");
 
         System.out.println(counter.mostCommon());
         System.out.println(counter.mostCommonItem());
