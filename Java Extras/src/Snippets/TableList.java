@@ -1,9 +1,6 @@
 package Snippets;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("unused") // For completeness of class.
@@ -23,6 +20,16 @@ public class TableList {
     private static final String CROSSING_T = "┬";
     private static final String CROSSING_B = "┻";
 
+    private String getSymbol(String[] strs) {
+        return strs[enableUnicode ? 1 : 0];
+    }
+
+    public enum Alignment {
+        LEFT,
+        CENTER,
+        RIGHT
+    }
+
     private final String[] descriptions;
     private final List<String[]> table;
     private final int[] tableSizes;
@@ -34,15 +41,15 @@ public class TableList {
     private int spacing;
     private final Alignment[] alignments;
 
-    public TableList(String... descriptions) {
-        int columns = descriptions.length;
-        this.rows = columns;
-        this.descriptions = descriptions;
-        this.table = new ArrayList<>();
-        this.tableSizes = new int[columns];
-        this.updateSizes(descriptions);
-        this.spacing = 1;
-        this.alignments = new Alignment[columns];
+    public TableList(String... _descriptions) {
+        int columns = _descriptions.length;
+        rows = columns;
+        descriptions = _descriptions;
+        table = new ArrayList<>();
+        tableSizes = new int[columns];
+        updateSizes(descriptions);
+        spacing = 1;
+        alignments = new Alignment[columns];
         Arrays.fill(alignments, Alignment.LEFT);
     }
 
@@ -54,13 +61,13 @@ public class TableList {
         }
     }
 
-    public TableList setComparator(Comparator<String[]> c) {
-        this.comparator = c;
+    public TableList setComparator(Comparator<String[]> _comparator) {
+        comparator = _comparator;
         return this;
     }
 
     public TableList sortBy(int column) {
-        return this.setComparator(Comparator.comparing(strings -> strings[column]));
+        return setComparator(Comparator.comparing(strings -> strings[column]));
     }
 
     public TableList align(int column, Alignment alignment) {
@@ -68,17 +75,24 @@ public class TableList {
         return this;
     }
 
-    public TableList withSpacing(int spacing) {
-        this.spacing = spacing;
+    public TableList withSpacing(int _spacing) {
+        spacing = _spacing;
         return this;
     }
 
-    /**
-     * Adds a row to the table with the specified elements.
-     */
+    public TableList addRow(Object... elements) {
+        return this.addRow(
+                Arrays.stream(elements)
+                        .map(Object::toString)
+                        .toArray(String[]::new)
+        );
+    }
+
     public TableList addRow(String... elements) {
         if (elements.length != rows) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                    "Invalid number of elements :" + elements.length + ", should be: " + rows
+            );
         }
         table.add(elements);
         updateSizes(elements);
@@ -86,13 +100,13 @@ public class TableList {
     }
 
     public TableList filterBy(int par0, String pattern) {
-        this.filterColIdx = par0;
-        this.filter = pattern;
+        filterColIdx = par0;
+        filter = pattern;
         return this;
     }
 
-    public TableList withUnicode(boolean enableUnicode) {
-        this.enableUnicode = enableUnicode;
+    public TableList withUnicode(boolean _enableUnicode) {
+        enableUnicode = _enableUnicode;
         return this;
     }
 
@@ -175,8 +189,7 @@ public class TableList {
         }
 
         if (localTable.isEmpty()) {
-            String[] sa = new String[rows];
-            localTable.add(sa);
+            localTable.add(new String[rows]);
         }
 
         localTable.forEach(arr -> {
@@ -258,16 +271,6 @@ public class TableList {
             System.out.println(line);
         }
 
-    }
-
-    private String getSymbol(String[] strs) {
-        return strs[enableUnicode ? 1 : 0];
-    }
-
-    public enum Alignment {
-        LEFT,
-        CENTER,
-        RIGHT
     }
 
 }

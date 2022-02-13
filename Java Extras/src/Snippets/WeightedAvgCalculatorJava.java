@@ -125,7 +125,7 @@ public class WeightedAvgCalculatorJava {
 
     public void printAll() {
         TableList tl = new TableList("Course", "%", "NZ").withUnicode(true);
-        marks.forEach(t -> tl.addRow(t.first, t.second.toString(), t.third.toString()));
+        marks.forEach(t -> tl.addRow(t.first, t.second, t.third));
         tl.print();
     }
 

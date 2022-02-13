@@ -64,9 +64,7 @@ class WeightedAvgCalculator(
 
     fun printAll() {
         val tl = TableList("#", "Course", "%", "NZ").withUnicode(true)
-        marks.forEachIndexed { idx, t ->
-            tl.addRow((idx + 1).toString(), t.first, t.second.toString(), t.third.toString())
-        }
+        marks.forEachIndexed { idx, t -> tl.addRow(idx + 1, t.first, t.second, t.third) }
         tl.print()
     }
 }
