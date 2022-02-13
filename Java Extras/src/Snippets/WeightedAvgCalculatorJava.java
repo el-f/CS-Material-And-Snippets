@@ -29,12 +29,12 @@ public class WeightedAvgCalculatorJava {
             WeightedAvgCalculatorJava wac = new WeightedAvgCalculatorJava(filePath);
             wac.printAll();
             wac.printAverage();
+            wac.printRoundedAverage();
+            System.out.println();
             wac.printAllRanges();
 
             System.out.println("\nPress Enter to exit");
             scanner.nextLine();
-
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -76,13 +76,13 @@ public class WeightedAvgCalculatorJava {
         marks = new ArrayList<>();
 
         Files.lines(new File(filePath).toPath())
-                .filter(l -> !l.isEmpty())
+                .filter(l -> !l.isEmpty() && !l.startsWith("#"))
                 .map(l -> l.split(","))
                 .forEach(l -> marks.add(
-                        new Triple<>(l[0].trim(),
-                                Integer.parseInt(l[1].trim()),
-                                Double.parseDouble(l[2].trim()))
-                        )
+                                 new Triple<>(l[0].trim(),
+                                              Integer.parseInt(l[1].trim()),
+                                              Double.parseDouble(l[2].trim()))
+                         )
                 );
 
         allNaz = marks.stream().map(t -> t.third).mapToDouble(Double::doubleValue).sum();
@@ -93,7 +93,11 @@ public class WeightedAvgCalculatorJava {
     }
 
     public void printAverage() {
-        System.out.printf("\n>>> Average: %.3f\n\n", getAvg());
+        System.out.printf(">>> Average: %.3f\n", getAvg());
+    }
+
+    public void printRoundedAverage() {
+        System.out.printf(">>> Rounded Average: %d\n", Math.round(getAvg()));
     }
 
     public void printRange(int low, int high) {
@@ -120,15 +124,9 @@ public class WeightedAvgCalculatorJava {
     }
 
     public void printAll() {
-        System.out.println("Course                %          NZ");
-        System.out.println("-----------------------------------");
-        marks.forEach(t -> {
-            System.out.print(t.first + " ");
-            for (int i = 0; i < Math.max(20, t.first.length() + 1) - t.first.length(); i++) System.out.print("-");
-            System.out.print(" " + t.second + " ");
-            for (int i = 0; i < 8 - t.second.toString().length(); i++) System.out.print("-");
-            System.out.println(" " + t.third);
-        });
+        TableList tl = new TableList("Course", "%", "NZ").withUnicode(true);
+        marks.forEach(t -> tl.addRow(t.first, t.second.toString(), t.third.toString()));
+        tl.print();
     }
 
 }

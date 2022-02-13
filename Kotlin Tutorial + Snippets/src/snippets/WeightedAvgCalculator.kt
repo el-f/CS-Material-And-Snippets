@@ -1,11 +1,11 @@
 package snippets
 
+import Snippets.TableList
 import java.io.File
-import kotlin.math.max
 import kotlin.math.roundToInt
 
 fun main() {
-    println("------------ All Marks ------------------")
+    println("All Marks:")
     var wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myMarks")
     wac.printAll().also { println() }
     wac.printAverage()
@@ -13,7 +13,7 @@ fun main() {
     wac.printAllRanges().also { println() }
 
 
-    println("\n-------- technology Marks ---------------")
+    println("\nTechnology Marks:")
     wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myTechnologyMarks")
     wac.printAll().also { println() }
     wac.printAverage()
@@ -22,24 +22,21 @@ fun main() {
 }
 
 class WeightedAvgCalculator(
-        filePath: String?,
-        private var marks: MutableList<Triple<String, Int, Double>> = ArrayList(),
-        private var allNaz: Double = 0.0,
+    filePath: String?,
+    private var marks: MutableList<Triple<String, Int, Double>> = ArrayList(),
+    private var allNaz: Double = 0.0,
 ) {
-    private val firstPrintLineLen: Int = 25
-    private val secondPrintLineLen: Int = 9
 
     init {
-        if (filePath != null)
-            initListFromFile(filePath)
+        if (filePath != null) initListFromFile(filePath)
     }
 
     private fun initListFromFile(filePath: String) {
         File(filePath)
-                .readLines()
-                .filter { it.isNotEmpty() && !it.startsWith("#") }
-                .map { it.split(Regex(",")) }
-                .forEach { marks.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
+            .readLines()
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .map { it.split(Regex(",")) }
+            .forEach { marks.add(Triple(it[0].trim(), it[1].trim().toInt(), it[2].trim().toDouble())) }
         allNaz = marks.sumOf { it.third }
     }
 
@@ -51,8 +48,8 @@ class WeightedAvgCalculator(
 
     private fun printRange(low: Int, high: Int) {
         println(
-                "${marks.filter { it.second in low..high }.size}" +
-                        " Marks at Range of ($low-$high) Out of ${marks.size} Marks"
+            "${marks.filter { it.second in low..high }.size}" +
+                    " Marks at Range of ($low-$high) Out of ${marks.size} Marks"
         )
     }
 
@@ -66,14 +63,8 @@ class WeightedAvgCalculator(
     }
 
     fun printAll() {
-        println("Course                     %           NZ")
-        println("-----------------------------------------")
-        marks.forEach {
-            print(it.first + " ")
-            print("-".repeat(max(firstPrintLineLen, it.first.length + 1) - it.first.length))
-            print(" " + it.second + " ")
-            print("-".repeat(secondPrintLineLen - it.second.toString().length))
-            println(" " + it.third)
-        }
+        val tl = TableList("Course", "%", "NZ").withUnicode(true)
+        marks.forEach { tl.addRow(it.first, it.second.toString(), it.third.toString()) }
+        tl.print()
     }
 }
