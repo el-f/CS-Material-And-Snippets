@@ -33,7 +33,7 @@ public class TableList {
     private final String[] descriptions;
     private final List<String[]> table;
     private final int[] tableSizes;
-    private final int rows;
+    private final int columns;
     private int filterColIdx;
     private String filter;
     private boolean enableUnicode;
@@ -42,14 +42,14 @@ public class TableList {
     private final Alignment[] alignments;
 
     public TableList(String... _descriptions) {
-        int columns = _descriptions.length;
-        rows = columns;
+        int cols = _descriptions.length;
+        columns = cols;
         descriptions = _descriptions;
         table = new ArrayList<>();
-        tableSizes = new int[columns];
+        tableSizes = new int[cols];
         updateSizes(descriptions);
         spacing = 1;
-        alignments = new Alignment[columns];
+        alignments = new Alignment[cols];
         Arrays.fill(alignments, Alignment.LEFT);
     }
 
@@ -70,6 +70,12 @@ public class TableList {
         return setComparator(Comparator.comparing(strings -> strings[column]));
     }
 
+    public TableList filterBy(int filterColIndex, String pattern) {
+        filterColIdx = filterColIndex;
+        filter = pattern;
+        return this;
+    }
+
     public TableList align(int column, Alignment alignment) {
         alignments[column] = alignment;
         return this;
@@ -81,7 +87,7 @@ public class TableList {
     }
 
     public TableList addRow(Object... elements) {
-        return this.addRow(
+        return addRow(
                 Arrays.stream(elements)
                         .map(Object::toString)
                         .toArray(String[]::new)
@@ -89,19 +95,13 @@ public class TableList {
     }
 
     public TableList addRow(String... elements) {
-        if (elements.length != rows) {
+        if (elements.length != columns) {
             throw new IllegalArgumentException(
-                    "Invalid number of elements :" + elements.length + ", should be: " + rows
+                    "Invalid number of elements :" + elements.length + ", should be: " + columns
             );
         }
         table.add(elements);
         updateSizes(elements);
-        return this;
-    }
-
-    public TableList filterBy(int par0, String pattern) {
-        filterColIdx = par0;
-        filter = pattern;
         return this;
     }
 
@@ -114,7 +114,7 @@ public class TableList {
         StringBuilder line = null;
 
         if (enableUnicode) {
-            for (int i = 0; i < rows; i++) {
+            for (int i = 0; i < columns; i++) {
                 if (line != null) {
                     line.append(CROSSING_T);
                 } else {
@@ -133,7 +133,7 @@ public class TableList {
         }
 
         // print header
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < columns; i++) {
             if (line != null) {
                 line.append(getSymbol(VERTICAL_T_SEP));
             } else {
@@ -158,7 +158,7 @@ public class TableList {
 
         // print vertical separator
         line = null;
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < columns; i++) {
             if (line != null) {
                 line.append(getSymbol(CROSSING));
             } else {
@@ -189,7 +189,7 @@ public class TableList {
         }
 
         if (localTable.isEmpty()) {
-            localTable.add(new String[rows]);
+            localTable.add(new String[columns]);
         }
 
         localTable.forEach(arr -> {
@@ -205,7 +205,7 @@ public class TableList {
         }
 
         for (String[] strings : localTable) {
-            for (int i = 0; i < rows; i++) {
+            for (int i = 0; i < columns; i++) {
                 if (line != null) {
                     line.append(getSymbol(VERTICAL_B_SEP));
                 } else {
@@ -255,7 +255,7 @@ public class TableList {
         }
 
         if (enableUnicode) {
-            for (int i = 0; i < rows; i++) {
+            for (int i = 0; i < columns; i++) {
                 if (line != null) {
                     line.append(CROSSING_B);
                 } else {
