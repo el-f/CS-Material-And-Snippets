@@ -119,11 +119,14 @@ void part3()
 
     for (auto &tribe: tribes)
     {
-        add_survivor(tribe);
-        cout << "continue? [y/n]";
-        char in;
-        cin >> in;
-        if (in != 'y') goto cont;
+        while (tribe.survivors_count < tribe.MAX_SURVIVORS)
+        {
+            add_survivor(tribe);
+            cout << "continue? [y/n]";
+            char in;
+            cin >> in;
+            if (in != 'y') goto cont;
+        }
     }
     cont:
     for (auto &tribe: tribes) print_tribe(tribe);
