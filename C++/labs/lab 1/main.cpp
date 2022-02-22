@@ -91,6 +91,7 @@ void part2()
         *tribes[t] = new Survivor[survivors_count];
         for (uint16_t s = 0; s < survivors_count; s++)
         {
+            tribes[t][s] = new Survivor();
             init_survivor(*tribes[t][s]);
             count++;
             cout << "continue? [y/n]";
