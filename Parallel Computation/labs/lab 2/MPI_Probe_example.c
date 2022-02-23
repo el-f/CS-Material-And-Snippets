@@ -14,25 +14,24 @@ int main(int argc, char **argv) {
     
    
     if (myid == 0) {
-		int data[3] = {200, 300, 400};
-    	MPI_Send(data, 3, MPI_INT, 1, 0, MPI_COMM_WORLD);
+	int data[3] = {200, 300, 400};
+	MPI_Send(data, 3, MPI_INT, 1, 0, MPI_COMM_WORLD);
     } else {
-		int *msg, j;
-		MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
+	int *msg, j;
+	MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
 
-		MPI_Get_count(&status, MPI_INT, &count);
-		printf("getting count = %d\n",count);
+	MPI_Get_count(&status, MPI_INT, &count);
+	printf("getting count = %d\n",count);
 
-    	msg = (int*) malloc(count*sizeof(int));
+	msg = (int*) malloc(count*sizeof(int));
     	
-		MPI_Recv(msg, count,MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+	MPI_Recv(msg, count,MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
     	
-    	for(j = 0; j < count; j++) {
-			printf("%d ",msg[j]);
-    	}
-		
-		printf("\n");
+	for(j = 0; j < count; j++) {
+		printf("%d ",msg[j]);
+	}
+	printf("\n");
+
     }
-	
     MPI_Finalize();
 }
