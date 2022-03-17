@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -147,6 +148,14 @@ public class JavaStreams {
         Map<Integer, List<String>> wordsByLength = words.stream()
                 .collect(Collectors.groupingBy(String::length));
         System.out.println(wordsByLength);
+
+        out.println("\n19. groupingBy(..) - counting frequencies");
+        int[] numbersGB = new int[]{ 11, 12, 13, 12, 13, 13 };
+        Map<Integer, Long> numsByFreq = Arrays.stream(numbersGB)
+                .boxed()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        out.println(numsByFreq);
+
     }
 
     public static Set<Integer> primeFactors(int n) {
