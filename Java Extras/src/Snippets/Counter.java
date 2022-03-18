@@ -26,8 +26,8 @@ public class Counter<T> {
         return collection.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
-    public Long count(T it) {
-        return counts.get(it);
+    public Long count(T item) {
+        return Optional.ofNullable(counts.get(item)).orElse(0L);
     }
 
     public T mostCommonItem() {
@@ -102,6 +102,7 @@ class CounterExample {
         System.out.println(counter.count(1));
         System.out.println(counter.getOrderedEntries());
         System.out.println(counter.getUnderlyingMap());
+        System.out.println(counter.count("a string not in the counter..."));
 
         List<String> list = Arrays.asList("1", "abc", "a", "b", "c", "c", "1", "2", "3", "1", "2");
         System.out.println(new Counter<>(list));
