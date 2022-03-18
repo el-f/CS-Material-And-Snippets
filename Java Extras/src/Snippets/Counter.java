@@ -2,11 +2,12 @@ package Snippets;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Counter<T> {
 
-    private final Map<T, Integer> counts;
+    private final Map<T, Long> counts;
 
     public Counter() {
         counts = new ConcurrentHashMap<>();
@@ -18,10 +19,14 @@ public class Counter<T> {
     }
 
     public void add(T it) {
-        counts.merge(it, 1, Integer::sum);
+        counts.merge(it, 1L, Long::sum);
     }
 
-    public Integer count(T it) {
+    public static <V> Map<V, Long> count(Collection<V> collection) {
+        return collection.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+    public Long count(T it) {
         return counts.get(it);
     }
 
@@ -35,13 +40,13 @@ public class Counter<T> {
 
     public List<T> mostCommon(int n) {
         return counts.entrySet().stream()
-                .sorted((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()))
+                .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
                 .limit(n)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
-    public SortedSet<Map.Entry<T, Integer>> getOrderedEntries() {
+    public SortedSet<Map.Entry<T, Long>> getOrderedEntries() {
         return entriesSortedByValues(counts);
     }
 
@@ -64,7 +69,7 @@ public class Counter<T> {
         return sortedEntries;
     }
 
-    public Map<T, Integer> getUnderlyingMap() {
+    public Map<T, Long> getUnderlyingMap() {
         return counts;
     }
 
@@ -100,6 +105,7 @@ class CounterExample {
 
         List<String> list = Arrays.asList("1", "abc", "a", "b", "c", "c", "1", "2", "3", "1", "2");
         System.out.println(new Counter<>(list));
+        System.out.println(Counter.count(list));
 
     }
 }
