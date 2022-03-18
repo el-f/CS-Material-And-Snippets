@@ -4,8 +4,7 @@
 
 #define SIZE 10
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int myid, numprocs;
     char buffer[SIZE] = {'\0'};
 
