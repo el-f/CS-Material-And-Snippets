@@ -1,0 +1,96 @@
+TOKEN      | LEXEME               | SEMANTIC VALUE           
+___________________________________________________________
+
+NAME       | Martina Navratilova  | Martina Navratilova      
+GENDER     | <Woman>              | WOMAN                    
+
+TOURNEY    | Wimbledon            | Wimbledon                
+YEAR       | 1978                 | 1978                     
+YEAR       | 1979                 | 1979                     
+YEAR_RANGE | 1982-1987            | 1982-1987                
+YEAR       | 1990                 | 1990                     
+
+TOURNEY    | Australian Open      | Australian Open          
+YEAR       | 1981                 | 1981                     
+YEAR       | 1983                 | 1983                     
+YEAR       | 1985                 | 1985                     
+
+TOURNEY    | French Open          | French Open              
+YEAR       | 1982                 | 1982                     
+YEAR       | 1984                 | 1984                     
+
+-----------------------------------------------------------
+
+NAME       | Roger Federer        | Roger Federer            
+GENDER     | <Man>                | MAN                      
+
+TOURNEY    | Wimbledon            | Wimbledon                
+YEAR_RANGE | 2003-2007            | 2003-2007                
+YEAR       | 2009                 | 2009                     
+YEAR       | 2012                 | 2012                     
+YEAR       | 2017                 | 2017                     
+
+TOURNEY    | Australian Open      | Australian Open          
+YEAR       | 2004                 | 2004                     
+YEAR       | 2006                 | 2006                     
+YEAR       | 2007                 | 2007                     
+YEAR       | 2010                 | 2010                     
+YEAR       | 2017                 | 2017                     
+YEAR       | 2018                 | 2018                     
+
+TOURNEY    | French Open          | French Open              
+YEAR       | 2009                 | 2009                     
+
+-----------------------------------------------------------
+
+NAME       | Novak Djokovic       | Novak Djokovic           
+GENDER     | <Man>                | MAN                      
+
+TOURNEY    | Wimbledon            | Wimbledon                
+YEAR       | 2011                 | 2011                     
+YEAR       | 2014                 | 2014                     
+YEAR       | 2015                 | 2015                     
+YEAR       | 2018                 | 2018                     
+YEAR       | 2019                 | 2019                     
+YEAR       | 2021                 | 2021                     
+
+TOURNEY    | Australian Open      | Australian Open          
+YEAR       | 2008                 | 2008                     
+YEAR_RANGE | 2011-2013            | 2011-2013                
+YEAR       | 2015                 | 2015                     
+YEAR       | 2016                 | 2016                     
+YEAR_RANGE | 2019-2021            | 2019-2021                
+
+TOURNEY    | French Open          | French Open              
+YEAR       | 2016                 | 2016                     
+YEAR       | 2021                 | 2021                     
+
+-----------------------------------------------------------
+
+NAME       | Simona Halep         | Simona Halep             
+GENDER     | <Woman>              | WOMAN                    
+
+TOURNEY    | Wimbledon            | Wimbledon                
+YEAR       | 2019                 | 2019                     
+
+TOURNEY    | French Open          | French Open              
+YEAR       | 2018                 | 2018                     
+
+-----------------------------------------------------------
+
+NAME       | Israel Israeli       | Israel Israeli           
+GENDER     | <Man>                | MAN                      
+
+TOURNEY    | Wimbledon            | Wimbledon                
+YEAR       | 2020                 | 2020                     
+YEAR       | 2021                 | 2021                     
+YEAR       | 2022                 | 2022                     
+
+-----------------------------------------------------------
+
+NAME       | Serena               | Serena                   
+GENDER     | <Woman>              | WOMAN                    
+
+TOURNEY    | French Open          | French Open              
+YEAR_RANGE | 1993-1994            | 1993-1994                
+YEAR       | 2017                 | 2017                     
