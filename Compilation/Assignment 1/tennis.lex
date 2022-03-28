@@ -37,9 +37,9 @@ name_format [a-zA-Z]+|[a-zA-Z]+" "[a-zA-Z]+
 year_format (19[0-9]{2})|([2-9][0-9]{3,})
 %%
 
-\*\*" "[a-zA-Z]*" "\*\*         // possible title of file (`** Winners **`) - just ignore if appears
+\*\*.*\*\*                      // possible title of file (e.g: `** Winners **`) - just ignore if appears
 
-\<name\>" "*[\"\']?             { BEGIN (PLAYERNAME); }
+\<name\>" "*[\"\'\t]?           { BEGIN (PLAYERNAME); }
 <PLAYERNAME>{name_format}       { strcpy(yylval.name, yytext);          return NAME; }
 <PLAYERNAME>[\"\'\t]?" "*       { BEGIN (0); }
 
@@ -61,16 +61,16 @@ year_format (19[0-9]{2})|([2-9][0-9]{3,})
 %%
 
 int main (int argc, char **argv) {
-	int token;
+    int token;
 
-	if (argc != 2) {
-		fprintf(stderr, "Usage: mylex <input file name>\n");
-		exit(1);
-	}
+    if (argc != 2) {
+        fprintf(stderr, "Usage: mylex <input file name>\n");
+        exit(1);
+    }
 
-	yyin = fopen (argv[1], "r");
+    yyin = fopen (argv[1], "r");
     printf("%-10s | %-20s | %-25s\n", "TOKEN", "LEXEME", "SEMANTIC VALUE");
-	printf("___________________________________________________________\n\n");
+    printf("___________________________________________________________\n\n");
     int first = 1;
     while ((token = yylex()) != 0) {
         switch (token) {
@@ -102,6 +102,6 @@ int main (int argc, char **argv) {
                 exit(1);
         }
     }
-	fclose(yyin);
-	exit(0);
+    fclose(yyin);
+    exit(0);
 }
