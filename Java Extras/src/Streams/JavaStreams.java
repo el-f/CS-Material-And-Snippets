@@ -70,9 +70,12 @@ public class JavaStreams {
         bands.close();
 
         out.println("\n9. Stream rows from text file and save to List");
-        List<String> bands2 = Files.lines(Paths.get(path + "/bands.txt"))
-                .filter(x -> x.contains("jit"))
-                .collect(Collectors.toList());
+        List<String> bands2;
+        try (Stream<String> lines = Files.lines(Paths.get(path + "/bands.txt"))) {
+            bands2 = lines
+                    .filter(x -> x.contains("jit"))
+                    .collect(Collectors.toList());
+        }
         bands2.forEach(out::println);
 
         out.println("\n10. Stream rows from CSV file and count");
@@ -108,11 +111,11 @@ public class JavaStreams {
         }
 
         out.println("\n13. Reduction - sum");
-        double total = Stream.of(7.3, 1.5, 4.8, 5.1)
-                .reduce(0.0, (Double a, Double b) -> a / 3 == 0.5 ? a : b);
+        double total = Stream.of(999.1, 999.1, 999.1, 1.0, 1.0, 1.0)
+                .reduce(0.0, (Double a, Double b) -> b % 1 == 0 ? a + b : a + b % 1);
 //                .reduce(0.0, Double::sum);
-//                .reduce(0.0, (Double a, Double b) -> a + b);
-        out.println("Total = " + total);
+
+        out.println("Total = " + String.format("%.2f", total));
 
         out.println("\n14. Reduction - summary statistics");
         IntSummaryStatistics summary = IntStream.of(7, 2, 19, 88, 73, 4, 10)
