@@ -88,11 +88,12 @@ def tag_if_missing(file_path):
 # recursively tag all mp3/opus files in a directory
 def tag_directory(directory):
     folder_stack = [directory]  # dfs stack
-    amount_tagged = 0
+    amount_tagged, last = 0, 0
     while folder_stack:
         folder = folder_stack.pop()
         if is_untagged_folder(folder):
-            print('\n\n>>> Tagging: ' + folder)
+            print((last != 0) * '\n\n' + '>>> Tagging: ' + folder)
+            last = 0
             for file in os.listdir(folder):
                 file_path = os.path.join(folder, file)
                 if os.path.isdir(file_path):
@@ -100,6 +101,7 @@ def tag_directory(directory):
                 elif file_path.endswith('.mp3') or file_path.endswith('.opus'):
                     if tag_if_missing(file_path):
                         amount_tagged += 1
+                        last += 1
     return amount_tagged
 
 
