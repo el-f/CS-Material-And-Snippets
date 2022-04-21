@@ -117,7 +117,7 @@ if __name__ == '__main__':
         if seconds_took < 60:
             time_took = f"{round(seconds_took, 2)} seconds"
         else:
-            time_took = f"{round(seconds_took / 60, 2)} minutes, and {round(seconds_took % 60, 2)} seconds"
+            time_took = f"{seconds_took // 60} minutes, and {round(seconds_took % 60, 2)} seconds"
 
         print('\n\n>>> Done!')
         print('>>> Tagged ' + str(total_tagged) + ' files in ' + time_took)
