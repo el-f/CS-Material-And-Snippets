@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public abstract class SeleniumTest {
     protected MyLogger logger;
 
     public static final String ELAZAR_DRIVER = "C:/chromedriver_win32/chromedriver.exe";
-//    public static final String GAL_DRIVER = "C:/Users/galka/Desktop/לימודים/שנה ב/QA/chromedriver.exe";
+    //    public static final String GAL_DRIVER = "C:/Users/galka/Desktop/לימודים/שנה ב/QA/chromedriver.exe";
     public static final int IMPLICIT_WAIT_TIME_MS = 1100;
 
     @Rule(order = Integer.MIN_VALUE)
@@ -154,7 +155,8 @@ public abstract class SeleniumTest {
         driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<>();
-        driverWait = new WebDriverWait(driver, 5);
+        driverWait = new WebDriverWait(driver,
+                                       Duration.ofSeconds(5));
 
         logger = new MyLogger(
                 "logs/" + this.getClass().getPackage().getName() + ".log",
