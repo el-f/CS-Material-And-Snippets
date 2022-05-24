@@ -102,7 +102,7 @@ def main():
 
     print('Files:')
     for i, file in enumerate(files):
-        print('{}: {}'.format(i + 1, file))
+        print('{}: {}'.format(i + 1, os.path.basename(file)))
 
     while True:
         try:
@@ -114,7 +114,6 @@ def main():
             print('Invalid index!')
 
     file_path = os.path.join(folder, files[file_index - 1])
-
     tag(file_path, ask_user)
 
 
