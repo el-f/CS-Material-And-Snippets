@@ -96,6 +96,10 @@ def main():
         if not os.path.isdir(file_path) and file_path.endswith('.mp3') or file_path.endswith('.opus'):
             files.append(file_path)
 
+    if not files:
+        print("No mp3/opus files found!")
+        return
+
     print('Files:')
     for i, file in enumerate(files):
         print('{}: {}'.format(i + 1, file))
