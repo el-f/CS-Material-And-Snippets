@@ -1,4 +1,4 @@
-package Snippets;
+package Reflection;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.ByteBuddy;

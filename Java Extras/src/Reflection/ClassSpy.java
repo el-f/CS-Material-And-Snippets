@@ -1,4 +1,4 @@
-package Snippets;
+package Reflection;
 
 import java.lang.reflect.*;
 

@@ -1,4 +1,4 @@
-package Snippets;
+package Reflection;
 
 import javassist.*;
 import net.bytebuddy.agent.ByteBuddyAgent;
