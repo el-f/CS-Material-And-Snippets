@@ -15,31 +15,29 @@ def get_file_extension(file_path):
 
 
 def get_artist_and_title_from_file_name(file_name, ask_user):
-    part1 = file_name[:file_name.find(' - ')]
-    part2 = file_name[file_name.find(' - ') + 3:]
+    parts = file_name.split(' - ')
 
-    if not ask_user:
-        return part1, part2
+    if len(parts) == 2 and not ask_user:
+        return parts[0], parts[1]
 
-    # ask the user which of the parts is the artist and which is the title
-    print("which of the parts is the artist?")
-    print("1: " + part1)
-    print("2: " + part2)
-    while True:
-        try:
-            part_index = int(input())
-            if part_index < 1 or part_index > 2:
-                raise ValueError
-            break
-        except ValueError:
-            print("Invalid input!")
+    def get_part(part_name):
+        print(f"which of the parts is the {part_name}?")
+        for i, part in enumerate(parts):
+            print("{}: {}".format(i + 1, part))
 
-    if part_index == 1:
-        artist = part1
-        title = part2
-    else:
-        artist = part2
-        title = part1
+        while True:
+            try:
+                part_index = int(input())
+                if part_index < 1 or part_index > len(parts):
+                    raise ValueError
+                break
+            except ValueError:
+                print("Invalid input!")
+
+        return parts[part_index - 1]
+
+    artist = get_part('artist')
+    title = (parts[0] if artist == parts[1] else parts[1]) if len(parts) == 2 else get_part('title')
 
     return artist, title
 
@@ -71,7 +69,12 @@ def tag(file_path, ask_user=False):
         audio['title'] = title
 
     audio.save()
+    print('==============================')
     print('Tagged: ' + file_path)
+    print('------------------------------')
+    print('\tArtist:\t' + artist)
+    print('\tTitle:\t' + title)
+    print('==============================')
 
 
 def main():
@@ -79,12 +82,12 @@ def main():
     list the files in current directory, asks the user to pick one, then tag it.
     :return:
     """
-    ask_user = False
+    ask_user = True
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == '-y':
-            ask_user = True
-        elif sys.argv[1] != '-n':
+        if sys.argv[1] == '-n':
+            ask_user = False
+        elif sys.argv[1] != '-y':
             print("Supported arguments: -y, -n")
 
     folder = os.getcwd()
