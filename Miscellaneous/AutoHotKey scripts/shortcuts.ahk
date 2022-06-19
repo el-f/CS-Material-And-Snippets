@@ -26,10 +26,10 @@ return
 ;^!c::Run www.google.com ; ctrl+alt+c
 ;return
 
-^!v::Run "E:\Video" ; ctrl+alt+e
+^!v::Run "E:\Video" ; ctrl+alt+v
 return
 
-;^!g::Run "C:\Users\Elazar\Google Drive" ; ctrl+alt+e
+;^!g::Run "C:\Users\Elazar\Google Drive" ; ctrl+alt+g
 ;return
 
 ^!y::Run "I:\Elfein_Archive\Programs\RockboxUtility-v1.3.1" ; ctrl+alt+y
