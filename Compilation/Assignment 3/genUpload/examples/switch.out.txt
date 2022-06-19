@@ -1,0 +1,26 @@
+    t1 = a + b
+    ifFalse t1 == 1 goto label3
+label2:
+    z = 1
+    
+    goto label4
+label3:
+    ifFalse t1 == 2 goto label5
+label4:
+    z = 2
+    
+    goto label1
+    
+    goto label6
+label5:
+    ifFalse t1 == 3 goto label7
+label6:
+    z = 3
+    
+    goto label8
+label7:
+label8:
+    z = 100
+    
+label1:
+    

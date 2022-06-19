@@ -1,0 +1,17 @@
+/* example of using breaks in nested loops */
+
+int i, j;
+int k;
+
+while (i < 10) {
+    output(i);
+	for(j = 0; j < i; j++)
+	    if (j == 4)
+		     break; // exit for loop
+	    else
+		   output(j);
+	k = 8;
+	break;  // exit while loop
+	k = 9;
+} 
+		   

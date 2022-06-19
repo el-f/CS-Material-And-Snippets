@@ -1,0 +1,46 @@
+    read i
+    
+    j = 3
+    
+    k = (int)4.00
+    
+    <read> a
+    
+    b = (double)7
+    
+    c = 8.04
+    
+    t1 = j * k
+    i = t1
+    
+    t2 = b <*> c
+    a = t2
+    
+    t3 = (double) k
+    t4 = a <-> t3
+    i = (int)t4
+    
+    t5 = (double) k
+    t6 = t5 <-> a
+    j = (int)t6
+    
+    t7 = i + j
+    a = (double)t7
+    
+    t8 = i / j
+    t9 = t8 * k
+    b = (double)t9
+    
+    t10 = i / j
+    t11 = (double) t10
+    t12 = t11 <*> a
+    c = t12
+    
+    t13 = i + j
+    write t13
+    
+    t14 = a <*> b
+    t15 = c <*> c
+    t16 = t14 <+> t15
+    <write> t16
+    

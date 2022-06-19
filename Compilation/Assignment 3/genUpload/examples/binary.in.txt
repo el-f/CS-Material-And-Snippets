@@ -1,0 +1,28 @@
+// examples: assignments;  applying binary operators
+int  i, j, k;
+
+double a, b, c;
+
+input(i);
+j = 3;
+k = 4.0;
+
+input(a);
+b = 7;
+c = 8.0372;
+
+i = j * k;
+a = b * c;
+
+i = a - k;
+
+j = k - a;
+
+a = i + j;
+
+b = (i/j)*k;
+
+c = (i/j)*a;
+
+output(i+j);
+output(a*b + c*c);

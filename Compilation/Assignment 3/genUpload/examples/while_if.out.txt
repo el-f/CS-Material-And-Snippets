@@ -1,0 +1,23 @@
+    t1 = b + c
+    t2 = d + f
+    t3 = t1 * t2
+    a = t3
+    
+label1:
+    t4 = b + c
+    ifFalse a < t4 goto label2
+    t5 = a + y
+    a = t5
+    goto label1
+label2:
+    
+    t6 = w + z
+    t7 = b + c
+    ifFalse t6 < t7 goto label4
+    t8 = a + y
+    a = t8
+    goto label3
+label4:
+    z = y
+label3:
+    

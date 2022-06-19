@@ -1,0 +1,26 @@
+label1:
+    ifFalse i < 10 goto label2
+    write i
+    
+    j = 0
+label3:
+    ifFalse j < i goto label4
+    ifFalse j == 4 goto label6
+    goto label4
+    goto label5
+label6:
+    write j
+label5:
+    j = j + 1
+    goto label3
+label4:
+    
+    k = 8
+    
+    goto label2
+    
+    k = 9
+    
+    goto label1
+label2:
+    

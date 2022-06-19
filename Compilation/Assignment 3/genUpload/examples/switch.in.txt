@@ -1,0 +1,11 @@
+/* example of switch stmt.  Note that only case 2 has a break */
+int a, b;
+int z;
+
+switch(a+b) { 
+    case 1:  z = 1;
+    case 2:  z = 2;
+             break;
+    case 3:  z = 3;
+    default: z = 100;
+}

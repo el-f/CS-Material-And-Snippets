@@ -1,0 +1,12 @@
+    i = 0
+label1:
+    ifFalse i < 10 goto label2
+    write i
+    
+    t1 = 2 * i
+    write t1
+    
+    i = i + 1
+    goto label1
+label2:
+    
