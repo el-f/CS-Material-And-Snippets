@@ -45,8 +45,8 @@ public class Examples {
         String text;
 
         for (String diff : diffs) {
-
-            String filename = "boards/" + diff;
+            String currentWorkingDir = System.getProperty("user.dir");
+            String filename = currentWorkingDir + "/Algorithms/Dancing Links/boards/" + diff;
 
             List<Long> timings = new ArrayList<>();
 
@@ -126,9 +126,8 @@ public class Examples {
                 { 0, 9, 0, 0, 0, 0, 4, 0, 0 }
         }; // apparently the hardest sudoku
 
-//        
-//        SudokuDLX sudoku = new SudokuDLX();
-//        sudoku.solve(hardest);
+        SudokuDLX sudoku = new SudokuDLX();
+        sudoku.solve(hardest);
 
         NaiveSudokuSolver naive = new NaiveSudokuSolver();
         naive.solve(hardest);
@@ -136,8 +135,7 @@ public class Examples {
 
     public static void main(String[] args) {
 //        runCoverExample();
-//        runSudokuExample();
-
+        runSudokuExample();
         runExample();
     }
 
