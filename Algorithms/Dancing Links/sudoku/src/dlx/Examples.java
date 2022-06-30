@@ -46,7 +46,7 @@ public class Examples {
 
         for (String diff : diffs) {
             String currentWorkingDir = System.getProperty("user.dir");
-            String filename = currentWorkingDir + "/Algorithms/Dancing Links/boards/" + diff;
+            String filename = currentWorkingDir + "/Algorithms/Dancing Links/sudoku/boards/" + diff;
 
             List<Long> timings = new ArrayList<>();
 
@@ -135,7 +135,7 @@ public class Examples {
 
     public static void main(String[] args) {
 //        runCoverExample();
-        runSudokuExample();
+        // runSudokuExample();
         runExample();
     }
 
