@@ -20,6 +20,11 @@ def top_three_words(string: str):
     return result
 
 
+def top_3_words(text):
+    c = Counter(re.findall(r"[a-z']+", re.sub(r" '+ ", " ", text.lower())))
+    return [w for w,_ in c.most_common(3)]
+
+
 if __name__ == '__main__':
     assert top_three_words("""In a village of La Mancha, the name of which I have no desire to call to
             mind, there lived not long since one of those gentlemen that keep a lance
