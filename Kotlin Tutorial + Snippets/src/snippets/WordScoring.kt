@@ -1,6 +1,6 @@
 package snippets
 
-// my solution for this kata: 57eb8fcdf670e99d9b000272
+//  57eb8fcdf670e99d9b000272
 
 fun score(word: String) = word.sumOf { it.code - 'a'.code + 1 }
 fun high(words: String) = words.split(' ').maxByOrNull(::score)

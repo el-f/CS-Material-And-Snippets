@@ -1,5 +1,5 @@
 # sum bits in range(left, right + 1)
-# solution for this kata: 596d34df24a04ee1e3000a25
+#  596d34df24a04ee1e3000a25
 
 def sum_up_to(n):
     if n == 0: return 0

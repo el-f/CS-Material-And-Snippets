@@ -1,7 +1,7 @@
 from collections import Counter
 
 
-# my solution for this kata: https://www.codewars.com/kata/5629db57620258aa9d000014/
+#  5629db57620258aa9d000014/
 
 
 def mix(s1: str, s2: str):

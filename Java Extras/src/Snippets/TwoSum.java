@@ -3,7 +3,7 @@ package Snippets;
 import java.util.Arrays;
 import java.util.HashMap;
 
-// my solution for this kata: 52c31f8e6605bcc646000082
+//  52c31f8e6605bcc646000082
 public class TwoSum {
     public static int[] twoSum(int[] numbers, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();

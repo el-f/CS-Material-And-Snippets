@@ -10,7 +10,7 @@ class B {
     int getValue() { throw new IllegalStateException("You don't get a value!"); }
 }
 
-// kata: 54bd6b4c956834c9870001a1
+// 54bd6b4c956834c9870001a1
 public class ModifyInstrumentation {
 
     public static void main(String[] args) {

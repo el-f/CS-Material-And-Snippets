@@ -8,7 +8,7 @@ import static java.util.function.UnaryOperator.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
-// solution for this kata: codewars.com/kata/54bf1c2cd5b56cc47f0007a1
+//  54bf1c2cd5b56cc47f0007a1
 public class DuplicateChars {
 
     static final boolean PRINT_MAP = false;

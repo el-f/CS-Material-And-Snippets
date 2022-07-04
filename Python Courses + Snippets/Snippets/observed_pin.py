@@ -2,7 +2,7 @@ from itertools import product
 
 import unittest
 
-# my solution for this kata: https://www.codewars.com/kata/5263c6999e0f40dee200059d/python
+#  5263c6999e0f40dee200059d
 
 adj = {
     '1': {'1', '2', '4'},

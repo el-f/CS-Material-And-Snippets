@@ -1,5 +1,5 @@
 
-# my solution for this kata: 55983863da40caa2c900004e
+#  55983863da40caa2c900004e
 
 def parse_int(n: int) -> str:
     return "".join(sorted(str(n), reverse=True))

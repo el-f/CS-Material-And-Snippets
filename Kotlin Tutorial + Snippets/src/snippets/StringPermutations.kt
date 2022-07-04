@@ -3,7 +3,7 @@ package snippets
 import kotlin.test.assertEquals
 
 /*
-    solution for this kata: https://www.codewars.com/kata/5254ca2719453dcc0b00027d
+     5254ca2719453dcc0b00027d
     (all permutations of an input string)
  */
 

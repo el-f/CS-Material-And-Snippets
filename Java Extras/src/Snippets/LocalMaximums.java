@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// my solution for this kata: 5279f6fe5ab7f447890006a7
+//  5279f6fe5ab7f447890006a7
 public class LocalMaximums {
 
     static final String POS = "pos", PEAKS = "peaks";

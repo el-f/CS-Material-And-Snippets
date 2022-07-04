@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SecretString {
 
-    // my solution for this kata: https://www.codewars.com/kata/53f40dff5f9d31b813000774
+    //  53f40dff5f9d31b813000774
 
     public String recoverSecret(char[][] triplets) {
         return buildString(getOrderMap(triplets));

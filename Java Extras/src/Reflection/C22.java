@@ -21,7 +21,7 @@ abstract class Boris {
 }
 
 /*
-    my solution for this kata: 5510caecaacf801f820002ac
+     5510caecaacf801f820002ac
     changed some names for obscurity
  */
 class C22 extends Boris {

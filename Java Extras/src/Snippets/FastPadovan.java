@@ -10,7 +10,7 @@ import static java.math.BigInteger.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * my solution for this kata: 5819f1c3c6ab1b2b28000624
+ *  5819f1c3c6ab1b2b28000624
  * <p>
  * <a href="https://en.wikipedia.org/wiki/Padovan_sequence">Padovan_sequence</a>
  * <p>

@@ -2,7 +2,7 @@ from itertools import combinations
 from random import randrange, sample
 
 
-# solution for this kata: 590a924c7dfc1a238d000047
+#  590a924c7dfc1a238d000047
 def smallest_team_with_all_skills(n, candidates):
     for i in range(1, len(candidates) + 1):
         combs = combinations(candidates, i)

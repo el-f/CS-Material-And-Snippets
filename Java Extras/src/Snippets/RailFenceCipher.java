@@ -1,6 +1,6 @@
 package Snippets;
 
-//  my solution for this kata: 58c5577d61aefcf3ff000081
+//   58c5577d61aefcf3ff000081
 public class RailFenceCipher {
 
     public static void main(String[] args) {

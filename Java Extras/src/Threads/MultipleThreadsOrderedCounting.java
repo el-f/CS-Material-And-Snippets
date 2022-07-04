@@ -2,7 +2,7 @@ package Threads;
 
 import java.util.concurrent.*;
 
-// 2 solutions for this kata: 549e70e994e517ed8b00043e
+// 549e70e994e517ed8b00043e
 
 @SuppressWarnings("all")
 public class MultipleThreadsOrderedCounting {

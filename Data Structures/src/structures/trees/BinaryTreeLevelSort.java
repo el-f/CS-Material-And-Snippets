@@ -5,8 +5,7 @@ import java.util.*;
 public class BinaryTreeLevelSort {
 
     /*
-        This is my solution for this kata:
-        https://www.codewars.com/kata/52bef5e3588c56132c0003bc/train/java
+        52bef5e3588c56132c0003bc
      */
 
     public static List<Integer> treeByLevels(Node _node) {

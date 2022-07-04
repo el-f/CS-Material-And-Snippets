@@ -1,4 +1,4 @@
-# my solution for this kata: 51e056fe544cf36c410000fb
+#  51e056fe544cf36c410000fb
 
 from collections import Counter
 import re

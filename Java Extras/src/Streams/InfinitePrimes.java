@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 import java.util.BitSet;
 
-// my solution for this kata: 59122604e5bc240817000016
+//  59122604e5bc240817000016
 public class InfinitePrimes {
 
     static BitSet sieve;

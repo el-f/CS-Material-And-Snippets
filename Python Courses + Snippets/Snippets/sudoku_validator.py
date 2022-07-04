@@ -1,7 +1,7 @@
 import math
 
 
-# solution for this kata: 540afbe2dc9f615d5e000425
+#  540afbe2dc9f615d5e000425
 
 class Sudoku(object):
     def __init__(self, data):

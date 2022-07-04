@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.apache.commons.math3.primes.Primes.primeFactors;
 
-// my solution for this kata: 54d496788776e49e6b00052f
+//  54d496788776e49e6b00052f
 public class SumOfFactorMultipliers {
 
     public static String sumOSumOfFactorMultipliers(int[] arr) {

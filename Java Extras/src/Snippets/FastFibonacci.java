@@ -5,7 +5,7 @@ import java.util.*;
 
 import static java.math.BigInteger.*;
 
-// my solution for this kata: 53d40c1e2f13e331fc000c26
+//  53d40c1e2f13e331fc000c26
 public class FastFibonacci {
 
     static final BigInteger TWO = valueOf(2);

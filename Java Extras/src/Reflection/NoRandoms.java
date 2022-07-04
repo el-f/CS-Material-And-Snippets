@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Random;
 
-// my solution for this kata: 54bd79a7956834e767001357
+//  54bd79a7956834e767001357
 
 public class NoRandoms {
 

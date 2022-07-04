@@ -3,7 +3,7 @@ package snippets
 import kotlin.collections.ArrayList
 import kotlin.test.assertEquals
 
-// solution for this kata: 55e7280b40e1c4a06d0000aa
+//  55e7280b40e1c4a06d0000aa
 // (best possible sum of <k> elements under constraint <t>)
 
 private var sum = 0

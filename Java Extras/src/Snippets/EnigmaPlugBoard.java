@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// my solution for this kata: 5523b97ac8f5025c45000900
+//  5523b97ac8f5025c45000900
 
 public class EnigmaPlugBoard {
 
