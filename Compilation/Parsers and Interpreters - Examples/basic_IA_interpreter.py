@@ -52,7 +52,7 @@ def split_list(lst, item):
 
 class InterpreterV2:
     operators = OrderedDict(
-        {'*': operator.mul, '/': operator.div, '%': operator.mod,
+        {'*': operator.mul, '/': operator.truediv, '%': operator.mod,
          '+': operator.add, '-': operator.sub}
     )
 
@@ -108,3 +108,105 @@ class InterpreterV2:
     @staticmethod
     def is_var(token):
         return bool(re.match(r'^\w+$', token))
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# ****************************
+# ********* Tests ************
+# ****************************
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+def basic_ia_interpreter_tests(subject_interpreter):
+    def assert_equals(actual, expected, message="FAILED"):
+        if actual != expected:
+            print(message)
+            print("expected:", expected)
+            print("actual:", actual)
+            exit(1)
+
+    def describe(message):
+        print(message)
+
+    def it(message):
+        print(message)
+
+    def expect_error(message, func):
+        try:
+            func()
+        except Exception:
+            return
+        print(message)
+        exit(1)
+
+    describe("Basic Expression Evaluation")
+    interpreter = subject_interpreter()
+
+    it("Should handle empty input")
+    assert_equals(interpreter.input(""), "", "input: ''")
+    assert_equals(interpreter.input(" "), "", "input: ' '")
+
+    it("Should reject invalid input")
+    expect_error("input: '1 2'", lambda: interpreter.input("1 2"))
+    expect_error("input: '1two'", lambda: interpreter.input("1two"))
+
+    it("Should handle addition")
+    assert_equals(interpreter.input("1 + 1"), 2, "input: '1 + 1'")
+    assert_equals(interpreter.input("2+2"), 4, "input: '2+2'")
+
+    it("Should handle subtraction")
+    assert_equals(interpreter.input("2 - 1"), 1, "input: '2 - 1'")
+    assert_equals(interpreter.input("4-6"), -2, "input: '4-6'")
+
+    it("Should handle multiplication")
+    assert_equals(interpreter.input("2 * 3"), 6, "input: '2 * 3'")
+
+    it("Should handle division")
+    assert_equals(interpreter.input("8 / 4"), 2, "input: '8 / 4'")
+
+    it("Should handle modulo")
+    assert_equals(interpreter.input("7 % 4"), 3), "input: '7 % 4'"
+
+    describe("Complex Expression Evaluation")
+    interpreter = Interpreter()
+
+    it("Should handle multiple operations")
+    assert_equals(interpreter.input("4 + 2 * 3"), 10, "input: '4 + 2 * 3'")
+    assert_equals(interpreter.input("4 / 2 * 3"), 6, "input: '4 / 2 * 3'")
+    assert_equals(interpreter.input("7 % 2 * 8"), 8, "input: '7 % 2 * 8'")
+
+    it("Should handle parentheses")
+    assert_equals(interpreter.input("(4 + 2) * 3"), 18, "input: '(4 + 2) * 3'")
+    assert_equals(interpreter.input("(7 + 3) / (2 * 2 + 1)"), 2, "input: '(7 + 3) / (2 * 2 + 1)'")
+
+    it("Should handle nested parentheses")
+    assert_equals(interpreter.input("(8 - (4 + 2)) * 3"), 6, "input: '(8 - (4 + 2)) * 3'")
+    assert_equals(interpreter.input("(10 / (8 - (4 + 2))) * 3"), 15, "input: '(10 / (8 - (4 + 2))) * 3'")
+
+    describe("Variables")
+    interpreter = Interpreter()
+
+    it("Should assign a constant to a variable")
+    assert_equals(interpreter.input("x = 7"), 7, "input: 'x = 7'")
+
+    it("Should read the value of a variable")
+    assert_equals(interpreter.input("x"), 7, "input: 'x'")
+
+    it("Should handle variables in expressions")
+    assert_equals(interpreter.input("x + 3"), 10, "input: 'x + 3'")
+
+    it("Should throw an error when variables don't exist")
+    expect_error("input: 'y'", lambda: interpreter.input("y"))
+
+    it("Should continue to function after an error is thrown")
+    assert_equals(interpreter.input("y = x + 5"), 12, "input: 'y = x + 5'")
+    assert_equals(interpreter.input("y"), 12, "input: 'y'")
+
+
+if __name__ == '__main__':
+    basic_ia_interpreter_tests(Interpreter)
+    print("\nInterpreter: ALL TESTS PASSED")
+    print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+    basic_ia_interpreter_tests(InterpreterV2)
+    print("\nInterpreterV2: ALL TESTS PASSED")

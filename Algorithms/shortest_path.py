@@ -20,6 +20,7 @@ def shortest_path_weighted(grid):
 
 
 # each cell is a node, and each edge is a weight of 1
+# avoid the obstacles
 def shortest_path(grid):
     grid = grid.split("\n")
     n = len(grid)
@@ -38,6 +39,7 @@ def shortest_path(grid):
 
 
 # each cell is a node, and each edge is a weight of 0
+# avoid the obstacles
 def is_there_a_path(grid):
     grid = grid.split("\n")
     w, h = len(grid[0]) - 1, len(grid) - 1
@@ -92,7 +94,8 @@ def shortest_path_with_obstacles(grid):
                 parent[(i, j)] = (y, x)
 
 
-dirs = {(1, 0): "up", (-1, 0): "down", (0, 1): "left", (0, -1): "right"}  # reversed for path reconstruction optimization.
+dirs = {(1, 0): "up", (-1, 0): "down", (0, 1): "left",
+        (0, -1): "right"}  # reversed for path reconstruction optimization.
 
 
 # shortest path by node weight, return a list of directions
@@ -142,3 +145,303 @@ def best_path(grid):
                 visited[(i, j)] = (new_cost, dist + 1)
                 hq.heappush(queue, (new_cost, dist + 1, i, j))
                 parent[(i, j)] = (y, x)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# ****************************
+# ********* Tests ************
+# ****************************
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+def assert_equals(actual, expected, message="FAILED"):
+    if actual != expected:
+        print(message)
+        print("expected:", expected)
+        print("actual:", actual)
+        exit(1)
+
+
+def expect(predicate, message):
+    if not predicate:
+        print(message)
+        exit(1)
+
+
+def describe(message):
+    print(message)
+
+
+def it(message):
+    print(message)
+
+
+def best_path_tests():
+    describe('Fixed Tests')
+
+    def verify(river, path, expected_depth, expected_length):
+        assert_equals(path[0][1], 0, "Path does not start on left bank.")
+        assert_equals(path[-1][1], len(river[0]) - 1, "Path does not end on right bank.")
+        expect(
+            all(abs(r - path[j][0]) <= 1 and abs(c - path[j][1]) <= 1 for j, (r, c) in enumerate(path[1:])),
+            "Path is not continuous."
+        )
+        expect(
+            max(river[r][c] for (r, c) in path) <= expected_depth,
+            "Path is deeper than expected. Expected depth is %d." % expected_depth
+        )
+        expect(len(path) <= expected_length, "Path is longer than expected. Expected length is %d." % expected_length)
+        print("~PASSED\n")
+
+    it('Single cell')
+    river = [[3]]
+    path = best_path(river)
+    verify(river, path, 3, 1)
+
+    it('Single column')
+    river = [
+        [8],
+        [8],
+        [8],
+        [8],
+        [8],
+        [8],
+        [5],
+        [8],
+        [8],
+        [8],
+        [8],
+        [8]]
+    path = best_path(river)
+    verify(river, path, 5, 1)
+
+    it('Two columns')
+    river = [
+        [1, 8],
+        [8, 8],
+        [8, 8],
+        [8, 1],
+        [8, 8],
+        [8, 8],
+        [1, 8],
+        [8, 1],
+        [8, 8]]
+    path = best_path(river)
+    verify(river, path, 1, 2)
+
+    it('Three columns')
+    river = [
+        [1, 8, 8],
+        [8, 8, 8],
+        [8, 8, 1],
+        [8, 8, 1],
+        [8, 1, 8],
+        [8, 8, 1],
+        [1, 1, 8],
+        [8, 8, 1],
+        [8, 8, 8]]
+    path = best_path(river)
+    verify(river, path, 1, 3)
+
+    it('Three columns, long path')
+    river = [
+        [1, 8, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 8, 1],
+        [8, 1, 8],
+        [8, 1, 1],
+        [8, 8, 8]]
+    path = best_path(river)
+    verify(river, path, 1, 6)
+
+    it('Three columns multiple paths')
+    river = [
+        [1, 8, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 1, 8],
+        [8, 8, 1],
+        [8, 1, 8],
+        [8, 1, 1],
+        [1, 8, 8]]
+    path = best_path(river)
+    verify(river, path, 1, 3)
+
+    it('Four Columns')
+    river = [
+        [8, 8, 8, 8],
+        [8, 8, 8, 8],
+        [8, 8, 8, 8],
+        [1, 1, 1, 8],
+        [1, 8, 1, 8],
+        [1, 8, 1, 8],
+        [1, 8, 1, 8],
+        [8, 8, 1, 8],
+        [8, 8, 1, 1]]
+    path = best_path(river)
+    verify(river, path, 1, 7)
+
+    it('Four Columns, flat river bed')
+    river = [
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1]]
+    path = best_path(river)
+    verify(river, path, 1, 4)
+
+    it('Ten columns with loop')
+    river = [
+        [8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+        [8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+        [8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+        [8, 8, 1, 1, 1, 1, 1, 1, 1, 1],
+        [8, 8, 1, 8, 8, 8, 8, 8, 8, 8],
+        [8, 8, 1, 1, 1, 8, 8, 8, 8, 8],
+        [8, 8, 8, 8, 1, 8, 8, 8, 8, 8],
+        [8, 8, 8, 8, 1, 8, 8, 8, 8, 8],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 8],
+        [8, 8, 1, 8, 8, 8, 8, 8, 1, 8],
+        [8, 8, 1, 8, 8, 8, 8, 8, 1, 8],
+        [8, 8, 1, 1, 1, 1, 1, 1, 1, 8]]
+
+    path = best_path(river)
+    verify(river, path, 1, 15)
+
+    it('Ten columns with multiple disjoint minimal depth paths')
+    river = [
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [7, 5, 5, 5, 7, 7, 7, 7, 7, 7],
+        [7, 5, 7, 5, 7, 7, 7, 7, 7, 7],
+        [7, 5, 7, 5, 7, 7, 7, 7, 7, 7],
+        [7, 5, 7, 5, 7, 7, 7, 7, 7, 7],
+        [5, 5, 7, 5, 7, 7, 7, 7, 7, 7],
+        [7, 7, 7, 5, 5, 5, 5, 5, 5, 5],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        [5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        [7, 7, 7, 7, 7, 7, 7, 7, 7, 7]]
+
+    path = best_path(river)
+    verify(river, path, 5, 10)
+
+
+def shortest_path_tests():
+    describe("\nFixed tests:")
+    a = "\n".join(
+        [
+            ".W...",
+            ".W...",
+            ".W.W.",
+            "...W.",
+            "...W."]
+    )
+    assert_equals(shortest_path(a[:]), 12)
+    print("PASSED")
+    a = "\n".join(
+        [
+            ".W...",
+            ".W...",
+            ".W.W.",
+            "...WW",
+            "...W."]
+    )
+    assert_equals(shortest_path(a[:]), False)
+    print("PASSED")
+    a = "\n".join(
+        [
+            "..W",
+            ".W.",
+            "W.."]
+    )
+    assert_equals(shortest_path(a[:]), False)
+    print("PASSED")
+    a = "\n".join(
+        [
+            ".WWWW",
+            ".W...",
+            ".W.W.",
+            ".W.W.",
+            "...W."]
+    )
+    assert_equals(shortest_path(a[:]), 14)
+    print("PASSED")
+    a = "\n".join(
+        [
+            ".W...",
+            "W....",
+            ".....",
+            ".....",
+            "....."]
+    )
+    assert_equals(shortest_path(a[:]), False)
+    print("PASSED")
+    a = "\n".join(
+        [
+            ".W",
+            "W."]
+    )
+    assert_equals(shortest_path(a[:]), False)
+    print("PASSED")
+
+    describe("\nRandom tests:")
+
+    import heapq
+    from random import randint as R, sample as S
+
+    def reference(s):
+        s = [list(x) for x in s.split()]
+        f = len(s) - 1
+        q = [(0, 0, (0, 0))]
+        while q:
+            _, n, (x, y) = heapq.heappop(q)
+            if x == y == f: return n
+            n += 1
+            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                X, Y = x + dx, y + dy
+                if 0 <= X <= f and 0 <= Y <= f and s[X][Y] == ".":
+                    s[X][Y] = "W"
+                    heapq.heappush(q, (n + f - X + f - Y, n, (X, Y)))
+        return 0
+
+    count = 0
+    for i in range(10, 50):
+        for _ in range(10):
+            total = R(i ** 2 // 5, i ** 2 // 3)
+            locations = set(S(range(0, i ** 2 - 2), total))
+            field = []
+            line = "."
+            for j in range(i ** 2 - 2):
+                if len(line) < i:
+                    line += "W" if j in locations else "."
+                else:
+                    field.append(line)
+                    line = "W" if j in locations else "."
+            field.append(line + "{}".format("." if i > 1 else ""))
+            field = "\n".join(field)
+            assert_equals(shortest_path(field), reference(field))
+            count += 1
+
+    print("PASSED ALL {} RANDOM TESTS".format(count))
+
+
+if __name__ == '__main__':
+    print("Best path tests:")
+    best_path_tests()
+
+    print("~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~")
+    print("Shortest path tests:")
+    shortest_path_tests()
