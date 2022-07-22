@@ -31,6 +31,15 @@ public class GroupBy {
         return students.collect(Collectors.groupingBy(Student::getDepartment, Collectors.groupingBy(Student::getGender, Collectors.counting())));
     }
 
+    public static Map<String, Double> getPercentageOfPassingStudentsForEachDepartment(Stream<Student> students) {
+        Collection<Student> studentsAct = students.collect(Collectors.toList());
+
+        Map<String, Long> numberOfStudentsByDepartment = getNumberOfStudentsByDepartment(studentsAct.stream());
+        Map<String, Long> numberOfPassingStudentsByDepartment = getNumberOfStudentsByDepartment(studentsAct.stream().filter(s -> s.getGrade() >= Student.PASSING_GRADE));
+        return numberOfPassingStudentsByDepartment.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> ((double) e.getValue() / numberOfStudentsByDepartment.getOrDefault(e.getKey(), 0L)) * 100.0));
+    }
+
 }
 
 class GroupByTests {
@@ -161,9 +170,17 @@ class GroupByTests {
                                                Collectors.groupingBy(Student::getGender, Collectors.counting())));
 
         assertEquals(expected, actual);
-
     }
 
+    @Test
+    public void basicTestGetTheNumberOfPassingStudentsByDepartment() {
+        Map<String, Double> actual = getPercentageOfPassingStudentsForEachDepartment(Arrays.stream(students));
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("CS", 50.0);
+        expected.put("Philology", 2.0 / 3.0 * 100);
+
+        assertEquals(expected, actual);
+    }
 
 }
 
