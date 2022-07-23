@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.*;
 import java.util.stream.*;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static Streams.GroupBy.*;
@@ -43,12 +43,10 @@ public class GroupBy {
 }
 
 class GroupByTests {
-    private Student[] students;
-    private Student[] randomStudents;
+    private static Student[] students;
 
-    @BeforeEach
-    public void setUp() {
-        //Generate a basic array of students:
+    @BeforeAll
+    static void setUp() {
         Student galina = new Student("Galina", 95, "Philology", Student.Gender.FEMALE);
         Student anton = new Student("Anton", 90, "CS", Student.Gender.MALE);
         Student jack = new Student("Jack", 82, "Philology", Student.Gender.MALE);
@@ -56,27 +54,6 @@ class GroupByTests {
         Student jane = new Student("Jane", 65, "CS", Student.Gender.FEMALE);
 
         students = new Student[]{ galina, anton, jack, mike, jane };
-
-        //Generate a random array of students:
-        Student.Gender[] genders = Student.Gender.values();
-
-        int randomLength = (int) (Math.random() * 100 + 1);
-        randomStudents = new Student[randomLength];
-
-        for (int i = 0; i < randomStudents.length; i++) {
-
-            int randomNameNum = (int) (Math.random() * 1000);
-            int randomDepartmentNum = (int) (Math.random() * 10);
-            int randomGenderIndex = (int) (Math.random() * 2);
-
-            String name = "Student" + randomNameNum;
-            double grade = Math.random() * (100 - 40) + 40;
-            String department = "Department" + randomDepartmentNum;
-            Student.Gender gender = genders[randomGenderIndex];
-
-            randomStudents[i] = new Student(name, grade, department, gender);
-
-        }
     }
 
     @Test
@@ -90,34 +67,11 @@ class GroupByTests {
     }
 
     @Test
-    public void randomTestGetAverageGradeByDepartment() {
-        Map<String, Double> expected = Stream.of(randomStudents)
-                .collect(Collectors.groupingBy(Student::getDepartment,
-                                               Collectors.averagingDouble(Student::getGrade)));
-
-
-        Map<String, Double> actual = getAverageGradeByDepartment(Arrays.stream(randomStudents));
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void basicTestGetNumberOfStudentsByDepartment() {
         Map<String, Long> actual = getNumberOfStudentsByDepartment(Arrays.stream(students));
         Map<String, Long> expected = new HashMap<>();
         expected.put("CS", 2L);
         expected.put("Philology", 3L);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void randomTestGetNumberOfStudentsByDepartment() {
-        Map<String, Long> expected = Arrays.stream(randomStudents)
-                .collect(Collectors.groupingBy((Student::getDepartment),
-                                               Collectors.counting()));
-
-        Map<String, Long> actual = getNumberOfStudentsByDepartment(Arrays.stream(randomStudents));
 
         assertEquals(expected, actual);
     }
@@ -135,18 +89,6 @@ class GroupByTests {
     }
 
     @Test
-    public void randomTestGetStudentNamesByDepartment() {
-        Map<String, List<String>> expected = Arrays.stream(randomStudents)
-                .collect(Collectors.groupingBy(Student::getDepartment,
-                                               Collectors.mapping(Student::getName,
-                                                                  Collectors.toList())));
-
-        Map<String, List<String>> actual = getStudentNamesByDepartment(Arrays.stream(randomStudents));
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void basicTestGetTheNumberOfStudentsByGenderForEachDepartment() {
         Map<String, Map<Student.Gender, Long>> actual = getTheNumberOfStudentsByGenderForEachDepartment(Arrays.stream(students));
         Map<String, Map<Student.Gender, Long>> expected = new HashMap<>();
@@ -158,16 +100,6 @@ class GroupByTests {
         map2.put(Student.Gender.FEMALE, 1L);
         expected.put("CS", map1);
         expected.put("Philology", map2);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void randomTestGetTheNumberOfStudentsByGenderForEachDepartment() {
-        Map<String, Map<Student.Gender, Long>> actual = getTheNumberOfStudentsByGenderForEachDepartment(Arrays.stream(randomStudents));
-        Map<String, Map<Student.Gender, Long>> expected = Arrays.stream(randomStudents)
-                .collect(Collectors.groupingBy(Student::getDepartment,
-                                               Collectors.groupingBy(Student::getGender, Collectors.counting())));
 
         assertEquals(expected, actual);
     }
