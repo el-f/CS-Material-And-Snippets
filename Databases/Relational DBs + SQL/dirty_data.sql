@@ -48,7 +48,7 @@ group by
     c.credit_limit
 order by
     c.first_name,
-    c.last_name
+    c.last_name;
 
 
 -- #############################################################################
