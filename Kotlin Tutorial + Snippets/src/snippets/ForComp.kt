@@ -24,7 +24,7 @@ suspend fun <T : Any, U> SequenceScope<Optional<T>>.bind(value: Optional<U>): U 
 }
 
 
-
+const val THIS_CONST_SHOULD_EQUAL_THE_LINE_IT_IS_ON = 27L
 class SimpleForComprehensionTest {
 
     @Test
@@ -118,12 +118,15 @@ class SimpleForComprehensionTest {
     
     @Test  
     fun dontUseTryAndCatch() {
-        Files.lines(File("src/snippets/ForComp.kt").toPath()).limit(30).forEach { s ->
-            val str = s.lowercase(Locale.getDefault())
-            assertFalse("\\u" in str)
-            assertFalse("try" in str)
-            assertFalse("catch" in str)
-            assertFalse("exception" in str)
-        }
+        Files
+            .lines(File("src/snippets/ForComp.kt").toPath())
+            .limit(THIS_CONST_SHOULD_EQUAL_THE_LINE_IT_IS_ON)
+            .forEach {
+                val str = it.lowercase(Locale.getDefault())
+                assertFalse("\\u" in str)
+                assertFalse("try" in str)
+                assertFalse("catch" in str)
+                assertFalse("exception" in str)
+            }
     }
 }
