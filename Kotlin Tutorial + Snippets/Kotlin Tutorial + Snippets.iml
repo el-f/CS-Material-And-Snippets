@@ -13,5 +13,6 @@
     <orderEntry type="library" name="org.projectlombok:lombok:1.18.20" level="application" />
     <orderEntry type="library" name="junit.jupiter.engine" level="application" />
     <orderEntry type="module" module-name="Java Extras" />
+    <orderEntry type="library" name="junit" level="application" />
   </component>
 </module>
