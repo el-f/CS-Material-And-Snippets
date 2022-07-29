@@ -28,5 +28,5 @@ def components(grid):
                 set_id += 1
     
 
-    lengths = Counter(sorted([ccs[s] // 2 for s in ccs if ccs[s]], reverse=True))
+    lengths = Counter(sorted([ccs[s] // 2 for s in ccs], reverse=True))
     return [(l, lengths[l]) for l in lengths]
