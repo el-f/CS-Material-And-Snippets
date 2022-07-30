@@ -29,18 +29,12 @@ class VigenereCipher(object):
 # #############################################################################
 
 def get_key_length(ciphertext, mx_key_len):
-    data = []
+    mods = [0] * (mx_key_len + 1)
     
     for mod in range(1, mx_key_len):
-        matches = 0
-        for j in range(len(ciphertext) - mod):
-            if ciphertext[j] == ciphertext[j + mod]:
-                matches += 1
-        data.append((matches, mod))
+        mods[mod] = sum(ciphertext[j] == ciphertext[j + mod] for j in range(len(ciphertext) - mod))
     
-    data.sort(reverse=True, key=lambda x: x[0])
-    most_frequest_mods = Counter([t[1] for t in data[:max(3, len(data) // 3)]])
-    return most_frequest_mods.most_common(1)[0][0]
+    return max(enumerate(mods), key=lambda x: x[1])[0] 
 
 
 # #############################################################################
