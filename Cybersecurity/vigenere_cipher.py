@@ -1,6 +1,7 @@
 # #############################################################################
 # ############################# ENCODE / DECODE ###############################
 # #############################################################################
+
 from collections import Counter
 from string import ascii_uppercase
 from itertools import cycle
@@ -21,6 +22,25 @@ class VigenereCipher(object):
 
     def decode(self, _str):
         return self.cipher(-1, _str)
+    
+
+# #############################################################################
+# ############################# FIND KEY LENGTH ###############################
+# #############################################################################
+
+def get_key_length(ciphertext, mx_key_len):
+    data = []
+    
+    for mod in range(1, mx_key_len):
+        matches = 0
+        for j in range(len(ciphertext) - mod):
+            if ciphertext[j] == ciphertext[j + mod]:
+                matches += 1
+        data.append((matches, mod))
+    
+    data.sort(reverse=True, key=lambda x: x[0])
+    most_frequest_mods = Counter([t[1] for t in data])
+    return most_frequest_mods.most_common(1)[0][0]
 
 
 # #############################################################################
