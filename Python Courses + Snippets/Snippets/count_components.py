@@ -23,9 +23,10 @@ def components(grid):
             if grid[y][x] == ' ' and (y, x) not in visited:
                 ccs[set_id] = 0
                 Q.append((y, x, set_id))
+                while Q:
+                    check(*Q.pop())
                 set_id += 1
-    while Q:
-        check(*Q.pop())
+    
 
-    lengths = Counter(sorted([ccs[s] // 2 for s in ccs if ccs[s]], reverse=True))
+    lengths = Counter(sorted([ccs[s] // 2 for s in ccs], reverse=True))
     return [(l, lengths[l]) for l in lengths]
