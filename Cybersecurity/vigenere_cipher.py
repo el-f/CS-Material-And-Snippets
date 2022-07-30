@@ -39,7 +39,7 @@ def get_key_length(ciphertext, mx_key_len):
         data.append((matches, mod))
     
     data.sort(reverse=True, key=lambda x: x[0])
-    most_frequest_mods = Counter([t[1] for t in data])
+    most_frequest_mods = Counter([t[1] for t in data[:max(3, len(data) // 3)]])
     return most_frequest_mods.most_common(1)[0][0]
 
 
