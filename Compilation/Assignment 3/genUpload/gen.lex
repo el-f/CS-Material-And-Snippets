@@ -32,20 +32,20 @@
 [a-zA-Z_]+      { strcpy(yylval.name, yytext); return ID; }
 
 
-"+"             { yylval.op = PLUS; return ADDOP;}
-"-"             { yylval.op = MINUS; return ADDOP;}
-"++"            { yylval.op = PLUS; return INC;}
-"--"            { yylval.op = MINUS; return INC;}
+"+"             { yylval.op = PLUS;     return ADDOP; }
+"-"             { yylval.op = MINUS;    return ADDOP; }
+"++"            { yylval.op = PLUS;     return INC;   }
+"--"            { yylval.op = MINUS;    return INC;   }
 
-"*"             { yylval.op = MUL; return MULOP; }
-"/"             { yylval.op = DIV; return MULOP;}
+"*"             { yylval.op = MUL;      return MULOP; }
+"/"             { yylval.op = DIV;      return MULOP; }
 
-"<"             { yylval.relop = "<"; return RELOP; }
-">"             { yylval.relop = ">"; return RELOP; }
-"<="            { yylval.relop = "<="; return RELOP; }
-">="            { yylval.relop = ">="; return RELOP; }
-"=="            { yylval.relop = "=="; return RELOP; }
-"!="            { yylval.relop = "!="; return RELOP; }
+"<"             { yylval.relop = "<";   return RELOP; }
+">"             { yylval.relop = ">";   return RELOP; }
+"<="            { yylval.relop = "<=";  return RELOP; }
+">="            { yylval.relop = ">=";  return RELOP; }
+"=="            { yylval.relop = "==";  return RELOP; }
+"!="            { yylval.relop = "!=";  return RELOP; }
 
 [=;,(){}:]      { return yytext[0]; }
 
