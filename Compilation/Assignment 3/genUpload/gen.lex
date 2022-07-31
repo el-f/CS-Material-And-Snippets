@@ -40,12 +40,12 @@
 "*"             { yylval.op = MUL; return MULOP; }
 "/"             { yylval.op = DIV; return MULOP;}
 
-"<"             {  yylval.relop = "<"; return RELOP; }
-">"             {  yylval.relop = ">"; return RELOP; }
-"<="            {  yylval.relop = "<="; return RELOP; }
-">="            {  yylval.relop = ">="; return RELOP; }
-"=="            {  yylval.relop = "=="; return RELOP; }
-"!="            {  yylval.relop = "!="; return RELOP; }
+"<"             { yylval.relop = "<"; return RELOP; }
+">"             { yylval.relop = ">"; return RELOP; }
+"<="            { yylval.relop = "<="; return RELOP; }
+">="            { yylval.relop = ">="; return RELOP; }
+"=="            { yylval.relop = "=="; return RELOP; }
+"!="            { yylval.relop = "!="; return RELOP; }
 
 [=;,(){}:]      { return yytext[0]; }
 
