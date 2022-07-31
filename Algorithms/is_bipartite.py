@@ -17,6 +17,32 @@ def is_bipartite(db: dict) -> bool:
         stk.extend(lst)
     return True
 
+# ###############################################
+# ####### Ver 2 ( more readble version ) ########
+# ###############################################
+from collections import deque, defaultdict
+
+def is_bipartite_v2(database: dict) -> bool:
+    color = defaultdict(int)
+    def is_subgraph_bipartite(src):
+        queue = deque([src])
+        color[src] = 1
+        while queue:
+            node = queue.pop()
+            for neighbor in database[node]:
+                if not color[neighbor]:
+                    color[neighbor] = -color[node]
+                    queue.appendleft(neighbor)
+                elif color[neighbor] == color[node]:
+                    return False
+        return True
+    for node in database:
+        if not color[node]:
+            if not is_subgraph_bipartite(node):
+                return False
+    return True
+
+
 
 if __name__ == '__main__':
     connected_tests = [({0: [1, 2], 1: [0], 2: [0], 3: []}, True),
