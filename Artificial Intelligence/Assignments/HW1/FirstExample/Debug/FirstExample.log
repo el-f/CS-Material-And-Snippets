@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (FirstExample.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+C:\Projects\CS Material And Snippets\Artificial Intelligence\Assignments\HW1\FirstExample\main.cpp(69,30): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  FirstExample.vcxproj -> C:\Projects\CS Material And Snippets\Artificial Intelligence\Assignments\HW1\Debug\Main.exe
