@@ -27,9 +27,8 @@ void get_matches_for_picture(Picture *pic, Object *objects, int objs_size, doubl
     }
 
     for (int obj_i = 0; obj_i < objs_size && pic->obj_id == -1; obj_i++) {
-#pragma omp parallel for num_threads(diffs[obj_i])
+#pragma omp parallel for num_threads(diffs[obj_i]) collapse(2)
         for (int row = 0; row < diffs[obj_i]; row++) {
-#pragma omp parallel for num_threads(diffs[obj_i])
             for (int col = 0; col < diffs[obj_i]; col++) {
                 if (pic->obj_id != -1) continue;
                 if (matching(pic, objects + obj_i, row, col, matching_val) < matching_val) {
