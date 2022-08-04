@@ -177,21 +177,21 @@ int main(int argc, char *argv[]) {
     	                   MPI_INT, 0, MPI_COMM_WORLD); // send matches details to master
     } else { // master proc
     	// receive match details from each process and updated the picture array according to the process rank
-		MPI_Gather(matches_info_for_proc, 4 * num_of_pics_per_process, MPI_INT, matches_info_for_all_pics, 4 * num_of_pics_per_process,
-				   MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Gather(matches_info_for_proc, 4 * num_of_pics_per_process, MPI_INT, matches_info_for_all_pics, 4 * num_of_pics_per_process,
+			   MPI_INT, 0, MPI_COMM_WORLD);
 
-		double t2 = MPI_Wtime();
-		printf("\n~FINISHED | time elapsed = %1.9fs\n", t2 - t1);
+	double t2 = MPI_Wtime();
+	printf("\n~FINISHED | time elapsed = %1.9fs\n", t2 - t1);
 
-		// write each final picture info to the output file
-		for (int pic_i = 0; pic_i < num_of_pics; pic_i++) {
-			write_to_file(
-					matches_info_for_all_pics[pic_i * 4],		// pic id
-					matches_info_for_all_pics[pic_i * 4 + 1],	// obj id	 (-1 if none)
-					matches_info_for_all_pics[pic_i * 4 + 2],	// match row (-1 if none)
-					matches_info_for_all_pics[pic_i * 4 + 3]	// match col (-1 if none)
-			);
-		}
+	// write each final picture info to the output file
+	for (int pic_i = 0; pic_i < num_of_pics; pic_i++) {
+		write_to_file(
+				matches_info_for_all_pics[pic_i * 4],		// pic id
+				matches_info_for_all_pics[pic_i * 4 + 1],	// obj id	 (-1 if none)
+				matches_info_for_all_pics[pic_i * 4 + 2],	// match row (-1 if none)
+				matches_info_for_all_pics[pic_i * 4 + 3]	// match col (-1 if none)
+		);
+	}
     }
 
     if (my_rank == 0) puts("freeing...");
