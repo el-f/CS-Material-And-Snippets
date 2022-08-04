@@ -1,0 +1,42 @@
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
+Picture 0: found Object 1 in Position(100,200)
+Picture 1: No Objects were found
+Picture 2: found Object 0 in Position(800,800)
