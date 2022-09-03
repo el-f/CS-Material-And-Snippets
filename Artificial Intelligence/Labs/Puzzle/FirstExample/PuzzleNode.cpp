@@ -64,7 +64,10 @@ void PuzzleNode::Draw()
 	for (i = 0; i<BSZ; i++)
 		for (j = 0; j < BSZ; j++)
 		{
-			glColor3d(0.8, 0.8, 0.8);
+			if (1 + i * BSZ + j == board[i][j])
+				glColor3d(0.8, 1, 0.8);
+			else
+				glColor3d(0.8, 0.8, 0.8);
 			glBegin(GL_POLYGON);
 			glVertex2d(j, i);
 			glVertex2d(j+1, i);

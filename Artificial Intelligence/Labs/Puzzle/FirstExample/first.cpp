@@ -60,6 +60,14 @@ void RestorePath(PuzzleNode* pnb)
 		pnb = pnb->getParent();
 	}
 	solutionIsReady = true;
+	// print solution
+	cout << "click these coords for the solution:" << endl;
+	for (auto it = solution.rbegin(); it != solution.rend(); it++)
+    {
+		cout << "(" << (*it)->getEmptyRow() << ", " << (*it)->getEmptyCol() << ")";
+		if (it + 1 != solution.rend()) cout << " -> ";
+    }
+    cout << endl;
 }
 
 bool CheckNeighbor(PuzzleNode* pCurrent, int direction, priority_queue <PuzzleNode*, vector<PuzzleNode*>, ComparePuzzleNodes> &pq,
