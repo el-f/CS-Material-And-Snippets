@@ -99,7 +99,7 @@ void init_maze() {
     pq.push(S);
     maze[MAZE_H / 2][MAZE_W / 2] = START;
 
-    E = new cell(rand() % (MAZE_H - 1), rand() % (MAZE_W - 1));
+    E = new cell(max(1, rand() % (MAZE_H - 1)), max(1, rand() % (MAZE_W - 1)));
     maze[E->r][E->c] = TARGET;
 }
 

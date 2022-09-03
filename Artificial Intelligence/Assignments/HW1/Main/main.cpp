@@ -36,7 +36,7 @@ typedef pair<int, int> cell;
 queue<cell *> grays_forward;
 queue<cell *> grays_backward;
 
-set <cell> directions = {
+set<cell> directions = {
         make_pair(0, 1),
         make_pair(0, -1),
         make_pair(1, 0),
@@ -93,7 +93,7 @@ void InitMaze() {
     grays_forward.push(S);
     maze[MAZE_H / 2][MAZE_W / 2] = START;
 
-    auto E = new cell(rand() % (MAZE_H - 1), rand() % (MAZE_W - 1));
+    auto E = new cell(max(1, rand() % (MAZE_H - 1)), max(1, rand() % (MAZE_W - 1)));
     grays_backward.push(E);
     maze[E->first][E->second] = TARGET;
 }
