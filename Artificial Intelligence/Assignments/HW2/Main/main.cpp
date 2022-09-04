@@ -27,6 +27,8 @@ const int PATH = 6;
 const int MAZE_H = 100, MAZE_W = 100; // maze size
 int maze[MAZE_H][MAZE_W] = {0};
 
+clock_t start_time;
+
 set<pair<int, int>> directions = {
         make_pair(0, 1),
         make_pair(0, -1),
@@ -168,6 +170,7 @@ void check_neighbor(int row, int col, cell *current) {
         search_is_running = false;
         int path_len = restore_path(neighbour);
         cout << "Path length: " << path_len << endl;
+        cout << "Time: " << (clock() - start_time) / (double) CLOCKS_PER_SEC << " seconds" << endl;
     } else {
         pq.push(neighbour);
         maze[row][col] = FRONTIER;
@@ -181,7 +184,7 @@ void search_iteration() {
         return;
     }
 
-    cell* frontier = pq.top();
+    cell *frontier = pq.top();
     pq.pop();
 
     int r = frontier->r, c = frontier->c;
@@ -231,9 +234,11 @@ void menu(int choice) {
         case 1: // run A*
             search_is_running = true;
             is_astar = true;
+            start_time = clock();
             break;
         case 2: // run Best First Search
             search_is_running = true;
+            start_time = clock();
             is_astar = false;
             break;
         case 3: // reset (new maze)
@@ -250,12 +255,17 @@ void menu(int choice) {
 }
 
 void key_pressed(unsigned char key, int x, int y) {
+    static clock_t pause_time;
     switch (key) {
         case ' ': // play / pause
             search_is_running ^= true;
+            if (search_is_running)
+                start_time += clock() - pause_time;
+            else
+                pause_time = clock();
             break;
         case 'r': // reset
-            reset();
+            reset(true);
             break;
         default:
             break;
