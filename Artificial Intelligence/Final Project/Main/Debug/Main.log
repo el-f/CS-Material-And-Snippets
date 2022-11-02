@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Main\main.cpp(175,23): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Main\main.cpp(177,27): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Main\main.cpp(224,30): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  Main.vcxproj -> C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Debug\Main.exe

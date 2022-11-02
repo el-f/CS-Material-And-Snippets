@@ -1,0 +1,4 @@
+C:\Users\Elazar\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4345.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/Elazar/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe -G Ninja -S "C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Main" -B "C:\Projects\CS Material And Snippets\Artificial Intelligence\Final Project\Main\cmake-build-debug"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Projects/CS Material And Snippets/Artificial Intelligence/Final Project/Main/cmake-build-debug
