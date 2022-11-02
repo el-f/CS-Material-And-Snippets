@@ -1,3 +1,0 @@
-C:/Projects/CS Material And Snippets/Artificial Intelligence/Final Project/Main/cmake-build-debug/CMakeFiles/AI.dir
-C:/Projects/CS Material And Snippets/Artificial Intelligence/Final Project/Main/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Projects/CS Material And Snippets/Artificial Intelligence/Final Project/Main/cmake-build-debug/CMakeFiles/rebuild_cache.dir
