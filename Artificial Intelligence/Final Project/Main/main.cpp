@@ -316,7 +316,7 @@ void do_pacman_iteration() {
 #ifdef USE_SMART_ESCAPE
 				true,                        	// use smart escape
 #else
-				pacman->getIsChasing(),         // is chasing the ghosts
+				ghost->getIsChasing(),         // is chasing the ghosts
 #endif
                 PACMAN,                         // target type is pacman
                 true

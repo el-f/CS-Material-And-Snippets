@@ -10,7 +10,7 @@
  * we can just run it normally to find the shortest path and then just go the opposite direction.
  * this has a HUGE performance boost, and both the ghosts AND pacman are able to win using it :)
  */
-#define USE_SMART_ESCAPE = true;
+#define USE_SMART_ESCAPE 1;
 
 constexpr unsigned int RESET_ITERATIONS = 50;
 unsigned int random_reset_iterations = -1;
