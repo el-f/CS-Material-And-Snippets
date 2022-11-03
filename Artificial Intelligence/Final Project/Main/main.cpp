@@ -278,7 +278,7 @@ void do_pacman_iteration() {
             nullptr,                        // pacman never knows where the ghosts are
             false,                          // don't paint path
 #ifdef USE_SMART_ESCAPE
-            true,                        	// use smart escape
+            true,			    // use smart escape
 #else
             pacman->getIsChasing(),         // is chasing the ghosts
 #endif
@@ -314,9 +314,9 @@ void do_pacman_iteration() {
                 new cell(pacman->r, pacman->c), // ghost knows where pacman is
                 false,                          // don't paint path
 #ifdef USE_SMART_ESCAPE
-				true,                        	// use smart escape
+		true,                        	// use smart escape
 #else
-				ghost->getIsChasing(),         // is chasing the ghosts
+		ghost->getIsChasing(),         // is chasing the ghosts
 #endif
                 PACMAN,                         // target type is pacman
                 true
