@@ -61,13 +61,15 @@ void RestorePath(PuzzleNode* pnb)
 	}
 	solutionIsReady = true;
 	// print solution
-	cout << "click these coords for the solution:" << endl;
+	cout << "coords order for the solution:" << endl;
 	for (auto it = solution.rbegin(); it != solution.rend(); it++)
     {
 		cout << "(" << (*it)->getEmptyRow() << ", " << (*it)->getEmptyCol() << ")";
 		if (it + 1 != solution.rend()) cout << " -> ";
     }
     cout << endl;
+
+	cout << "You can now click anywhere for each solution step to take place." << endl;
 }
 
 bool CheckNeighbor(PuzzleNode* pCurrent, int direction, priority_queue <PuzzleNode*, vector<PuzzleNode*>, ComparePuzzleNodes> &pq,
@@ -183,6 +185,7 @@ void idle()
 
 void menu(int choice)
 {
+	cout << "Solving..." << endl;
 	// start A* to find the solution
 	RunAStar();
 }
@@ -205,6 +208,13 @@ void mouse(int button, int state, int x, int y)
 			pn = solution.back();
 			solution.pop_back();
 		}
+		else
+		{
+			cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+			cout << "The puzzle is solved, resetting..." << endl;
+			solutionIsReady = false;
+			cout << "You may now re-play the puzzle." << endl << endl;
+		}
 	}
 
 }
@@ -222,7 +232,7 @@ void main(int argc, char* argv[])
 	glutMouseFunc(mouse);
 // add menu
 	glutCreateMenu(menu);
-	glutAddMenuEntry("Start Puzzle", 1);
+	glutAddMenuEntry("Solve Puzzle", 1);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	init();
