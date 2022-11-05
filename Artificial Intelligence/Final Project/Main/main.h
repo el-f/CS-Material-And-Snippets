@@ -1,9 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "util.h"
 #include "Entity.h"
-
+#include "limited_queue.h"
 
 /*
  * instead of running the path finding algorithm with reverse sorted priority queue to escape,
@@ -25,16 +26,22 @@ bool game_over = false;
 Entity *pacman;
 vector<Entity *> ghosts;
 vector<cell> rooms;
+map<Entity *, limited_queue<cell>> recent;
 
 unsigned int gold_coins = 0;
 unsigned long iterations = 1;
 
 struct cell_ref_comparer {
-    bool operator()(const cell &a, const cell& b) const {
+    bool operator()(const cell &a, const cell &b) const {
         return a.r == b.r ? a.c < b.c : a.r < b.r;
     }
 };
 
-int manhattan_distance(const cell& current, cell* target) {
+int manhattan_distance(const cell &current, cell *target) {
     return abs(current.r - target->r) + abs(current.c - target->c);
+}
+
+int is_in_tunnel(const cell &current) {
+    return board[current.r][current.c - 1] == WALL && board[current.r][current.c + 1] == WALL ||
+           board[current.r - 1][current.c] == WALL && board[current.r + 1][current.c] == WALL;
 }

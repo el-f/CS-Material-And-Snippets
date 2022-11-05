@@ -158,6 +158,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EscapingState.h" />
     <ClInclude Include="GLUT.H" />
+    <ClInclude Include="limited_queue.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="util.h" />

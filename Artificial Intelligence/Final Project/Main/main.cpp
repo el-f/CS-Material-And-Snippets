@@ -1,9 +1,11 @@
 #pragma warning(disable : 6386)
+
 #include "GLUT.h"
 #include "main.h"
 #include "Entity.h"
 #include "EscapingState.h"
 #include "ChasingState.h"
+#include "limited_queue.h"
 
 #include <ctime>
 #include <queue>
@@ -124,10 +126,7 @@ cell search(
                 board[current.r][current.c] = SPACE;
 
                 // if in a tunnel ( walls on both sides (L+R / U+D) have a chance of putting a coin there
-                if ((board[current.r][current.c - 1] == WALL && board[current.r][current.c + 1] == WALL ||
-                     board[current.r - 1][current.c] == WALL && board[current.r + 1][current.c] == WALL) &&
-                    rand() % 5 == 0
-                        ) {
+                if (is_in_tunnel(current) && rand() % 5 == 0) {
                     board[current.r][current.c] = COIN;
                     gold_coins++;
                 }
@@ -142,7 +141,7 @@ cell search(
     return {last_parent.r, last_parent.c};
 }
 
-cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target) {
+cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target, limited_queue<cell> recenttly_visited) {
     // if we get a direction to a target that we want to run away from, we have 3 other directions to choose from
     // we choose the one that is the furthest from the target so our order of preference is:
     // 1. go in the opposite direction of the target
@@ -151,9 +150,17 @@ cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target) {
     // to the target
     int dr = next_move_to_target.r - current.r;
     int dc = next_move_to_target.c - current.c;
+
+    auto is_good_direction = [&](cell &direction) {
+        return (direction.r >= 0 && direction.r < BOARD_H &&
+                direction.c >= 0 && direction.c < BOARD_W &&
+                board[direction.r][direction.c] != WALL &&
+                board[direction.r][direction.c] != GHOST &&
+                (is_in_tunnel(current) || !recenttly_visited.contains(direction)));
+    };
+
     cell opposite_direction = cell(current.r - dr, current.c - dc);
-    if (board[opposite_direction.r][opposite_direction.c] != WALL &&
-        board[opposite_direction.r][opposite_direction.c] != GHOST) {
+    if (is_good_direction(opposite_direction)) {
         return opposite_direction;
     }
 
@@ -162,9 +169,8 @@ cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target) {
             continue;
         }
         cell side_direction = cell(current.r + direction.first, current.c + direction.second);
-        if (board[side_direction.r][side_direction.c] != WALL &&
-            board[side_direction.r][side_direction.c] != GHOST) {
-            return {side_direction.r, side_direction.c};
+        if (is_good_direction(side_direction)) {
+            return side_direction;
         }
     }
 
@@ -204,13 +210,14 @@ void init_pacman() {
     // init entities with their starting positions and states
     board[rooms[0].r][rooms[0].c] = PACMAN;
     pacman = new Entity(rooms[0].r, rooms[0].c, new EscapingState());
+    recent[pacman] = limited_queue<cell>(4);
 
     for (int i = 1; i <= 3; i++) {
         int ghost_i_room_idx = 2 * i + rand() % 2;
         board[rooms[ghost_i_room_idx].r][rooms[ghost_i_room_idx].c] = GHOST;
         ghosts.push_back(new Entity(rooms[ghost_i_room_idx].r, rooms[ghost_i_room_idx].c, new ChasingState()));
+        recent[ghosts[i - 1]] = limited_queue<cell>(4);
     }
-
 }
 
 void init() {
@@ -260,6 +267,7 @@ void handle_pacman_ghost_collision() {
                     game_over = true;
                 }
             } else {
+                board[ghost->r][ghost->c] = GHOST;
                 cout << "Pacman was eaten by a ghost!" << endl;
                 cout << "Game over!" << endl;
                 game_over = true;
@@ -271,6 +279,7 @@ void handle_pacman_ghost_collision() {
 
 void do_pacman_iteration() {
     auto pacman_location = cell(pacman->r, pacman->c);
+    recent[pacman].push(pacman_location);
 
     // get next move for pacman depending on his state
     cell pacman_next_move = search(
@@ -278,7 +287,7 @@ void do_pacman_iteration() {
             nullptr,                        // pacman never knows where the ghosts are
             false,                          // don't paint path
 #ifdef USE_SMART_ESCAPE
-            true,			    // use smart escape
+            true,                // use smart escape
 #else
             pacman->getIsChasing(),         // is chasing the ghosts
 #endif
@@ -288,7 +297,7 @@ void do_pacman_iteration() {
 
 #ifdef USE_SMART_ESCAPE
     if (!pacman->getIsChasing()) {
-        pacman_next_move = get_cell_in_opposite_direction(pacman_location, pacman_next_move);
+        pacman_next_move = get_cell_in_opposite_direction(pacman_location, pacman_next_move, recent[pacman]);
     }
 #endif
 
@@ -307,6 +316,7 @@ void do_pacman_iteration() {
     // now ghosts move
     for (const auto &ghost: ghosts) {
         auto ghost_location = cell(ghost->r, ghost->c);
+        recent[ghost].push(ghost_location);
 
         // get next move for ghost depending on his state
         cell ghost_next_move = search(
@@ -314,9 +324,9 @@ void do_pacman_iteration() {
                 new cell(pacman->r, pacman->c), // ghost knows where pacman is
                 false,                          // don't paint path
 #ifdef USE_SMART_ESCAPE
-		true,                        	// use smart escape
+                true,                            // use smart escape
 #else
-		ghost->getIsChasing(),         // is chasing the ghosts
+                ghost->getIsChasing(),         // is chasing the ghosts
 #endif
                 PACMAN,                         // target type is pacman
                 true
@@ -324,7 +334,7 @@ void do_pacman_iteration() {
 
 #ifdef USE_SMART_ESCAPE
         if (!ghost->getIsChasing()) {
-            ghost_next_move = get_cell_in_opposite_direction(ghost_location, ghost_next_move);
+            ghost_next_move = get_cell_in_opposite_direction(ghost_location, ghost_next_move, recent[ghost]);
         }
 #endif
 

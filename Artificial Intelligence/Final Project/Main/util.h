@@ -31,5 +31,9 @@ struct cell {
     cell(int _r, int _c) : r(_r), c(_c) {}
 
     cell() : r(-1), c(-1) {}
+
+    bool operator==(const cell& other) const {
+        return r == other.r && c == other.c;
+    }
 };
 
