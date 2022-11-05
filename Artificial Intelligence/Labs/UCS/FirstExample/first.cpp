@@ -209,7 +209,7 @@ void reset() {
 
     // clear arrays
     fill_n(nodes, NUM_NODES, Node());
-    fill(begin(edges), end(edges), Edge());
+    fill_n(edges, NUM_EDGES, Edge());
 
     InitGraph();
 }
