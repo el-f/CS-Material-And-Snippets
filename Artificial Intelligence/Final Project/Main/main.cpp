@@ -141,7 +141,7 @@ cell search(
     return {last_parent.r, last_parent.c};
 }
 
-cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target, limited_queue<cell> recenttly_visited) {
+cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target, limited_queue<cell> recently_visited) {
     // if we get a direction to a target that we want to run away from, we have 3 other directions to choose from
     // we choose the one that is the furthest from the target so our order of preference is:
     // 1. go in the opposite direction of the target
@@ -156,7 +156,7 @@ cell get_cell_in_opposite_direction(cell &current, cell &next_move_to_target, li
                 direction.c >= 0 && direction.c < BOARD_W &&
                 board[direction.r][direction.c] != WALL &&
                 board[direction.r][direction.c] != GHOST &&
-                (is_in_tunnel(current) || !recenttly_visited.contains(direction)));
+                (is_in_tunnel(current) || !recently_visited.contains(direction)));
     };
 
     cell opposite_direction = cell(current.r - dr, current.c - dc);
