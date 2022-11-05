@@ -7,7 +7,7 @@
 
 Player::Player()
 {
-	x = rand()%MSZ;
+	x = rand() % MSZ;
 	y = rand() % MSZ;
 	isMoving = false;
 	isGettingWood = false;
@@ -68,7 +68,7 @@ void Player::Execute()
 		x += dx * SPEED;
 		y += dy * SPEED;
 		dist = sqrt(pow(tx - x, 2) + pow(ty - y, 2));
-		if (dist < 5)
+		if (dist < rand() % 7)
 			currentState->MakeTransition(this);
 	}
 	else if (isGettingWood)
@@ -88,9 +88,9 @@ void Player::Execute()
 
 void Player::setDirection(int targetX, int targetY)
 {
-	tx = targetX;
+	tx = targetX + ((rand() % 10) * (rand() % 2 ? 1 : -1));
 	ty = targetY;
-	double dist = sqrt(pow(targetX - x, 2) + pow(targetY - y, 2));
-	dx = (targetX - x) / dist;
-	dy = (targetY - y) / dist;
+	double dist = sqrt(pow(tx - x, 2) + pow(ty - y, 2));
+	dx = (tx - x) / dist;
+	dy = (ty - y) / dist;
 }
