@@ -6,6 +6,11 @@ const int DOWN = 1;
 const int LEFT = 2;
 const int RIGHT = 3;
 
+/*
+ * true: use A* - optimal solution but slower to find.
+ * false: use Best First - not guaranteed optimal solution but faster to find.
+ */
+constexpr bool GET_OPTIMAL_SOLUTION = true;
 
 class PuzzleNode
 {
@@ -23,7 +28,7 @@ public:
 	int ManhattanDistance(int row, int col);
 	void setG(int value) { g = value; }
 	void ComputeH();
-	void ComputeF() { f = g + h; }
+	void ComputeF() { f = GET_OPTIMAL_SOLUTION ? g + h : h; }
 	int getG() { return g; }
 	int getH() { return h; }
 	int getF() { return f; }

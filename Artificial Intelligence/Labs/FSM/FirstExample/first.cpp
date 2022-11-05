@@ -2,22 +2,24 @@
 #include <math.h>
 #include "Player.h"
 #include <time.h>
+#include <vector>
 
 const double PI = 3.14;
 
-Player* p;
-Player* p1;
+constexpr int NUM_OF_PLAYERS = 5;
 
+std::vector<Player*> players;
 
 void init()
 {
 	glClearColor(0, 0.6, 0.2, 0); // RGB - sets background color
 	glOrtho(0, MSZ, 0, MSZ, -1, 1); // setup coordinate system
 	srand(time(0));
-	p = new Player();
-	p1 = new Player();
 
-
+    for (int i = 0; i < NUM_OF_PLAYERS; i++)
+    {
+        players.push_back(new Player());
+    }
 }
 
 void DrawTree(int x, int y)
@@ -80,8 +82,10 @@ void display()
 	DrawForest();
 	DrawStock();
 
-	p->DrawMe();
-	p1->DrawMe();
+	for (const auto& player : players)
+    {
+        player->DrawMe();
+    }
 
 
 	glutSwapBuffers();// show what was drawn in "frame buffer"
@@ -89,8 +93,10 @@ void display()
 
 void idle()
 {
-	p->Execute();
-	p1->Execute();
+	for (const auto& player : players)
+    {
+        player->Execute();
+    }
 	glutPostRedisplay(); // calls indirectly to display
 }
 
