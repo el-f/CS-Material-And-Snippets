@@ -6,19 +6,20 @@ import kotlin.math.roundToInt
 
 fun main() {
     println("All Marks:")
-    var wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myMarks")
-    wac.printAll().also { println() }
-    wac.printAverage()
-    wac.printRoundedAverage().also { println() }
-    wac.printAllRanges().also { println() }
+    val allMarks = WeightedAvgCalculator("E:/Elfein/Afeka/myMarks")
+    allMarks.printAll().also { println() }
+    allMarks.printAverage()
+    allMarks.printRoundedAverage().also { println() }
+    allMarks.printAllRanges().also { println() }
 
 
     println("\nTechnology Marks:")
-    wac = WeightedAvgCalculator("Kotlin Tutorial + Snippets/src/snippets/myTechnologyMarks")
-    wac.printAll().also { println() }
-    wac.printAverage()
-    wac.printRoundedAverage().also { println() }
-    wac.printAllRanges()
+    val technologyMarks = WeightedAvgCalculator("E:/Elfein/Afeka/myTechnologyMarks")
+    technologyMarks.printAll().also { println() }
+    technologyMarks.printAverage()
+    technologyMarks.printRoundedAverage().also { println() }
+    technologyMarks.printAllRanges().also { println() }
+
 }
 
 class WeightedAvgCalculator(
