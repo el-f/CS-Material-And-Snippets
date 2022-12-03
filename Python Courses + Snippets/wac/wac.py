@@ -33,7 +33,7 @@ class WeightedAvgCalculator:
 
     def print_range(self, low, high):
         print(
-            "%d Marks at Range of (%d-%d) Out of %d Marks"
+            "%2d Marks at Range of ( %3d - %3d ) Out of %d Marks"
             % (
                 len([x for x in self.marks if int(x[1]) in range(low, high + 1)]),
                 low,
