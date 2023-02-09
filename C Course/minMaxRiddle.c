@@ -7,7 +7,7 @@
 
 
 /*
- *  Solution - Elazar Fine - github.com/Elfein7Night
+ *  Solution - Elazar Fine - github.com/el-f
  *
  *          sign | operation | return
  *          -------------------------
@@ -32,7 +32,7 @@ int minMax(int a, int b, char c) {
 }
 
 /*
- *  Trivial Solution - Elazar Fine - github.com/Elfein7Night
+ *  Trivial Solution - Elazar Fine - github.com/el-f
  *
  *          choice | result | return
  *          -------------------------

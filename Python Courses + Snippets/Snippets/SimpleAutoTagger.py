@@ -4,7 +4,7 @@ import time
 import mutagen
 from mutagen.id3 import TPE1, TIT2
 
-# Written by https://github.com/Elfein7Night
+# Written by https://github.com/el-f
 # This script is a simple auto-tagger for mp3 and opus files.
 # It will read the file's name and if it follows the following format: <artist> - <title>.<file_extension>
 # and the tags are missing it will set the tags accordingly.
