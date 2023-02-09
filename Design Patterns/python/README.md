@@ -38,26 +38,26 @@ objects).
 - [Template Method], steps of an algorithm
 - [Visitor], operations that can be applied to objects without changing their classes
 
-[Abstract Factory]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/abstract-factory
-[Builder]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/builder
-[Factory Method]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/factory-method
-[Prototype]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/prototype
-[Singleton]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/singleton
-[Adapter]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/adapter
+[Abstract Factory]: abstract-factory
+[Builder]: builder
+[Factory Method]: factory-method
+[Prototype]: prototype
+[Singleton]: singleton
+[Adapter]: adapter
 [Bridge]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/bridge 
-[Composite]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/composite
-[Decorator]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/decorator
-[Façade]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/facade
-[Flyweight]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/flyweight
-[Proxy]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/proxy
-[Chain of Responsibility]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/chain-of-responsibility
-[Command]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/command
-[Interpreter]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/interpreter
-[Iterator]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/iterator
-[Mediator]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/mediator
-[Memento]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/memento
-[Observer]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/observer
-[State]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/state
-[Strategy]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/strategy
-[Template Method]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/template-method
-[Visitor]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/visitor
+[Composite]: composite
+[Decorator]: decorator
+[Façade]: facade
+[Flyweight]: flyweight
+[Proxy]: proxy
+[Chain of Responsibility]: chain-of-responsibility
+[Command]: command
+[Interpreter]: interpreter
+[Iterator]: iterator
+[Mediator]: mediator
+[Memento]: memento
+[Observer]: observer
+[State]: state
+[Strategy]: strategy
+[Template Method]: template-method
+[Visitor]: visitor
