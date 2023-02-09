@@ -44,7 +44,7 @@ objects).
 [Prototype]: prototype
 [Singleton]: singleton
 [Adapter]: adapter
-[Bridge]: https://github.com/Elfein7Night/CS-Material-And-Snippets/tree/master/Design%20Patterns/python/bridge 
+[Bridge]: bridge 
 [Composite]: composite
 [Decorator]: decorator
 [Façade]: facade
