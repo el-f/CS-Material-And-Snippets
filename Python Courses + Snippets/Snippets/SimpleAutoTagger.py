@@ -1,5 +1,6 @@
 import os
 import time
+import re
 
 import mutagen
 from mutagen.id3 import TPE1, TIT2
@@ -18,6 +19,21 @@ MUSIC_FOLDER_PREFIXES = {'MP'}
 
 # Set to a set of known folder names to only tag folders that have one of these names
 MUSIC_FOLDER_KNOWN_NAMES = {'Music'}
+
+# Set to true to fix titles with irrelevant stuff in them (e.g. " - YouTube" / " - Official Video" / " feat. <artist>" / " (HD)" etc.)
+FIX_TITLES = True
+
+IRRELEVANT_TITLE_SUFFIXES = [
+    "\s+\(.+",
+    "\s+\[.+",
+    "\s+【.+",
+    "\s+.?\s+Official\s+(Video|Audio).+",
+    "\s+.?\s+HD.+",
+    "\s+.?\s+HQ.+",
+    "\s+.?\s+Lyrics.+",
+    "\s+\-?\s?$", # remove trailing spaces and dashes
+]
+
 
 
 def get_file_name(file_path):
@@ -55,7 +71,7 @@ def tag_if_missing(file_path):
     if not artist or not title:
         return False
 
-    tagged = False
+    tagged = fixed = False
     audio = mutagen.File(file_path)
     if audio is None:
         print('!!! ERROR: Could not open file: ' + file_path)
@@ -71,6 +87,12 @@ def tag_if_missing(file_path):
         if 'TIT2' not in audio.tags:
             audio['TIT2'] = TIT2(text=title)
             tagged = True
+        elif FIX_TITLES:
+            for suffix in IRRELEVANT_TITLE_SUFFIXES:
+                if re.search(suffix, audio['TIT2'].text[0]):
+                    print(f'Fixed title: {audio["TIT2"].text[0]} -> {re.sub(suffix, "", audio["TIT2"].text[0])}')
+                    audio['TIT2'].text[0] = re.sub(suffix, '', audio['TIT2'].text[0])
+                    fixed = True
     elif file_extension == 'opus':
         if 'artist' not in audio:
             audio['artist'] = artist
@@ -78,17 +100,25 @@ def tag_if_missing(file_path):
         if 'title' not in audio:
             audio['title'] = title
             tagged = True
+        elif FIX_TITLES:
+            for suffix in IRRELEVANT_TITLE_SUFFIXES:
+                if re.search(suffix, audio['title'][0]):
+                    print(f'Fixed title: {audio["title"][0]} -> {re.sub(suffix, "", audio["title"][0])}')
+                    audio['title'] = re.sub(suffix, '', audio['title'][0])
+                    fixed = True
 
     if tagged:
         audio.save()
         print('Tagged: ' + file_path)
-    return tagged
+    elif fixed:
+        audio.save()
+    return { 'tagged': tagged, 'fixed': fixed }
 
 
 # recursively tag all mp3/opus files in a directory
 def tag_directory(directory):
     folder_stack = [directory]  # dfs stack
-    amount_tagged, last = 0, 0
+    amount_tagged, amount_fixed, last = 0, 0, 0
     while folder_stack:
         folder = folder_stack.pop()
         if is_untagged_folder(folder):
@@ -99,10 +129,12 @@ def tag_directory(directory):
                 if os.path.isdir(file_path):
                     folder_stack.append(file_path)
                 elif file_path.endswith('.mp3') or file_path.endswith('.opus'):
-                    if tag_if_missing(file_path):
-                        amount_tagged += 1
-                        last += 1
-    return amount_tagged
+                    results = tag_if_missing(file_path)
+                    last += 1
+                    if results:
+                        amount_tagged += int(results['tagged'])
+                        amount_fixed += int(results['fixed'])
+    return { 'tagged': amount_tagged, 'fixed': amount_fixed }
 
 
 if __name__ == '__main__':
@@ -111,7 +143,9 @@ if __name__ == '__main__':
         inp = input('Are you sure you want to tag all mp3/opus files in this directory and all sub-directories? (y/n)')
     if inp in {'y', 'Y'}:
         start_time = time.time()
-        total_tagged = tag_directory(os.getcwd())
+        totals = tag_directory(os.getcwd())
+        total_tagged = totals['tagged']
+        total_fixed = totals['fixed']
 
         seconds_took = time.time() - start_time
         if seconds_took < 60:
@@ -120,7 +154,7 @@ if __name__ == '__main__':
             time_took = f"{seconds_took // 60} minutes, and {round(seconds_took % 60, 2)} seconds"
 
         print('\n\n>>> Done!')
-        print('>>> Tagged ' + str(total_tagged) + ' files in ' + time_took)
+        print('>>> Tagged ' + str(total_tagged) + ' and fixed ' + str(total_fixed) + ' files in ' + time_took)
         input('\nPress enter to exit.')
     else:
         print('Cancelled.')
