@@ -1,7 +1,7 @@
 from pulp import *
 
 def turn_mat_to_q_string(mat):
-    return '\n'.join(''.join('Q' if bool(i.varValue) else '.' for i in arr) for arr in mat) + "\n"
+    return '\n'.join(''.join('Q' if bool(i.varValue) else '.' for i in arr) for arr in mat) + '\n'
 
 def solve_n_queens(n, mandatory_position=None):
     """
@@ -21,34 +21,34 @@ def solve_n_queens(n, mandatory_position=None):
     """
     queens = LpProblem('queens')
 
-    x = [[LpVariable(f'x({i},{j})', 0, 1, 'Binary') for j in range(n)] for i in range(n)]
+    board = [[LpVariable(f'x({i},{j})', 0, 1, 'Binary') for j in range(n)] for i in range(n)]
     
     # no objective function - we only want to find a solution, there is no "best" solution
 
     # exactly one queen per row
-    for i in range(n):
-        queens += lpSum(x[i][j] for j in range(n)) == 1
+    for row in range(n):
+        queens += lpSum(board[row][col] for col in range(n)) == 1
     
     # exactly one queen per column
-    for j in range(n):
-        queens += lpSum(x[i][j] for i in range(n)) == 1
+    for col in range(n):
+        queens += lpSum(board[row][col] for row in range(n)) == 1
 
     # at most one queen per diagonal \
-    for _, k in enumerate(range(-n + 1, n)):
-        queens += lpSum(x[i][j] for i in range(n) for j in range(n) if i - j == k) <= 1
+    for k in range(-n + 1, n):
+        queens += lpSum(board[row][col] for row in range(n) for col in range(n) if row - col == k) <= 1
 
     # at most one queen per diagonal /
-    for _, k in enumerate(range(0, 2 * n - 1)):
-        queens += lpSum(x[i][j] for i in range(n) for j in range(n) if i + j == k) <= 1
+    for k in range(0, 2 * n - 1):
+        queens += lpSum(board[row][col] for row in range(n) for col in range(n) if row + col == k) <= 1
 
     # if mandatory_position is given, add it to the constraints
     if mandatory_position:
-        queens += x[mandatory_position[0]][mandatory_position[1]] == 1
+        queens += board[mandatory_position[0]][mandatory_position[1]] == 1
         
     queens.solve()
     
     if LpStatus[queens.status] == 'Optimal':
-        return turn_mat_to_q_string(x)
+        return turn_mat_to_q_string(board)
 
     return "No solution found."
 
