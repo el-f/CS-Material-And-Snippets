@@ -24,9 +24,9 @@ MUSIC_FOLDER_KNOWN_NAMES = {'Music'}
 FIX_TITLES = True
 
 IRRELEVANT_TITLE_SUFFIXES = [
-    "\s+\(.+",
-    "\s+\[.+",
-    "\s+【.+",
+    "\s+\(feat.+",
+    "\s+\[feat.+",
+    "\s+【feat.+",
     "\s+.?\s+Official\s+(Video|Audio).+",
     "\s+.?\s+HD.+",
     "\s+.?\s+HQ.+",
@@ -63,21 +63,33 @@ def is_untagged_folder(folder):
 # with the artist and title if not already set
 def tag_if_missing(file_path):
     file_name = get_file_name(file_path)
-    if ' - ' not in file_name:
-        return False
-
-    artist = file_name[:file_name.find(' - ')]
-    title = file_name[file_name.find(' - ') + 3:]
-    if not artist or not title:
-        return False
-
+    file_extension = get_file_extension(file_path)
+    
     tagged = fixed = False
+    
     audio = mutagen.File(file_path)
     if audio is None:
         print('!!! ERROR: Could not open file: ' + file_path)
         return False
-
-    file_extension = get_file_extension(file_path)
+    
+    if ' - ' in file_name:
+        artist = file_name[:file_name.find(' - ')]
+        title = file_name[file_name.find(' - ') + 3:]
+        if not artist or not title:
+            return False
+    else:
+        if file_extension == 'mp3':
+            artist = audio['TPE1'].text[0] if 'TPE1' in audio.tags else ''
+            title = audio['TIT2'].text[0] if 'TIT2' in audio.tags else ''
+            if not artist or not title:
+                return False
+        elif file_extension == 'opus':
+            artist = audio['artist'][0] if 'artist' in audio else ''
+            title = audio['title'][0] if 'title' in audio else ''
+            if not artist or not title:
+                return False
+    
+    
     if file_extension == 'mp3':
         if audio.tags is None:
             audio.add_tags()
@@ -89,9 +101,9 @@ def tag_if_missing(file_path):
             tagged = True
         elif FIX_TITLES:
             for suffix in IRRELEVANT_TITLE_SUFFIXES:
-                if re.search(suffix, audio['TIT2'].text[0]):
-                    print(f'Fixed title: {audio["TIT2"].text[0]} -> {re.sub(suffix, "", audio["TIT2"].text[0])}')
-                    audio['TIT2'].text[0] = re.sub(suffix, '', audio['TIT2'].text[0])
+                if re.search(suffix, audio['TIT2'].text[0], re.IGNORECASE):
+                    print(f'Fixed title: {audio["TIT2"].text[0]} -> {re.sub(suffix, "", audio["TIT2"].text[0], 0, re.IGNORECASE)}')
+                    audio['TIT2'].text[0] = re.sub(suffix, '', audio['TIT2'].text[0], 0, re.IGNORECASE)
                     fixed = True
     elif file_extension == 'opus':
         if 'artist' not in audio:
@@ -102,16 +114,17 @@ def tag_if_missing(file_path):
             tagged = True
         elif FIX_TITLES:
             for suffix in IRRELEVANT_TITLE_SUFFIXES:
-                if re.search(suffix, audio['title'][0]):
-                    print(f'Fixed title: {audio["title"][0]} -> {re.sub(suffix, "", audio["title"][0])}')
-                    audio['title'] = re.sub(suffix, '', audio['title'][0])
+                if re.search(suffix, audio['title'][0], re.IGNORECASE):
+                    print(f'Fixed title: {audio["title"][0]} -> {re.sub(suffix, "", audio["title"][0], 0, re.IGNORECASE)}')
+                    audio['title'] = re.sub(suffix, '', audio['title'][0], 0, re.IGNORECASE)
                     fixed = True
 
     if tagged:
-        audio.save()
+        # audio.save()
         print('Tagged: ' + file_path)
     elif fixed:
-        audio.save()
+        # audio.save()
+        pass
     return { 'tagged': tagged, 'fixed': fixed }
 
 
