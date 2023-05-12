@@ -28,6 +28,8 @@ def main():
     source_files = os.listdir(source)
     target_files = os.listdir(target)
 
+    replaced = 0
+
     with tqdm.tqdm(total=len(source_files)) as pbar:
         for source_file in source_files:
             for target_file in target_files:
@@ -47,6 +49,8 @@ def main():
                             "✔ File {} was replaced with file {}, (source file size: {}, target file size: {})"
                             .format(target_file, source_file, source_file_size, target_file_size)
                         )
+
+                        replaced += 1
                     else:
                         pbar.write(
                             "❌ File {} was not replaced with file {}, (source file size: {}, target file size: {})"
@@ -54,7 +58,7 @@ def main():
                         )
             pbar.update(1)
 
-    print("Done.")
+    print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
 
 
 if __name__ == "__main__":
