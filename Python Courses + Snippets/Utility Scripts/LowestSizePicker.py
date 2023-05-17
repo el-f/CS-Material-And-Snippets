@@ -46,15 +46,13 @@ def main():
                         shutil.move(source_file_full_path, target)
 
                         pbar.write(
-                            "✔ File {} was replaced with file {}, (source file size: {}, target file size: {})"
-                            .format(target_file, source_file, source_file_size, target_file_size)
+                            f"✅\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was replaced "
                         )
 
                         replaced += 1
                     else:
                         pbar.write(
-                            "❌ File {} was not replaced with file {}, (source file size: {}, target file size: {})"
-                            .format(target_file, source_file, source_file_size, target_file_size)
+                            f"❌\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was not replaced "
                         )
             pbar.update(1)
 
