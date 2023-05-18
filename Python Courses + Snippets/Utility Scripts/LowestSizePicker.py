@@ -29,6 +29,9 @@ def main():
     target_files = os.listdir(target)
 
     replaced = 0
+    
+    total_original_size = 0
+    total_size_after_replacement = 0
 
     with tqdm.tqdm(total=len(source_files)) as pbar:
         for source_file in source_files:
@@ -39,6 +42,9 @@ def main():
 
                     source_file_size = os.path.getsize(source_file_full_path)
                     target_file_size = os.path.getsize(target_file_full_path)
+                    
+                    total_original_size += source_file_size
+                    total_size_after_replacement += min(source_file_size, target_file_size)
 
                     if source_file_size < target_file_size:
                         os.remove(target_file_full_path)
@@ -56,8 +62,12 @@ def main():
                         )
             pbar.update(1)
 
+    print(f"----------- Summary -----------")
     print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
-
-
+    print(f"Total size before replacement: {total_original_size / 1024 ** 3:.3f} GB")
+    print(f"Total size after replacement: {total_size_after_replacement / 1024 ** 3:.3f} GB")
+    print(f"Total size saved: {(total_original_size - total_size_after_replacement) / 1024 ** 3:.3f} GB")
+    print(f"Total target/source size ratio: {total_size_after_replacement / total_original_size * 100:.2f}%")
+    
 if __name__ == "__main__":
     main()
