@@ -1,9 +1,12 @@
 turn_right = lambda: [turn_left(), turn_left(), turn_left()]
 turn_180   = lambda: [turn_left(), turn_left()]
 built_any = False
-   
-# enter room
-move(); move(); move(); turn_right(); move();
+  
+# enter room - get to the door then take a right
+while not at_goal(): move()
+turn_right();
+while not wall_in_front(): move();
+turn_left()
 
 def is_next_wall():
     move()
@@ -15,8 +18,8 @@ def move_and_check():
     move()
     if not wall_on_right() and not at_goal():
         # validate that is window
-        if wall_in_front(): return
-        if not is_next_wall():
+        if wall_in_front(): return # corner
+        if not is_next_wall(): # window is always between two walls
             turn_right(); move();
             return
         
