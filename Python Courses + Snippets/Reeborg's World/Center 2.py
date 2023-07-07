@@ -26,13 +26,11 @@ def change_stage():
     elif stage == 2:
         stage = 1
         turn_180()
-        vert = False
     elif stage == 1:
         stage = 3
         turn_left()
     elif stage == 3:
         stage = 0
-        vert = False
 
 while not finished():
     if horiz and finished_horz():
