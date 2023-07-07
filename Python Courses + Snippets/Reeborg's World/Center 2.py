@@ -7,21 +7,15 @@ finished_horz = lambda: all(a[::2]) and a[0] // 2 <= a[2]
 finished_vert = lambda: all(a[1::2]) and a[1] // 2 <= a[3]
 finished = lambda: (not horiz or finished_horz()) and (not vert or finished_vert())
 
-def check_horiz():
-    global horiz
-    if not wall_in_front(): return
+if wall_in_front():
     turn_180()
     if wall_in_front():     horiz = False
     turn_180()
-check_horiz();
 
-def check_vert():
-    global vert
-    if not wall_on_right(): return
+if wall_on_right():
     turn_left()
     if wall_in_front():     vert = False
     turn_right()
-check_vert()
 
 def change_stage():
     global stage
@@ -49,6 +43,7 @@ while not finished():
     else:
         change_stage()
 put()
+
 ################################################################
 # WARNING: Do not change this comment.
 # Library Code is below.
