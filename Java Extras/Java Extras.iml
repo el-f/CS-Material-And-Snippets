@@ -8,16 +8,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org.projectlombok:lombok:1.18.20" level="application" />
     <orderEntry type="library" name="junit.jupiter.engine" level="application" />
-    <orderEntry type="library" name="net.bytebuddy.byte.buddy" level="application" />
-    <orderEntry type="library" name="apache.commons.lang3" level="application" />
-    <orderEntry type="library" name="apache.commons.text" level="application" />
-    <orderEntry type="library" name="apache.commons.collections4" level="application" />
     <orderEntry type="library" name="google.guava" level="application" />
-    <orderEntry type="library" name="apache.commons.math3" level="application" />
     <orderEntry type="library" name="javassist" level="application" />
-    <orderEntry type="library" name="net.bytebuddy.byte.buddy.agent" level="application" />
     <orderEntry type="library" name="io.vavr" level="application" />
     <orderEntry type="module-library">
       <library name="JUnit4">
@@ -29,6 +22,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="junit" level="application" />
+    <orderEntry type="library" name="projectlombok.lombok" level="application" />
+    <orderEntry type="library" name="commons-text-1.10.0" level="application" />
+    <orderEntry type="library" name="commons-math3-3.6.1" level="application" />
+    <orderEntry type="library" name="commons-lang3-3.13.0" level="application" />
+    <orderEntry type="library" name="byte-buddy-1.14.5" level="application" />
   </component>
 </module>
