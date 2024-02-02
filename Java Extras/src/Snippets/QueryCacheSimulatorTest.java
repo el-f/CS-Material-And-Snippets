@@ -43,7 +43,7 @@ class QueryCacheSimulator {
     public static List<Integer> getNumbers(List<EntityCache> caches, int offset, int number) {
         List<Integer> recipes = new ArrayList<>();
         int neededStart = offset;
-        int neededEnd = offset + number;
+        int neededEndExlusive = offset + number;
         int currentOffset = offset;
         List<EntityCache> newCaches = new ArrayList<>();
 
@@ -55,7 +55,7 @@ class QueryCacheSimulator {
                 continue;
             }
 
-            if (cacheStart >= neededEnd) {
+            if (cacheStart >= neededEndExlusive) {
                 break;
             }
 
@@ -71,7 +71,7 @@ class QueryCacheSimulator {
             }
 
             int start = Math.max(currentOffset - cacheStart, 0);
-            int end = Math.min(neededEnd - cacheStart, cache.number);
+            int end = Math.min(neededEndExlusive - cacheStart, cache.number);
             System.out.println("Get from DB for range " + (cacheStart + start) + "-" + (cacheStart + end - 1));
             for (int i = start; i < end; i++) {
                 recipes.add(cacheStart + i);
@@ -80,13 +80,13 @@ class QueryCacheSimulator {
             currentOffset = cacheEnd;
         }
 
-        if (currentOffset < neededEnd) {
-            System.out.println("Query API for range " + currentOffset + "-" + (neededEnd - 1));
-            for (int i = currentOffset; i < neededEnd; i++) {
+        if (currentOffset < neededEndExlusive) {
+            System.out.println("Query API for range " + currentOffset + "-" + (neededEndExlusive - 1));
+            for (int i = currentOffset; i < neededEndExlusive; i++) {
                 recipes.add(i);
             }
 
-            newCaches.add(new EntityCache(currentOffset, neededEnd - currentOffset));
+            newCaches.add(new EntityCache(currentOffset, neededEndExlusive - currentOffset));
 
         }
 
