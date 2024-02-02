@@ -159,6 +159,25 @@ public class JavaStreams {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         out.println(numsByFreq);
 
+        out.println("\n20. partitioningBy(..)");
+        Map<Boolean, List<String>> partitioned = words.stream()
+                .collect(Collectors.partitioningBy(s -> s.length() > 3));
+        out.println(partitioned);
+
+        out.println("\n21. joining(..)");
+        String joined = words.stream()
+                .collect(Collectors.joining(", ", "[", "]"));
+        out.println(joined);
+
+        out.println("\n22. peek(..)");
+        List<String> peeked = new ArrayList<>();
+        List<String> stream = words.stream()
+                .peek(s -> {
+                    if (s.length() > 3) peeked.add(s);
+                })
+                .collect(Collectors.toList());
+        out.println("stream: " + stream + " | peeked: " + peeked);
+
     }
 
     public static Set<Integer> primeFactors(int n) {
