@@ -1,7 +1,19 @@
 import os
-import mutagen
-from mutagen.id3 import TPE1, TIT2
+from mutagen.mp3 import EasyMP3
+from mutagen.oggopus import OggOpus
 import sys
+
+EXTS = {
+    'mp3': EasyMP3,
+    'opus': OggOpus,
+}
+
+HELP_MSG = """
+    Usage: python TagsOverwriter.py [-y | -n] (optional)
+        -y: Ask the user which part of the file name is the artist and which part is the title.
+        -n: Do not ask the user, just use the first and second parts of the file name as artist and title, respectively.
+    this pertains to the tagger's expected file name format: "artist - title.ext"
+"""
 
 
 def get_file_name(file_path):
@@ -37,7 +49,8 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
         return parts[part_index - 1]
 
     artist = get_part('artist')
-    title = (parts[0] if artist == parts[1] else parts[1]) if len(parts) == 2 else get_part('title')
+    title = (parts[0] if artist == parts[1] else parts[1]
+             ) if len(parts) == 2 else get_part('title')
 
     return artist, title
 
@@ -53,22 +66,17 @@ def tag(file_path, ask_user=False):
         print('Could not get artist and/or title!')
         return False
 
-    audio = mutagen.File(file_path)
-    if audio is None:
+    file_extension = get_file_extension(file_path)
+
+    file = EXTS[file_extension](file_path)
+    if file is None:
         print('!!! ERROR: Could not open file: ' + file_path)
         return False
 
-    file_extension = get_file_extension(file_path)
-    if file_extension == 'mp3':
-        if audio.tags is None:
-            audio.add_tags()
-        audio['TPE1'] = TPE1(text=artist)
-        audio['TIT2'] = TIT2(text=title)
-    elif file_extension == 'opus':
-        audio['artist'] = artist
-        audio['title'] = title
+    file['artist'] = artist
+    file['title'] = title
 
-    audio.save()
+    file.save()
     print('==============================')
     print('Tagged: ' + file_path)
     print('------------------------------')
@@ -88,7 +96,7 @@ def main():
         if sys.argv[1] == '-n':
             ask_user = False
         elif sys.argv[1] != '-y':
-            print("Supported arguments: -y, -n")
+            return print(HELP_MSG)
 
     folder = os.getcwd()
     print('Current directory: ' + folder)
@@ -96,11 +104,11 @@ def main():
     files = []
     for file in os.listdir(folder):
         file_path = os.path.join(folder, file)
-        if not os.path.isdir(file_path) and file_path.endswith('.mp3') or file_path.endswith('.opus'):
+        if not os.path.isdir(file_path) and any(file.endswith(f".{ext}") for ext in EXTS):
             files.append(file_path)
 
     if not files:
-        print("No mp3/opus files found!")
+        print(f"No {'/'.join(EXTS.keys())} files found in the current directory!")
         return
 
     print('Files:')
