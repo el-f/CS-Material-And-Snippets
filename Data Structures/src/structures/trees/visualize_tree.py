@@ -5,7 +5,7 @@ from functools import reduce
 # define the tree structure
 graph_dict = {
   0: [1, 2],
-  1: [3],
+  1: [3, 8],
   3: [4, 5, 7],
   2: [6],
 }
@@ -36,6 +36,12 @@ def build_positions(edges):
         x_extra_offset = child_num if children_for_each_parent[parent] > 2 else 1
         pos[child] = pos[parent][0] + ((-1) ** child_num) * x_extra_offset, pos[parent][1] - 1
 
+    seen = set()
+    for p in pos:
+        if pos[p] in seen:
+            pos[p] = (pos[p][0], pos[p][1] + .5)
+        seen.add(pos[p])
+    
     return pos
 
 poses = build_positions(edges)
