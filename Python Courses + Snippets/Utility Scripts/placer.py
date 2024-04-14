@@ -53,8 +53,9 @@ def main():
         source_file_full_path = os.path.join(source, source_file)
         target_file_full_path = os.path.join(target, target_file)
         if is_preview:
-            print(f"Move {source_file} to {target_file}")
+            print(f"👀 Will move {source_file} to {target_file}")
         else:
+            print(f"✅ Moved {source_file} to {target_file}")
             shutil.move(source_file_full_path, target_file_full_path)
         moved += 1
 
