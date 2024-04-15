@@ -111,18 +111,31 @@ def main():
         print(f"No {'/'.join(EXTS.keys())} files found in the current directory!")
         return
 
-    print('Files:')
-    for i, file in enumerate(files):
-        print('{}: {}'.format(i + 1, os.path.basename(file)))
+    def print_files():
+        print('Files:')
+        for i, file in enumerate(files):
+            print('{}: {}'.format(i + 1, os.path.basename(file)))
 
+    def filter_files(query):
+        query = query.lower().strip()
+        nonlocal files
+        files = [file for file in files if query in os.path.basename(file).lower()]
+
+    print_files()
     while True:
         try:
-            file_index = int(input('\nPick a file to tag: '))
+            inp = input('\nPick a file to tag by index, or type f:<query> to filter files: ')
+            if inp.startswith('f:'):
+                filter_files(inp[2:])
+                print_files()
+                continue
+            
+            file_index = int(inp)
             if file_index < 1 or file_index > len(files):
                 raise ValueError
             break
         except ValueError:
-            print('Invalid index!')
+            print('Invalid input!')
 
     file_path = os.path.join(folder, files[file_index - 1])
     tag(file_path, ask_user)
