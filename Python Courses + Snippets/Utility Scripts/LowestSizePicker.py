@@ -32,6 +32,10 @@ def main():
     
     total_original_size = 0
     total_size_after_replacement = 0
+    
+    if len(source_files) == 0:
+        print(f"⚠\tNo files found in the source directory")
+        return
 
     with tqdm.tqdm(total=len(source_files)) as pbar:
         for source_file in source_files:
@@ -61,6 +65,10 @@ def main():
                             f"❌\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was not replaced "
                         )
             pbar.update(1)
+    
+    if replaced == 0:
+        print(f"⚠\tNo files were replaced")
+        return
 
     print(f"----------- Summary -----------")
     print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
