@@ -33,6 +33,8 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
         return parts[0], parts[1]
 
     def get_part(part_name):
+        nonlocal parts
+
         print(f"which of the parts is the {part_name}?")
         for i, part in enumerate(parts):
             print("{}: {}".format(i + 1, part))
@@ -46,10 +48,11 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
             except ValueError:
                 print("Invalid input!")
 
-        return parts[part_index - 1]
+        part = parts[part_index - 1]
+        parts = parts[:part_index - 1] + parts[part_index:] # remove the part from the list
+        return part
 
     artist = get_part('artist')
-    parts = [p for p in parts if p != artist]
     title = parts.pop() if len(parts) == 1 else get_part('title')
 
     return artist, title
