@@ -1,5 +1,3 @@
-# recursively search for files in a directory that match a regex pattern
-
 import argparse
 import os
 import re
