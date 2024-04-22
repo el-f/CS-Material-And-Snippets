@@ -49,8 +49,8 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
         return parts[part_index - 1]
 
     artist = get_part('artist')
-    title = (parts[0] if artist == parts[1] else parts[1]
-             ) if len(parts) == 2 else get_part('title')
+    parts = [p for p in parts if p != artist]
+    title = parts.pop() if len(parts) == 1 else get_part('title')
 
     return artist, title
 
