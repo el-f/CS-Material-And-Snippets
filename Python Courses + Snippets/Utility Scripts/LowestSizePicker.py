@@ -1,9 +1,12 @@
 import os
-import sys
 import re
 import shutil
 import tqdm
+import argparse
 
+parser = argparse.ArgumentParser(description="Replace files in a target directory with files from the source directory if they are smaller")
+parser.add_argument("source", type=str, help="The source directory to replace files from")
+parser.add_argument("target", type=str, help="The target directory to replace files in")
 
 def main():
     """
@@ -18,12 +21,9 @@ def main():
     and you want to keep only the smallest size of each file. (my use case was converting from x264 to x265)
     """
 
-    if len(sys.argv) != 2:
-        print("Usage: python LowestSizePicker.py <target directory>")
-        return
-
-    source = os.getcwd()
-    target = sys.argv[1]
+    args = parser.parse_args()
+    source = args.source
+    target = args.target
 
     source_files = os.listdir(source)
     target_files = os.listdir(target)
