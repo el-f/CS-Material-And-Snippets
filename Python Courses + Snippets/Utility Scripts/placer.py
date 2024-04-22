@@ -5,7 +5,11 @@ import re
 import shutil
 import tqdm
 from collections import defaultdict
+import argparse
 
+parser = argparse.ArgumentParser(description='Move files to folders based on their names.')
+parser.add_argument('target', type=str, help='The target directory to move files to.')
+parser.add_argument('--preview', '-p', action='store_true', help='Preview the moves without actually moving the files.')
 
 def contains(source_file, target_file):
     """
@@ -22,14 +26,13 @@ def main():
     for each file in current folder (source), check if there is a folder with a name such that
     the file name starts with that folder name. If there is, move the file to that folder.
     """
-    if len(sys.argv) < 2:
-        print("Usage: python placer.py <target directory> [--preview]")
-        return
-        
-    is_preview = len(sys.argv) == 3 and sys.argv[2] == "--preview"
+    args = parser.parse_args()
+    is_preview = args.preview
 
     source = os.getcwd()
-    target = sys.argv[1]
+    target = args.target
+
+    print(dict(is_preview=is_preview, source=source, target=target))
 
     source_files = os.listdir(source)
     target_files = os.listdir(target)
