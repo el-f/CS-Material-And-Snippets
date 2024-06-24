@@ -48,16 +48,26 @@ def main():
                     target_file_size = os.path.getsize(target_file_full_path)
                     
                     total_original_size += source_file_size
-                    total_size_after_replacement += min(source_file_size, target_file_size)
+                    broken_target = target_file_size == 0
+                    if broken_target:
+                        total_size_after_replacement += source_file_size
+                    else:            
+                        total_size_after_replacement += min(source_file_size, target_file_size)
+                    
 
-                    if source_file_size < target_file_size:
+                    if broken_target or source_file_size < target_file_size:
                         os.remove(target_file_full_path)
 
                         shutil.move(source_file_full_path, target)
 
-                        pbar.write(
-                            f"✅\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was replaced "
-                        )
+                        if not broken_target:
+                            pbar.write(
+                                f"✅\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was replaced "
+                            )
+                        else:
+                            pbar.write(
+                                f"✅\t(🛠 broken target)\t{target_file} was replaced "
+                            )
 
                         replaced += 1
                     else:
