@@ -2,6 +2,8 @@ import os
 from mutagen.mp3 import EasyMP3
 from mutagen.oggopus import OggOpus
 import sys
+from bidi.algorithm import get_display # handle mixing RTL and LTR text in output
+
 
 EXTS = {
     'mp3': EasyMP3,
@@ -24,6 +26,11 @@ def get_file_name(file_path):
 def get_file_extension(file_path):
     name = os.path.basename(file_path)
     return name[name.rfind('.') + 1:]
+
+def get_file_name_for_display(file_path):
+    name_without_ext = get_file_name(file_path)
+    ext = get_file_extension(file_path)
+    return f"{get_display(name_without_ext)}.{ext}"
 
 
 def get_artist_and_title_from_file_name(file_name, ask_user):
@@ -117,7 +124,7 @@ def main():
     def print_files():
         print('Files:')
         for i, file in enumerate(files):
-            print('{}: {}'.format(i + 1, os.path.basename(file)))
+            print('{}: {}'.format(i + 1, get_file_name_for_display(os.path.basename(file))))
 
     def filter_files(query):
         query = query.lower().strip()
