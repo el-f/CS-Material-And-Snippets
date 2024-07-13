@@ -44,7 +44,7 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
 
         print(f"which of the parts is the {part_name}?")
         for i, part in enumerate(parts):
-            print("{}: {}".format(i + 1, part))
+            print("{}: {}".format(i + 1, get_display(part)))
 
         while True:
             try:
@@ -88,10 +88,10 @@ def tag(file_path, ask_user=False):
 
     file.save()
     print('==============================')
-    print('Tagged: ' + file_path)
+    print('Tagged: ' + get_file_name_for_display(file_path))
     print('------------------------------')
-    print('\tArtist:\t' + artist)
-    print('\tTitle:\t' + title)
+    print('\tArtist:\t' + get_display(artist))
+    print('\tTitle:\t' + get_display(title))
     print('==============================')
 
 
