@@ -60,7 +60,11 @@ def get_artist_and_title_from_file_name(file_name, ask_user):
         return part
 
     artist = get_part('artist')
-    title = parts.pop() if len(parts) == 1 else get_part('title')
+    if len(parts) == 1:
+        title = parts[0]
+    else:
+        parts.append(' - '.join(parts)) # for cases of where title has ' - ' in it
+        title = get_part('title')
 
     return artist, title
 
