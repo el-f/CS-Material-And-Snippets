@@ -11,12 +11,12 @@ const history = require(historyJsonPath);
 
 /**
  * parse total amount string to number
- * @param {string} totalAmountShekel total amount string
+ * @param {string} totalAmount total amount string
  * @param {string} currencySymbol currency symbol to remove from the string
  * @returns {number} total amount as number
  */
-const totalAmountToNumber = (totalAmountShekel, currencySymbol = '₪') => {
-  const parsed = +(totalAmountShekel.replace(currencySymbol, ''));
+const totalAmountToNumber = (totalAmount, currencySymbol = '₪') => {
+  const parsed = +(totalAmount.replace(currencySymbol, ''));
   return isNaN(parsed) ? 0 : parsed;
 }
 

@@ -16,9 +16,9 @@ with open(json_path, 'r', encoding='utf-8') as file:
     history = json.load(file)
 
 # Helper function to convert total amount to number
-def total_amount_to_number(total_amount_shekel, currency_symbol='₪'):
-    if total_amount_shekel == '--': return 0
-    parsed = float(total_amount_shekel.replace(currency_symbol, '').replace(',', ''))
+def total_amount_to_number(total_amount, currency_symbol='₪'):
+    if total_amount == '--': return 0
+    parsed = float(total_amount.replace(currency_symbol, '').replace(',', ''))
     return parsed if not pd.isna(parsed) else 0
 
 # Create a DataFrame from the order history
