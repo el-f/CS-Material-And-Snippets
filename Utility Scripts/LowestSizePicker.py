@@ -62,26 +62,27 @@ def main():
 
                         if not broken_target:
                             pbar.write(
-                                f"✅\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was replaced "
+                                f"🛠\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was replaced "
                             )
                         else:
                             pbar.write(
-                                f"✅\t(🛠 broken target)\t{target_file} was replaced "
+                                f"🛠\t(🛠 broken target)\t{target_file} was replaced "
                             )
 
                         replaced += 1
                     else:
                         pbar.write(
-                            f"❌\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was not replaced "
+                            f"🎉\t({round(target_file_size / source_file_size, 2) * 100:.2f}%)\t{target_file} was not replaced "
                         )
             pbar.update(1)
     
-    if replaced == 0:
-        print(f"⚠\tNo files were replaced")
-        return
-
     print(f"----------- Summary -----------")
-    print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
+    
+    if replaced == 0:
+        print(f"🥳\tNo files were replaced")
+    else:
+        print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
+    
     print(f"Total size before replacement: {total_original_size / 1024 ** 3:.3f} GB")
     print(f"Total size after replacement: {total_size_after_replacement / 1024 ** 3:.3f} GB")
     print(f"Total size saved: {(total_original_size - total_size_after_replacement) / 1024 ** 3:.3f} GB")
