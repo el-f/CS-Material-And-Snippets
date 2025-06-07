@@ -80,9 +80,9 @@ def main():
     
     if replaced == 0:
         print(f"🥳\tNo files were replaced")
-    else:
-        print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
+        return
     
+    print(f"Done! - replaced {replaced} files out of {len(target_files)}.")
     print(f"Total size before replacement: {total_original_size / 1024 ** 3:.3f} GB")
     print(f"Total size after replacement: {total_size_after_replacement / 1024 ** 3:.3f} GB")
     print(f"Total size saved: {(total_original_size - total_size_after_replacement) / 1024 ** 3:.3f} GB")
